@@ -59,7 +59,8 @@ import imgIconSize2 from "../../../assets/images/icons/modifiers/size-2.svg";
 import imgIconSize3 from "../../../assets/images/icons/modifiers/size-3.svg";
 import imgIconSquare from "../../../assets/images/icons/modifiers/square.svg";
 import imgIconUndo from "../../../assets/images/icons/misc/undo.svg";
-import imgGridCull from "../../../assets/images/icons/toggles/grid-cull.svg";
+import imgIconGridCull from "../../../assets/images/icons/toggles/grid-cull.svg";
+import imgIconSettings from "../../../assets/images/icons/misc/settings.svg";
 
 const ICON_MAP = {
   "add": imgIconAdd,
@@ -120,7 +121,8 @@ const ICON_MAP = {
   "size-3": imgIconSize3,
   "square": imgIconSquare,
   "undo": imgIconUndo,
-  "grid-culling": imgGridCull,
+  "grid-culling": imgIconGridCull,
+  "settings": imgIconSettings,
 }
 
 class Icon extends LitElement {

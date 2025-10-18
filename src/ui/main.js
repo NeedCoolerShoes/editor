@@ -23,6 +23,7 @@ import imgGridLight from "../../assets/images/grid-editor-light.png";
 import { GALLERY_URL, SKIN_LOOKUP_URL } from "../constants.js";
 import { del } from "idb-keyval";
 import passesColorAccuracyTest from "./misc/color_accuracy_test.js";
+import SettingsMenu from "./settings_menu.js";
 
 class UI extends LitElement {
   static styles = css`
@@ -31,6 +32,8 @@ class UI extends LitElement {
       height: 100%;
       --editor-bg: url(${unsafeCSS(imgGridDark)});
       --ncrs-color-picker-height: 15rem;
+
+      --editor-control-icon-color: #ffffff66;
     }
 
     #main {
@@ -76,6 +79,7 @@ class UI extends LitElement {
 
     :host(.editor-light) {
       --editor-bg: url(${unsafeCSS(imgGridLight)});
+      --editor-control-icon-color: #00000088;
     }
 
     :host(.editor-light) .warning {
@@ -145,13 +149,34 @@ class UI extends LitElement {
       --icon-color: #aaaaaa;
     }
 
-    #themeSwitch {
+    button.editor-control {
       all: unset;
       display: block;
       cursor: pointer;
+    }
+
+    .editor-control, button.editor-control {
+      width: 24px;
+      height: 24px;
+    }
+
+    #editorControls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
       position: absolute;
       top: 8px;
       right: 8px;
+    }
+
+    .editor-control > ncrs-icon {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+    }
+
+    #fullscreenSwitch ncrs-icon {
+      display: none;
     }
 
     #themeSwitch ncrs-icon {
@@ -172,62 +197,12 @@ class UI extends LitElement {
       display: block;
     }
 
-    #fullscreenSwitch {
-      all: unset;
-      display: block;
-      cursor: pointer;
-      position: absolute;
-      top: 40px;
-      right: 8px;
-    }
-
-    #fullscreenSwitch ncrs-icon {
-      display: none;
-      width: 24px;
-      height: 24px;
-    }
-
     :host(.minimized) #fullscreenSwitch ncrs-icon.minimized {
       display: block;
     }
 
     :host(.fullscreen) #fullscreenSwitch ncrs-icon.fullscreen {
       display: block;
-    }
-
-    :host(.editor-light) #fullscreenSwitch {
-      display: none;
-    }
-
-    #fullscreenSwitchLightMode {
-      all: unset;
-      display: block;
-      cursor: pointer;
-      position: absolute;
-      top: 40px;
-      right: 8px;
-    }
-
-    #fullscreenSwitchLightMode ncrs-icon {
-      display: none;
-      width: 24px;
-      height: 24px;
-    }
-
-    :host(.minimized) #fullscreenSwitchLightMode ncrs-icon.minimized {
-      display: block;
-    }
-
-    :host(.fullscreen) #fullscreenSwitchLightMode ncrs-icon.fullscreen {
-      display: block;
-    }
-
-    :host(.editor-gray) #fullscreenSwitchLightMode {
-      display: none;
-    }
-
-    :host(.editor-dark) #fullscreenSwitchLightMode {
-      display: none;
     }
 
     #color-check-modal {
@@ -267,6 +242,19 @@ class UI extends LitElement {
       padding: 0.25rem;
       text-align: center;
       font-size: large;
+    }
+
+    #settingsModal {
+      justify-content: center;
+    }
+
+    ncrs-settings-menu {
+      height: 100%;
+      width: 100%;
+      max-width: 800px;
+      max-height: 400px;
+      overflow: auto;
+      border-radius: 0.5rem;
     }
   `;
 
@@ -321,6 +309,7 @@ class UI extends LitElement {
 
     this.exportModal = this._setupModal("export-form");
     this.galleryModal = this._setupGalleryModal();
+    this.settingsModal = this._setupSettingsModal();
 
     this._setEditorTheme();
     this._setFullscreen();
@@ -456,8 +445,7 @@ class UI extends LitElement {
         <div id="editor">
           ${this.editor}
           ${this._filtersWarning()}
-          ${this._bgToggle()}
-          ${this._fullscreenToggle()}
+          ${this._editorControls()}
         </div>
         <div id="layers">
           ${this._historyButtons()}
@@ -467,6 +455,7 @@ class UI extends LitElement {
       </div>
       ${this.exportModal}
       ${this.galleryModal}
+      ${this.settingsModal}
       <slot name="footer"></slot>
     `;
   }
@@ -549,25 +538,37 @@ class UI extends LitElement {
     this.classList.add(fullscreen);
   }
 
+  _editorControls() {
+    function openSettings() {
+      this.settingsModal.show();
+    }
+
+    return html`
+      <div id="editorControls">
+        ${this._fullscreenToggle()}
+        ${this._bgToggle()}
+        <button class="editor-control" title="Open Settings." @click=${openSettings}>
+          <ncrs-icon icon="settings" color="var(--editor-control-icon-color)"></ncrs-icon>
+        </button>
+      </div>
+    `;
+  }
+
   _bgToggle() {
     return html`
-      <button id="themeSwitch" @click=${this.toggleEditorBackground}>
-        <ncrs-icon title="Switch to dusk mode." icon="dusk-mode" color="#ffffff66" class="dark"></ncrs-icon>
-        <ncrs-icon title="Switch to light mode." icon="light-mode" color="#ffffff66" class="gray"></ncrs-icon>
-        <ncrs-icon title="Switch to dark mode." icon="dark-mode" color="#00000088" class="light"></ncrs-icon>
+      <button class="editor-control" id="themeSwitch" @click=${this.toggleEditorBackground}>
+        <ncrs-icon title="Switch to dusk mode." icon="dusk-mode" color="var(--editor-control-icon-color)" class="dark"></ncrs-icon>
+        <ncrs-icon title="Switch to light mode." icon="light-mode" color="var(--editor-control-icon-color)" class="gray"></ncrs-icon>
+        <ncrs-icon title="Switch to dark mode." icon="dark-mode" color="var(--editor-control-icon-color)" class="light"></ncrs-icon>
       </button>
     `
   }
 
   _fullscreenToggle() {
     return html`
-      <button id="fullscreenSwitchLightMode" @click=${this.toggleFullscreen}>
-        <ncrs-icon title="Switch to Fullscreen." icon="fullscreen" color="#00000088" class="minimized"></ncrs-icon>
-        <ncrs-icon title="Minimize." icon="minimize" color="#00000088" class="fullscreen"></ncrs-icon>
-      </button>
-      <button id="fullscreenSwitch" @click=${this.toggleFullscreen}>
-        <ncrs-icon title="Switch to Fullscreen." icon="fullscreen" color="#ffffff66" class="minimized"></ncrs-icon>
-        <ncrs-icon title="Minimize." icon="minimize" color="#ffffff66" class="fullscreen"></ncrs-icon>
+      <button class="editor-control" id="fullscreenSwitch" @click=${this.toggleFullscreen}>
+        <ncrs-icon title="[F] Switch to Fullscreen." icon="fullscreen" color="var(--editor-control-icon-color)" class="minimized"></ncrs-icon>
+        <ncrs-icon title="[F] Minimize." icon="minimize" color="var(--editor-control-icon-color)" class="fullscreen"></ncrs-icon>
       </button>
     `
   }
@@ -627,6 +628,16 @@ class UI extends LitElement {
     // gallery.url = "http://127.0.0.1:3000/gallery/skins"
 
     // modal.appendChild(gallery);
+
+    return modal;
+  }
+
+  _setupSettingsModal() {
+    const modal = new Modal();
+    modal.id = "settingsModal";
+    const settings = new SettingsMenu(this);
+
+    modal.appendChild(settings);
 
     return modal;
   }
