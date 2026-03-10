@@ -54,8 +54,7 @@ function checkKeybinds(event) {
     if (event.shiftKey) {
       key+='+';
     }
-    key+=event.key;
-    console.log(key);
+    key+=event.key.toLowerCase();
 
     if (key in KEYBINDS) {
       return KEYBINDS[key];
@@ -72,6 +71,9 @@ function setupKeybinds(ui, editor) {
 
     if (isKeybindIgnored(element)) { return; }
 
+    if (checkKeybinds(event)) {
+      event.preventDefault();
+    }
     switch(checkKeybinds(event)) {
       case "pen":
         if (editor.currentTool.properties.id === "pen") {
