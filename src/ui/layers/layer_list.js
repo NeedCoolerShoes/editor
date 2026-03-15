@@ -11,7 +11,7 @@ class LayerList extends LitElement {
     :host {
       display: block;
       width: 5rem;
-      background-color: #13131599;
+      background-color: #131315dd;
       backdrop-filter: blur(3px);
       -webkit-backdrop-filter: blur(3px);
       border-left: 1px solid #1f2025;
@@ -22,7 +22,6 @@ class LayerList extends LitElement {
     @-moz-document url-prefix() {
       :host {
         backdrop-filter: none;
-        background-color: #131315dd;
       }
     }
 

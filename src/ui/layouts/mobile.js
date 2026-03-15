@@ -321,7 +321,7 @@ const STYLES = css`
   #layers .button {
     padding: 0.25rem;
     padding-bottom: 0px;
-    background-color: #13131599;
+    background-color: #131315dd;
     border-left: 1px solid #1f2025;
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
@@ -330,7 +330,6 @@ const STYLES = css`
   @-moz-document url-prefix() {
     #layers .button {
       backdrop-filter: none;
-      background-color: #131315dd;
     }
   }
 
@@ -390,7 +389,7 @@ const STYLES = css`
     width: 100%;
     padding: 0rem 0.5rem;
     box-sizing: border-box;
-    background-color: #1f2025dd;
+    background-color: #1f2025f4;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     z-index: 1;
@@ -405,7 +404,6 @@ const STYLES = css`
 
   @-moz-document url-prefix() {
     #tool-config {
-      background-color: #1f2025f4;
       backdrop-filter: none;
     }
   }
