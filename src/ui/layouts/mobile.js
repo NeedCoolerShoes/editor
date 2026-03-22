@@ -708,8 +708,8 @@ class NCRSUIMobileLayout extends BaseLayout {
   }
 
   _historyButtons() {
-    const undoDisabled = !this.editor.history.canUndo();
-    const redoDisabled = !this.editor.history.canRedo();
+    const undoDisabled = !this.editor.canUndoHistory();
+    const redoDisabled = !this.editor.canRedoHistory();
 
     return html`
       <div id="history">
@@ -742,11 +742,11 @@ class NCRSUIMobileLayout extends BaseLayout {
   }
 
   _undo() {
-    this.editor.history.undo();
+    this.editor.undoHistory();
   }
 
   _redo() {
-    this.editor.history.redo();
+    this.editor.redoHistory();
   }
 
   _setupEvents() {

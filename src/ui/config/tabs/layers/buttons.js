@@ -88,7 +88,7 @@ class LayersTabButtons extends LitElement {
     const canvas = layer.swapBodyOverlayTexture("classic");
     const texture = new THREE.Texture(canvas, IMAGE_WIDTH, IMAGE_HEIGHT);
 
-    this.editor.history.add(
+    this.editor.addHistory(
       new UpdateLayerTextureEntry(layers, layer, texture)
     );
   }
@@ -99,7 +99,7 @@ class LayersTabButtons extends LitElement {
     const canvas = layer.swapFrontBackTexture(this.editor.project.get("variant", "classic"));
     const texture = new THREE.Texture(canvas, IMAGE_WIDTH, IMAGE_HEIGHT);
 
-    this.editor.history.add(
+    this.editor.addHistory(
       new UpdateLayerTextureEntry(layers, layer, texture)
     );
   }
@@ -110,7 +110,7 @@ class LayersTabButtons extends LitElement {
     const canvas = layer.swapLeftRightTexture(this.editor.project.get("variant", "classic"));
     const texture = new THREE.Texture(canvas, IMAGE_WIDTH, IMAGE_HEIGHT);
 
-    this.editor.history.add(
+    this.editor.addHistory(
       new UpdateLayerTextureEntry(layers, layer, texture)
     );
   }
@@ -121,7 +121,7 @@ class LayersTabButtons extends LitElement {
     const canvas = layer.clearBase(this.editor.project.get("variant", "classic"));
     const texture = new THREE.Texture(canvas, IMAGE_WIDTH, IMAGE_HEIGHT);
 
-    this.editor.history.add(
+    this.editor.addHistory(
       new UpdateLayerTextureEntry(layers, layer, texture)
     );
   }
@@ -132,7 +132,7 @@ class LayersTabButtons extends LitElement {
     const canvas = layer.clearOverlay(this.editor.project.get("variant", "classic"));
     const texture = new THREE.Texture(canvas, IMAGE_WIDTH, IMAGE_HEIGHT);
 
-    this.editor.history.add(
+    this.editor.addHistory(
       new UpdateLayerTextureEntry(layers, layer, texture)
     );
   }
@@ -143,7 +143,7 @@ class LayersTabButtons extends LitElement {
     const canvas = layer.flattenOverlay(this.editor.project.get("variant", "classic"));
     const texture = new THREE.Texture(canvas, IMAGE_WIDTH, IMAGE_HEIGHT);
 
-    this.editor.history.add(
+    this.editor.addHistory(
       new UpdateLayerTextureEntry(layers, layer, texture)
     );
   }

@@ -107,10 +107,10 @@ function setupKeybinds(ui, editor) {
         editor.config.set("pick-color", !editor.config.get("pick-color", false));
         break;
       case "undo":
-        editor.history.undo();
+        editor.undoHistory();
         break;
       case "redo":
-        editor.history.redo();
+        editor.redoHistory();
         break;
       case "reset":
         const check = confirm("Do you want to reset all editor data? You will lose all progress on your current skin.");

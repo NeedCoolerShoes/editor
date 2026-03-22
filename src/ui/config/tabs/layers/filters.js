@@ -241,7 +241,7 @@ class LayersTabFilters extends LitElement {
     }
 
     this.requestUpdate();
-    this.editor.history.add(new UpdateLayerFiltersEntry(this.editor.layers, layer, [], false));
+    this.editor.addHistory(new UpdateLayerFiltersEntry(this.editor.layers, layer, [], false));
   }
 
   _mergeFilters() {
@@ -251,7 +251,7 @@ class LayersTabFilters extends LitElement {
     }
 
     this.requestUpdate();
-    this.editor.history.add(new MergeFiltersEntry(this.editor.layers, layer));
+    this.editor.addHistory(new MergeFiltersEntry(this.editor.layers, layer));
   }
 
   _syncFilters() {
@@ -267,7 +267,7 @@ class LayersTabFilters extends LitElement {
     });
 
     this.requestUpdate();
-    this.editor.history.add(new UpdateLayerFiltersEntry(this.editor.layers, layer, newFilters));
+    this.editor.addHistory(new UpdateLayerFiltersEntry(this.editor.layers, layer, newFilters));
   }
 
   _copyFilters() {
@@ -286,7 +286,7 @@ class LayersTabFilters extends LitElement {
     if (this.clipboardFilters == layer.compositor.getFilters()) { return; }
 
     this.requestUpdate();
-    this.editor.history.add(new UpdateLayerFiltersEntry(this.editor.layers, layer, this.clipboardFilters, false));
+    this.editor.addHistory(new UpdateLayerFiltersEntry(this.editor.layers, layer, this.clipboardFilters, false));
   }
 
   _setupSliders() {

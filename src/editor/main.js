@@ -28,7 +28,7 @@ import ReplaceLayerMetadataEntry from "./history/entries/replace_layer_metadata_
 import UpdateLayerAttributionEntry from "./history/entries/update_layer_attribution_entry.js";
 import PersistLayerChangesEntry from "./history/entries/persist_layers_entry.js";
 import MoveTool from "./tools/toolset/move_tool.js";
-import { genUUID, nonPolyfilledCtx } from "../helpers.js";
+import { nonPolyfilledCtx } from "../helpers.js";
 import ProjectLoader from "./format/project_loader.js";
 import ProjectData from "./format/project_data.js";
 
@@ -183,7 +183,7 @@ class Editor extends LitElement {
     this.currentTool.up();
     const layer = this.layers.getSelectedLayer();
 
-    this.history.add(new UpdateLayerTextureEntry(this.layers, layer, layer.texture));
+    this.addHistory(new UpdateLayerTextureEntry(this.layers, layer, layer.texture));
 
     this.dispatchEvent(new CustomEvent("tool-up"));
   }
@@ -301,7 +301,7 @@ class Editor extends LitElement {
   }
 
   selectLayer(layer) {
-    this.history.add(
+    this.addHistory(
       new SelectLayerEntry(this.layers, {layer})
     )
   }
@@ -309,7 +309,7 @@ class Editor extends LitElement {
   addLayer(optionalLayer = undefined, setMetadata = {}) {
     const layer = optionalLayer || this.layers.createBlank();
 
-    this.history.add(
+    this.addHistory(
       new GroupedEntry(
         new AddLayerEntry(this.layers, {layer}),
         new ReplaceLayerMetadataEntry(layer, setMetadata),
@@ -329,7 +329,7 @@ class Editor extends LitElement {
 
     if (currentLayer.isBlank()) {
       if (setMetadata) {
-        this.history.add(
+        this.addHistory(
           new GroupedEntry(
             new UpdateLayerTextureEntry(this.layers, currentLayer, texture),
             new ReplaceLayerMetadataEntry(currentLayer, setMetadata),
@@ -337,7 +337,7 @@ class Editor extends LitElement {
           )
         );
       } else {
-        this.history.add(
+        this.addHistory(
           new GroupedEntry(
             new UpdateLayerTextureEntry(this.layers, currentLayer, texture),
             new UpdateLayerAttributionEntry(currentLayer),
@@ -420,11 +420,11 @@ class Editor extends LitElement {
       );
     }
 
-    this.history.add(entry);
+    this.addHistory(entry);
   }
 
   cloneLayer() {
-    this.history.add(
+    this.addHistory(
       new CloneLayerEntry(this.layers, this.layers.getSelectedLayer())
     );
   }
@@ -436,7 +436,7 @@ class Editor extends LitElement {
     const source = layers.getSelectedLayer();
     const target = layers.getLayerAtIndex(layers.selectedLayerIndex - 1);
 
-    this.history.add(
+    this.addHistory(
       new MergeLayersEntry(this.layers, target, source)
     );
   }
@@ -444,7 +444,7 @@ class Editor extends LitElement {
   reorderLayers(fromIndex, toIndex) {
     if (fromIndex === toIndex) { return; }
     
-    this.history.add(
+    this.addHistory(
       new ReorderLayersEntry(this.layers, fromIndex, toIndex)
     );
   }
@@ -516,6 +516,26 @@ class Editor extends LitElement {
     this.camera.position.set(0, 0, 3);
     this.baseGroup.rotation.set(0, 0, 0);
     this.zoom(0.45);
+  }
+
+  addHistory(entry) {
+    return this.history.add(entry);
+  }
+
+  undoHistory() {
+    return this.history.undo();
+  }
+
+  redoHistory() {
+    return this.history.redo();
+  }
+
+  canUndoHistory() {
+    return this.history.canUndo();
+  }
+
+  canRedoHistory() {
+    return this.history.canRedo();
   }
 
   _upgradeFormat() {
