@@ -28,6 +28,7 @@ class Config extends EventTarget {
     if (this.#config[key] === value && !force) {
       return value;
     }
+    console.log(key, value);
 
     this.#config[key] = value;
     this.dispatchEvent(new CustomEvent(`${key}-change`, { detail: value }));
@@ -38,6 +39,58 @@ class Config extends EventTarget {
 
   reset() {
     this._loadValues(this.#valueMap, false);
+  }
+
+  serialize() {
+    const output = {};
+
+    Object.keys(this.#config).forEach(key => {
+      output[key] = this.serializeValue(key);
+    });
+
+    return output;
+  }
+
+  deserialize(values) {
+    Object.entries(values).forEach(([key, value]) => {
+      this.set(key, this.deserializeValue(key, value), true);
+    });
+  }
+
+  serializeValue(key) {
+    const config = this.#valueMap[key];
+
+    if (typeof config === "object") {
+      const persistence = config.persistence;
+
+      if (typeof persistence !== "object") {
+        return this.get(key);
+      }
+
+      if (typeof persistence.save === "function") {
+        return persistence.save(this.get(key));
+      }
+    }
+
+    return this.get(key);
+  }
+
+  deserializeValue(key, value) {
+    const config = this.#valueMap[key];
+
+    if (typeof config === "object") {
+      const persistence = config.persistence || {};
+
+      if (typeof persistence !== "object") {
+        return value;
+      }
+
+      if (typeof persistence.load === "function") {
+        return persistence.load(value);
+      }
+    }
+
+    return value;
   }
 
   _loadValues(valueMap, loadPersistent = true) {

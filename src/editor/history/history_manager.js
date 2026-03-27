@@ -66,6 +66,13 @@ class HistoryManager extends EventTarget {
     this._emitUpdateEvent();
   }
 
+  load(undoStack, redoStack) {
+    this.undoStack = undoStack;
+    this.redoStack = redoStack;
+
+    this._emitUpdateEvent();
+  }
+
   _emitUpdateEvent() {
     this.dispatchEvent(new CustomEvent("update"));
   }

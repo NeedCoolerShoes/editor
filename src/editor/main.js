@@ -7,7 +7,7 @@ import { Renderer } from "./renderer.js";
 import { HistoryManager } from "./history/history_manager.js";
 import { IMAGE_HEIGHT, IMAGE_WIDTH } from "../constants.js";
 import AddLayerEntry from "./history/entries/add_layer_entry.js";
-import ToolConfig from "./tools/tool_config.js";
+import ToolConfig from "./config/tool_config.js";
 import UpdateLayerTextureEntry from "./history/entries/update_layer_texture_entry.js";
 import ToolData from "./tools/tool_data.js";
 import PenTool from "./tools/toolset/pen_tool.js";
@@ -21,7 +21,6 @@ import DeleteLayerEntry from "./history/entries/delete_layer_entry.js";
 import ReorderLayersEntry from "./history/entries/reorder_layers_entry.js";
 import MergeLayersEntry from "./history/entries/merge_layers_entry.js";
 import CloneLayerEntry from "./history/entries/clone_layer_entry.js";
-import Config from "./config.js";
 
 import imgFacingIndicator from "../../assets/images/facing-indicator.svg";
 import ReplaceLayerMetadataEntry from "./history/entries/replace_layer_metadata_entry.js";
@@ -31,32 +30,10 @@ import MoveTool from "./tools/toolset/move_tool.js";
 import { nonPolyfilledCtx } from "../helpers.js";
 import ProjectLoader from "./format/project_loader.js";
 import ProjectData from "./format/project_data.js";
+import EditorConfig from "./config/editor_config.js";
+import ProjectManager from "./project/project_manager.js";
 
 const FORMAT = ProjectLoader.version.format;
-
-const CONFIG_VALUES = {
-  variant: {default: "classic", persistence: true},
-  selectedTool: {persistence: true},
-  partVisibility: {
-    default: {
-      head: true,
-      arm_left: true,
-      torso: true,
-      arm_right: true,
-      leg_left: true,
-      leg_right: true,
-      ear_left: true,
-      ear_right: true
-    },
-    persistence: true
-  },
-  baseVisible: {default: true, persistence: true},
-  overlayVisible: {default: false, persistence: true},
-  baseGridVisible: {default: true, persistence: true},
-  overlayGridVisible: {default: true, persistence: true},
-  cullBackFace: {default: true, persistence: true},
-  cullGrid: {default: true, persistence: true},
-}
 
 class Editor extends LitElement {
   static styles = css`
@@ -74,7 +51,8 @@ class Editor extends LitElement {
     this.mobile = mobile;
 
     this.project = new ProjectData();
-    this.config = new Config("ncrs-editor-config", CONFIG_VALUES);
+    this.config = new EditorConfig();
+    this.toolConfig = new ToolConfig();
 
     this._upgradeFormat();
 
@@ -84,9 +62,11 @@ class Editor extends LitElement {
     this.controls = new Controls(this);
     this.layers = new Layers(IMAGE_WIDTH, IMAGE_HEIGHT);
     this.history = new HistoryManager();
-    this.toolConfig = new ToolConfig();
     this.tools = this._setupTools();
     this.currentTool = this.tools[this.mobile ? 1 : 0];
+    this.projectManager = new ProjectManager(this);
+    window.editor = this;
+    window.projectManager = this.projectManager;
 
     this._loadSkin().then(() => {
       this._setupMesh(this.layers.texture);

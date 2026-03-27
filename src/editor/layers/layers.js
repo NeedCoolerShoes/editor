@@ -102,6 +102,21 @@ class Layers extends EventTarget {
     return output;
   }
 
+  deserializeLayers(serializedLayers) {
+    this.layers = [];
+
+    if (serializedLayers.length > 0) {
+      serializedLayers.forEach(layer => {
+        this.deserializeLayer(layer).then(newLayer => {
+          this.addLayer(newLayer);
+        })
+      });
+    } else {
+      this.addBlankLayer();
+      this.selectLayer(0);
+    }
+  }
+
   layerIndex(layer) {
     return this.layers.findIndex((element) => {
       return layer.id == element.id;

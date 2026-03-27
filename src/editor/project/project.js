@@ -1,9 +1,19 @@
-import { IMAGE_HEIGHT, IMAGE_WIDTH } from "../../constants";
 import { genUUID } from "../../helpers";
-import { HistoryManager } from "../history/history_manager";
-import { Layers } from "../layers/layers";
 
 class Project {
+  static createFromEditor(editor) {
+    const project = new Project();
+    const projectData = editor.project.get("project");
+
+    project.id = projectData.id;
+    project.createdAt = projectData.createdAt;
+    project.modifiedAt = projectData.modifiedAt;
+
+    project.saveFromEditor(editor);
+
+    return project;
+  }
+
   constructor() {
     const time = Math.floor(Date.now() / 1000);
 
@@ -11,15 +21,30 @@ class Project {
     this.createdAt = time;
     this.modifiedAt = time;
 
-    this.history = new HistoryManager();
-    this.layers = new Layers(IMAGE_WIDTH, IMAGE_HEIGHT);
+    this.undoHistory = [];
+    this.redoHistory = [];
+
+    this.layers = [];
+    this.config = {};
+    this.toolConfig = {};
+    this.projectData = {};
   }
 
-  serialize() {
-    return {
-      project: {id: this.id, createdAt: this.createdAt, modifiedAt: this.modifiedAt},
-      layers: this.layers.serializeLayers(),
-    }
+  saveFromEditor(editor) {
+    this.undoHistory = editor.history.undoStack;
+    this.redoHistory = editor.history.redoStack;
+
+    this.layers = editor.layers.serializeLayers();
+    this.config = editor.config.serialize();
+    this.toolConfig = editor.toolConfig.serialize();
+    this.projectData = editor.project.serialize();
+  }
+
+  loadToEditor(editor) {
+    editor.layers.deserializeLayers(this.layers);
+    editor.config.deserialize(this.config);
+    editor.toolConfig.deserialize(this.toolConfig);
+    editor.project.deserialize(this.projectData);
   }
 }
 
