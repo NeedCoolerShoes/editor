@@ -31,7 +31,7 @@ import { nonPolyfilledCtx } from "../helpers.js";
 import ProjectLoader from "./format/project_loader.js";
 import ProjectData from "./format/project_data.js";
 import EditorConfig from "./config/editor_config.js";
-import ProjectManager from "./project/project_manager.js";
+import { ProjectManager } from "./project/project_manager.js";
 
 const FORMAT = ProjectLoader.version.format;
 

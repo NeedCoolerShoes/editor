@@ -1,5 +1,7 @@
 import Project from "./project";
 
+const PROJECT_FORMAT = 1;
+
 class ProjectManager {
   constructor(editor) {
     this.editor = editor;
@@ -35,4 +37,4 @@ class ProjectManager {
   }
 }
 
-export default ProjectManager;
+export {ProjectManager, PROJECT_FORMAT};
