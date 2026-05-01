@@ -259,11 +259,21 @@ class UI extends LitElement {
     return html`
       <ncrs-modal id="color-check-modal">
         <div id="color-check">
-          <h2>Color Inaccuracies Detected</h2>
+          <h2>🚨 Color Inaccuracies Detected 🚨</h2>
           <p>We have detected that your browser may have issues with color accuracy.</p>
-          <p>You may notice subtle visual noise and incorrect colors appear in your skins.</p>
-          <p>This issue is usually caused by anti-fingerprinting privacy settings in your browser.</p>
+          <p>
+            To protect against fingerprinting, browsers can sometimes add visual noise to the canvas.
+            This method is known as <a href="https://brave.com/privacy-updates/4-fingerprinting-defenses-2.0/#what-is-farbling">farbling</a>.
+            This is not ideal for a pixel art editor.
+          </p>
+          <p>
+            If small amounts of noise / randomly coloured pixels in your skin is an issue, follow our guide below to fix the issue.
+          </p>
           <a href="https://wiki.needcoolershoes.com/troubleshooting/inaccurate_colors/" target="_blank">Learn how to fix</a>
+          <p>
+            Please note that we do not perform any fingerprinting on our site.
+          </p>
+          <a href="https://needcoolershoes.com/privacy">Our privacy policy</a>
           <div>
             <ncrs-button @click=${this._closeColorModal}>Close</ncrs-button>
             <ncrs-button @click=${this._ignoreColorModal}>Do Not Show Again</ncrs-button>
