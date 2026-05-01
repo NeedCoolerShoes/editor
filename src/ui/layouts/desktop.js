@@ -4,9 +4,9 @@ import { css, html, unsafeCSS } from "lit";
 import Toolbar from "../tools/toolbar.js";
 import LayerList from "../layers/layer_list.js";
 import Config from "../config/main.js";
-import WarningManager from "../misc/warnings.js";
 
 import imgGridDark from "../../../assets/images/grid-editor-dark.png";
+import ProjectTabBar from "../projects/project_tab_bar.js";
 
 class NCRSUIDesktopLayout extends BaseLayout {
   static styles = css`
@@ -16,12 +16,21 @@ class NCRSUIDesktopLayout extends BaseLayout {
       --ncrs-color-picker-height: 15rem;
     }
 
+    #outer {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
     #main {
       display: flex;
       width: 100%;
       height: 100%;
       position: relative;
     }
+
 
     ncrs-warning-manager {
       position: absolute;
@@ -149,6 +158,7 @@ class NCRSUIDesktopLayout extends BaseLayout {
     this.toolbar = new Toolbar(this.ui);
     this.layers = new LayerList(this.ui);
     this.config = new Config(this.ui);
+    this.projectTabBar = new ProjectTabBar(this.ui.editor);
 
     this._setupEvents();
   }
@@ -159,18 +169,21 @@ class NCRSUIDesktopLayout extends BaseLayout {
 
   render() {
     return html`
-      <div id="main">
-        ${this.config}
-        ${this.toolbar}
-        <div id="editor">
-          ${this.editor}
-          ${this.warningManager}
-          ${this._bgToggle()}
-          ${this._fullscreenToggle()}
-        </div>
-        <div id="layers">
-          ${this._historyButtons()}
-          ${this.layers}
+      <div id="outer">        
+        ${this.projectTabBar}
+        <div id="main">
+          ${this.config}
+          ${this.toolbar}
+          <div id="editor">
+            ${this.editor}
+            ${this.warningManager}
+            ${this._bgToggle()}
+            ${this._fullscreenToggle()}
+          </div>
+          <div id="layers">
+            ${this._historyButtons()}
+            ${this.layers}
+          </div>
         </div>
       </div>
     `;

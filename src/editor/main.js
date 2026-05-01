@@ -68,10 +68,12 @@ class Editor extends LitElement {
     window.editor = this;
     window.projectManager = this.projectManager;
 
-    this._loadSkin().then(() => {
-      this._setupMesh(this.layers.texture);
-      this._startRender();
-    });
+    this._loadDefaultSkin();
+    this._setupMesh(this.layers.texture);
+    this._startRender();
+
+    // this._loadSkin().then(() => {
+    // });
     
     this._setupResizeObserver();
     this._setupEvents();

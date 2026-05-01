@@ -1,9 +1,6 @@
 import { get, set } from "idb-keyval";
-import { PROJECT_FORMAT } from "./project_manager";
-
-function projectKey(id) {
-  return `ncrs:project/${id}`;
-}
+import { PROJECT_FORMAT, projectKey } from "./project_manager";
+import { genUUID } from "../../helpers";
 
 class Project {
   static createFromEditor(editor) {
@@ -29,7 +26,13 @@ class Project {
   static async loadFromStore(id) {
     const data = await get(projectKey(id));
 
+    if (!data) return;
+
     return this.deserialize(id, data);
+  }
+
+  static createBlank() {
+    return new Project(genUUID());
   }
 
   constructor(id) {
@@ -54,7 +57,7 @@ class Project {
     this.projectData = editor.project.serialize();
   }
 
-  loadToEditor(editor) {
+  async loadToEditor(editor) {
     editor.layers.deserializeLayers(this.layers);
     editor.config.deserialize(this.config);
     editor.toolConfig.deserialize(this.toolConfig);
@@ -69,10 +72,6 @@ class Project {
       toolConfig: this.toolConfig,
       projectData: this.projectData,
     }
-  }
-
-  async writeToStore() {
-    await set(projectKey(this.id), this.serialize());
   }
 }
 
