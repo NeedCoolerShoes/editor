@@ -2,7 +2,7 @@ import { del } from "idb-keyval";
 import { getFocusedElement, isKeybindIgnored } from "../helpers";
 import PersistenceManager from "../persistence";
 
-// All keybind definitions, ^ = ctrl, + = shift, ! = alt
+// All keybind definitions, ^ = ctrl / cmd, + = shift, ! = alt
 const KEYBINDS = {
   "b": "pen",
   "e": "eraser",
@@ -11,6 +11,7 @@ const KEYBINDS = {
   "i": "eyedropper",
   "+s": "sculpt",
   "^z": "undo",
+  "#z": "undo",
   "^y": "redo",
   "^+z": "redo",
   "^r": "reset",
@@ -44,7 +45,7 @@ const KEYBINDS = {
 
 function checkKeybinds(event) {
     let key = '';
-    if (event.ctrlKey) {
+    if (event.ctrlKey || event.metaKey) {
       key+='^';
     }
     if (event.altKey) {
@@ -70,6 +71,9 @@ function setupKeybinds(ui, editor) {
 
     if (isKeybindIgnored(element)) { return; }
 
+    if (checkKeybinds(event)) {
+      event.preventDefault();
+    }
     switch(checkKeybinds(event)) {
       case "pen":
         if (editor.currentTool.properties.id === "pen") {
