@@ -97,6 +97,11 @@ class MinecraftImport extends LitElement {
     fetch(url).then(res => {
       res.blob().then(blob => {
         const uuid = res.headers.get("X-NeedCoolerShoes-UUID");
+        const model = res.headers.get("X-NeedCoolerShoes-Model");
+
+        if (model !== this.editor.project.get("variant") && this.editor.layers.isBlank()) {
+          this.editor.setVariant(model);
+        }
 
         if (blob.type === "image/png") {
           this.editor.addLayerFromFile(blob, {attribution: `minecraft:java/${uuid}\n${username}`});
