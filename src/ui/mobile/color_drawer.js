@@ -24,8 +24,9 @@ const COLOR_DRAWER_STYLES = css`
   ncrs-color-picker {
     display: block;
     width: 100%;
-    height: 17rem;
+    height: 19rem;
     box-sizing: border-box;
+    overscroll-behavior: none;
   }
 
   #color-picker-tab {
@@ -41,7 +42,7 @@ const COLOR_DRAWER_STYLES = css`
   }
 
   ncrs-color-picker::part(slider) {
-    height: 1.25rem;
+    height: 1.5rem;
   }
 
   #palettes {

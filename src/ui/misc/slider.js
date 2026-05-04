@@ -1,7 +1,7 @@
 import { LitElement, css, html } from "lit";
 import { clamp } from "../../helpers.js";
 
-const SLIDER_SLOWDOWN_START = 10;
+const SLIDER_SLOWDOWN_START = 15;
 
 class Slider extends LitElement {
   static properties = {
@@ -42,6 +42,7 @@ class Slider extends LitElement {
       cursor: pointer;
       width: 100%;
       height: 100%;
+      user-select: none;
     }
 
     #cursor {
@@ -86,17 +87,22 @@ class Slider extends LitElement {
     const scope = this;
 
     const pointerMove = function (event) {
+      event.stopImmediatePropagation();
       scope.onMove(event);
     };
 
     const pointerUp = () => {
       document.removeEventListener("pointermove", pointerMove);
       document.removeEventListener("pointerup", pointerUp);
+
+      this.dispatchEvent(new CustomEvent("slide-end"));
     };
 
     this._onPointerDown = () => {
       document.addEventListener("pointermove", pointerMove);
       document.addEventListener("pointerup", pointerUp);
+
+      this.dispatchEvent(new CustomEvent("slide-start"));
     };
 
     this._setupResizeObserver();
@@ -115,9 +121,13 @@ class Slider extends LitElement {
   render() {
     this.input.value = this.getFilterValue();
 
+    function preventTouch(event) {
+      event.preventDefault();
+    }
+
     return html`
       <div id="slider" part="slider">
-        <button @pointerdown=${this.onClick} @keydown=${this.onKeyDown} @wheel=${this.onWheel} id="background"></button>
+        <button @touchmove=${preventTouch} @pointerdown=${this.onClick} @keydown=${this.onKeyDown} @wheel=${this.onWheel} id="background"></button>
         <div id="cursor" part="cursor" style="left: ${this._getPos() - 2}px;"></div>
       </div>
       ${this.input}
@@ -137,8 +147,9 @@ class Slider extends LitElement {
   }
 
   onClick(event) {
-    if (event.button != 0) { return; }
-
+    if (event.pointerType == "mouse" &&  event.button != 0) { return; }
+    
+    this.shadowRoot.getElementById("background").focus();
     this.setProgress(event.layerX / this._clientWidth());
     this._onPointerDown();
   }
@@ -150,12 +161,12 @@ class Slider extends LitElement {
 
     let difference = ((event.clientX - rect.x) / this._clientWidth()) - this.progress;
 
-    if (distance > SLIDER_SLOWDOWN_START) {
-      const x = distance - SLIDER_SLOWDOWN_START;
-      const y = Math.pow((x / 15) + 1, -3);
+    // if (distance > SLIDER_SLOWDOWN_START) {
+      // const x = distance - SLIDER_SLOWDOWN_START;
+      // const y = Math.pow((x / 15) + 1, -3);
 
-      difference *= y;
-    }
+      // difference /= 10;
+    // }
 
     this.setProgress(this.progress + difference);
   }

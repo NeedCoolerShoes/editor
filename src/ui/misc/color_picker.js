@@ -507,6 +507,8 @@ class ColorPickerRegion extends LitElement {
       event.stopPropagation();
     };
 
+    this.addEventListener("touchmove", e => e.preventDefault());
+
     this._setupResizeObserver();
   }
   _clientWidth = this.clientWidth;

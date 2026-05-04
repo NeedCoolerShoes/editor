@@ -229,7 +229,7 @@ const STYLES = css`
   ncrs-mobile-drawer {
     --base-opacity: 0.25;
     --base-blur: 1px;
-    --drawer-height: 23rem;
+    --drawer-height: 25rem;
   }
   
   ncrs-tools-part-toggles {
