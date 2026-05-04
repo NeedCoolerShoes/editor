@@ -504,6 +504,9 @@ class ColorPickerRegion extends LitElement {
     this._onPointerDown = event => {
       document.addEventListener("pointermove", pointerMove);
       document.addEventListener("pointerup", pointerUp);
+
+      this.shadowRoot.getElementById("background").focus();
+
       event.stopPropagation();
     };
 
@@ -518,7 +521,7 @@ class ColorPickerRegion extends LitElement {
     const pos = this._getPos();
 
     return html`
-      <button @pointerdown=${this.onClick} @keydown=${this.onKeyDown} id="background"></button>
+      <button id="background" @pointerdown=${this.onClick} @keydown=${this.onKeyDown} id="background"></button>
       <div id="cursor" part="cursor" style="left: ${pos.x - 4}px; top: ${pos.y - 4}px;"></div>
     `;
   }
