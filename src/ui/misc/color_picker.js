@@ -510,8 +510,6 @@ class ColorPickerRegion extends LitElement {
       event.stopPropagation();
     };
 
-    this.addEventListener("touchmove", e => e.preventDefault());
-
     this._setupResizeObserver();
   }
   _clientWidth = this.clientWidth;
@@ -520,8 +518,12 @@ class ColorPickerRegion extends LitElement {
   render() {
     const pos = this._getPos();
 
+    function preventTouch(event) {
+      event.preventDefault();
+    }
+
     return html`
-      <button id="background" @pointerdown=${this.onClick} @keydown=${this.onKeyDown} id="background"></button>
+      <button id="background" @touchmove=${preventTouch} @pointerdown=${this.onClick} @keydown=${this.onKeyDown} id="background"></button>
       <div id="cursor" part="cursor" style="left: ${pos.x - 4}px; top: ${pos.y - 4}px;"></div>
     `;
   }

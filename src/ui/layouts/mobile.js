@@ -540,6 +540,10 @@ class NCRSUIMobileLayout extends BaseLayout {
   render() {
     const eyedropper = this.editor.config.get("pick-color", false);
 
+    function preventTouch(event) {
+      event.preventDefault();
+    }
+
     return html`
       <div id="main">
         <div id="top">
@@ -586,11 +590,11 @@ class NCRSUIMobileLayout extends BaseLayout {
               ${this.toolSet}
             </div>
             <div class="container">
-              <button id="config-button" class="side-button" @click=${this._showConfigDrawer} title="Open config drawer">
+              <button id="config-button" class="side-button" @touchmove=${preventTouch} @click=${this._showConfigDrawer} title="Open config drawer">
                 <ncrs-icon icon="menu" color="var(--icon-color)"></ncrs-icon>
               </button>
               <div id="color-button-rainbow">
-                <button id="color-button" @click=${this._showColorDrawer} title="Open color drawer"></button>
+                <button id="color-button" @touchmove=${preventTouch} @click=${this._showColorDrawer} title="Open color drawer"></button>
               </div>
               <ncrs-toggle ?toggled=${eyedropper} @click=${this._toggleEyedropper} class="side-button side-right">
                 <ncrs-icon slot="off" icon="eyedropper" color="var(--icon-color)"></ncrs-icon>
