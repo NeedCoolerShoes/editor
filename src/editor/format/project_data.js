@@ -1,5 +1,6 @@
 import { genUUID } from "../../helpers";
 import Config from "../config";
+import { ProjectManager } from "../project/project_manager";
 import ProjectLoader from "./project_loader";
 
 const FORMAT = ProjectLoader.version.format;
@@ -10,11 +11,21 @@ class ProjectData extends Config {
 
     return {
       format: {default: FORMAT, persistence: true},
-      project: {default: {id: genUUID(), createdAt: time, modifiedAt: time}, persistence: true},
+      project: {default: {id: genUUID(), name: "Project 1", createdAt: time, modifiedAt: time}, persistence: true},
       variant: {default: "classic", persistence: true},
       layers: {default: [], persistence: true},
     }
   }
+
+  static blank() {
+    const output = {};
+
+    Object.entries(this.getDefaults()).forEach(([key, value]) => {
+      output[key] = value.default;
+    });
+
+    return output;
+  } 
 
   constructor() {
     super("ncrs-editor", ProjectData.getDefaults());

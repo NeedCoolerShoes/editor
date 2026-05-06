@@ -1,4 +1,4 @@
-import { del } from "idb-keyval";
+import { clear, del } from "idb-keyval";
 import { getFocusedElement, isKeybindIgnored } from "../helpers";
 import PersistenceManager from "../persistence";
 
@@ -117,7 +117,7 @@ function setupKeybinds(ui, editor) {
 
         if (check) {
           PersistenceManager.resetAll();
-          del("ncrs:reference-images");
+          clear();
           location.reload();
         }
         

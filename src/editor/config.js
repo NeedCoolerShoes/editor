@@ -13,11 +13,19 @@ class Config extends EventTarget {
   }
   #config = {};
   #valueMap = {};
+
+  _config() {
+    return this.#config;
+  }
   
   persistence;
 
+  has(key) {
+    return this.#config[key] !== undefined;
+  }
+
   get(key, fallback = undefined) {
-    if (this.#config[key] !== undefined) {
+    if (this.has(key)) {
       return this.#config[key];
     }
     
@@ -28,8 +36,6 @@ class Config extends EventTarget {
     if (this.#config[key] === value && !force) {
       return value;
     }
-    console.log(key, value);
-
     this.#config[key] = value;
     this.dispatchEvent(new CustomEvent(`${key}-change`, { detail: value }));
     this._savePersistent(key, value, this.#valueMap[key]?.persistence);

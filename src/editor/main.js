@@ -32,6 +32,7 @@ import ProjectLoader from "./format/project_loader.js";
 import ProjectData from "./format/project_data.js";
 import EditorConfig from "./config/editor_config.js";
 import { ProjectManager } from "./project/project_manager.js";
+import Project from "./project/project.js";
 
 const FORMAT = ProjectLoader.version.format;
 
@@ -65,15 +66,13 @@ class Editor extends LitElement {
     this.tools = this._setupTools();
     this.currentTool = this.tools[this.mobile ? 1 : 0];
     this.projectManager = new ProjectManager(this);
+
     window.editor = this;
     window.projectManager = this.projectManager;
 
-    this._loadDefaultSkin();
+    this._loadSkin();
     this._setupMesh(this.layers.texture);
     this._startRender();
-
-    // this._loadSkin().then(() => {
-    // });
     
     this._setupResizeObserver();
     this._setupEvents();
@@ -520,6 +519,11 @@ class Editor extends LitElement {
     return this.history.canRedo();
   }
 
+  async switchProject(uuid) {
+    await this.projectManager.syncFromEditor(this);
+    this.projectManager.switch(uuid);
+  }
+
   _upgradeFormat() {
     const format = this.project.get("format", -1);
 
@@ -590,10 +594,19 @@ class Editor extends LitElement {
   async _loadSkin() {
     const layerData = this.project.get("layers", []);
     if (layerData.length > 0) {
-      this._loadSkinFromData(layerData);
+      await this._loadSkinFromData(layerData);
     } else {
-      this._loadDefaultSkin();
-    }    
+      this._loadBlankSkin();
+    }
+
+    const projectData = this.project.get("project", {});
+    if (!projectData.name) {
+      const name = await ProjectManager.untitledName();
+      projectData.name = name;
+      this.project.set("project", projectData);
+    }
+
+    this.projectManager.syncFromEditor(this);
   }
 
   async _loadSkinFromData(layerData) {
@@ -603,7 +616,7 @@ class Editor extends LitElement {
     }
   }
 
-  _loadDefaultSkin() {
+  _loadBlankSkin() {
     this.layers.addBlankLayer();
     this.layers.selectLayer(0);
   }

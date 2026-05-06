@@ -1,4 +1,4 @@
-import { del, get } from "idb-keyval";
+import { del, get, set } from "idb-keyval";
 import Project from "./project";
 
 const PROJECT_FORMAT = 1;
@@ -12,6 +12,23 @@ function projectKey(id) {
 }
 
 class ProjectManager extends EventTarget {
+  static async list() {
+    const projects = await get("ncrs:projects");
+  
+    return projects || [];
+  }
+
+  static async count() {
+    const list = await this.list();
+    return list.length;
+  }
+
+  static async untitledName() {
+    const count = await this.count();
+
+    return `Project ${count + 1}`;
+  }
+
   constructor(editor) {
     super();
 
@@ -19,18 +36,14 @@ class ProjectManager extends EventTarget {
   }
   #projectCache = [];
 
-  async list() {
-    const projects = await get("ncrs:projects");
-
-    return projects || [];
-  }
-
   async currentUUID() {
     return await get("ncrs:projects/current");
   }
 
   async current() {
     const uuid = await this.currentUUID();
+
+    if (!uuid) return;
 
     return this.get(uuid);
   }
@@ -48,15 +61,20 @@ class ProjectManager extends EventTarget {
     return newProject;
   }
 
-  async switch(uuid) {
+  async switch(uuid, load = true) {
     const currentUUID = await this.currentUUID();
 
     if (uuid === currentUUID) return;
 
     const project = await this.get(uuid);
 
-    project.loadToEditor(this.editor);
+    if (load) {
+      project.loadToEditor(this.editor);
+    }
+
     await set("ncrs:projects/current", uuid);
+
+    this._syncProjectList();
   }
 
   async save(uuid) {
@@ -72,7 +90,8 @@ class ProjectManager extends EventTarget {
   }
 
   async new() {
-    const project = Project.createBlank();
+    const name = await ProjectManager.untitledName();
+    const project = Project.createBlank(name);
     this.#projectCache.push(project);
 
     await this._syncProjectList();
@@ -92,19 +111,41 @@ class ProjectManager extends EventTarget {
     await del(projectKey(uuid));
   }
 
+  async syncFromEditor(editor) {
+    const newProject = Project.createFromEditor(editor);
+    const idx = this.#projectCache.findIndex(project => project.id === newProject.id);
+
+    if (idx < 0) {
+      this.#projectCache.push(newProject);
+    } else {
+      this.#projectCache.splice(idx, 1, newProject);
+    }
+    await set(projectKey(newProject.id), newProject.serialize());
+
+    await this.switch(newProject.id, false);
+    this._syncProjectList();
+  }
+
   async _syncProjectList() {
-    const projects = await this.list();
+    const projects = await ProjectManager.list();
+    const current = await this.currentUUID();
 
     this.#projectCache.map(project => {
-      if (!projects.includes(project.id)) {
-        projects.push(project.id);
+      if (!projects.find(p => p.id == project.id)) {
+        projects.push({id: project.id, name: project.getName()});
+      } else {
+        const idx = projects.findIndex(p => p.id == project.id);
+
+        projects.splice(idx, 1, {id: project.id, name: project.getName()});
       }
     });
 
     await set("ncrs:projects", projects);
 
-    this.dispatchEvent(new CustomEvent("update", {detail: projects}));
+    this.dispatchEvent(new CustomEvent("update", {detail: {projects: projects, current: current}}));
   }
 }
+
+window.ProjectManager = ProjectManager;
 
 export {ProjectManager, PROJECT_FORMAT, projectKey};

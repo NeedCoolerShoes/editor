@@ -69,21 +69,30 @@ class ProjectTab extends LitElement {
     selected: {type: Boolean, reflect: true},
   }
 
-  constructor(id) {
+  constructor(id, name) {
     super();
 
     this.id = id;
+    this.name = name;
   }
 
   render() {
     return html`
       <div id="main">
-        <button id="tab-button">${this.id}</button>
+        <button @click=${this.select} id="tab-button">${this.name}</button>
         <div id="cross">
-          <button><ncrs-icon icon="cross" color="var(--icon-color)"></ncrs-icon></button>
+          <button @click=${this.delete}><ncrs-icon icon="cross" color="var(--icon-color)"></ncrs-icon></button>
         </div>
       </div>
     `;
+  }
+
+  select() {
+    this.dispatchEvent(new CustomEvent("select", {detail: {id: this.id}}));
+  }
+
+  delete() {
+    this.dispatchEvent(new CustomEvent("delete", {detail: {id: this.id}}));
   }
 }
 

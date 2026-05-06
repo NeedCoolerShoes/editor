@@ -1,11 +1,12 @@
 import { get, set } from "idb-keyval";
 import { PROJECT_FORMAT, projectKey } from "./project_manager";
 import { genUUID } from "../../helpers";
+import ProjectData from "../format/project_data";
 
 class Project {
   static createFromEditor(editor) {
     const projectData = editor.project.get("project");
-    const project = new Project(projectData.id);
+    const project = new Project(projectData.id, projectData.name);
 
     project.saveFromEditor(editor);
 
@@ -31,8 +32,11 @@ class Project {
     return this.deserialize(id, data);
   }
 
-  static createBlank() {
-    return new Project(genUUID());
+  static createBlank(name) {
+    const project = new Project(genUUID());
+    project.projectData.project.name = name;
+
+    return project;
   }
 
   constructor(id) {
@@ -44,7 +48,14 @@ class Project {
     this.layers = [];
     this.config = {};
     this.toolConfig = {};
-    this.projectData = {};
+    this.projectData = ProjectData.blank();
+    this.projectData.project.id = id;
+  }
+
+  getName() {
+    if (!this.projectData.project) return;
+
+    return this.projectData.project.name || this.id;
   }
 
   saveFromEditor(editor) {
@@ -58,6 +69,8 @@ class Project {
   }
 
   async loadToEditor(editor) {
+    editor.history.load(this.undoHistory, this.redoHistory);
+
     editor.layers.deserializeLayers(this.layers);
     editor.config.deserialize(this.config);
     editor.toolConfig.deserialize(this.toolConfig);
