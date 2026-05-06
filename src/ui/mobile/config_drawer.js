@@ -9,7 +9,7 @@ import ExportTabButtons from "../config/tabs/export/buttons";
 
 const CONFIG_DRAWER_STYLES = css`
   ncrs-layers-tab-filters {
-    --ncrs-slider-height: 1.25rem;
+    --ncrs-slider-height: 1.5rem;
     --ncrs-slider-input-width: 3rem;
   }
 

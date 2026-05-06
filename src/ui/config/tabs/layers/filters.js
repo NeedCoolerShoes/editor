@@ -42,7 +42,6 @@ class LayersTabFilters extends LitElement {
     #sliders ncrs-slider::part(slider) {
       width: 100%;
       border-radius: 0.25rem;
-      height: 1.5rem;
     }
 
     #opacity-slider::part(slider) {
