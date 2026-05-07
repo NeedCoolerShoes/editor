@@ -11,6 +11,7 @@ class ProjectTabBar extends LitElement {
   static styles = css`
     #main {
       display: flex;
+      gap: 0.5rem;
       background-color: #131315;
       padding-top: 0.25rem;
       border-color: #232428;

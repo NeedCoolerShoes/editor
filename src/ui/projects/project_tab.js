@@ -3,7 +3,8 @@ import { css, html, LitElement } from "lit";
 class ProjectTab extends LitElement {
   static styles = css`
     :host {
-      display: block;
+      height: 100%;
+      display: flex;
       --text-color: white;
       --icon-color: white;
     }
@@ -21,11 +22,19 @@ class ProjectTab extends LitElement {
       position: relative;
       border-top-right-radius: 0.25rem;
       border-top-left-radius: 0.25rem;
+      border-width: 0px;
+      border-top-width: 2px;
+      border-color: #232428;
       background-color: #232428;
+      border-style: solid;
+      background-color: #232428;
+      margin-top: 0.25rem;
     }
 
     :host([selected]) #main {
       background-color: #1A1A1A;
+      margin-top: 0px;
+      font-weight: bold;
     }
 
     #cross {
@@ -47,7 +56,7 @@ class ProjectTab extends LitElement {
     #tab-button {
       width: 100%;
       height: 100%;
-      padding: 0.25rem 0.75rem;
+      padding: 0rem 0.75rem;
       padding-right: 2rem;
       flex-grow: 1;
       color: var(--text-color);
