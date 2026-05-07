@@ -8,15 +8,25 @@ class ProjectTabBar extends LitElement {
   }
 
   static styles = css`
-    #tabs {
+    #main {
       display: flex;
-      gap: 0.25rem;
       background-color: #131315;
       padding-top: 0.25rem;
       border-color: #232428;
       border-style: solid;
       border-width: 0px;
       border-bottom-width: 1px;
+    }
+
+    #tabs {
+      display: flex;
+      gap: 0.25rem;
+      overflow: auto;
+      scrollbar-width: thin;
+    }
+
+    ncrs-ui-project-tab {
+      flex-shrink: 0;
     }
 
     ncrs-button::part(button) {
@@ -39,6 +49,7 @@ class ProjectTabBar extends LitElement {
     const tabs = this.projects.map(project => {
       const tab = new ProjectTab(project.id, project.name);
       tab.selected = (project.id === this.current);
+
       tab.addEventListener("select", event => {
         this.editor.switchProject(event.detail.id);
       });
@@ -47,12 +58,18 @@ class ProjectTabBar extends LitElement {
         this.editor.renameProject(event.detail.name);
       });
 
+      tab.addEventListener("delete", event => {
+        this.editor.deleteProject(event.detail.id);
+      });
+
       return tab;
     });
     
     return html`
-      <div id="tabs">
-        ${tabs}
+      <div id="main">
+        <div id="tabs">
+          ${tabs}
+        </div>
         <ncrs-button title="New Project" @click=${this.addTab}>+</ncrs-button>
       </div>
     `;

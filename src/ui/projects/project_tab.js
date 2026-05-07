@@ -82,7 +82,9 @@ class ProjectTab extends LitElement {
       <div id="main">
         <button @click=${this.select} id="tab-button">
           <span
-            spellcheck="false" aria-label="Editable project name"
+            id="name"
+            spellcheck="false"
+            aria-label="Editable project name"
             @click=${this._onClick}
             @input=${this._onInput}
             @focusout=${this.rename}
@@ -97,8 +99,12 @@ class ProjectTab extends LitElement {
   }
 
   rename() {
-    const name = this._nameTemp.length > 0 ? this._nameTemp : this.name;
-    this.dispatchEvent(new CustomEvent("rename", {detail: {name: name}}));
+    if (this._nameTemp.length > 0) {
+      this.dispatchEvent(new CustomEvent("rename", {detail: {name: this._nameTemp}}));
+    } else {
+      this.renderRoot.getElementById("name").innerText = this.name;
+      this._nameTemp = this.name;
+    }
   }
 
   select() {

@@ -100,15 +100,23 @@ class ProjectManager extends EventTarget {
   }
 
   async delete(uuid) {
-    const idx = this.#projectCache.findIndex(project => project.id === uuid);
+    const projects = await ProjectManager.list();
+    const idx = projects.findIndex(p => p.id === uuid);
 
     if (idx > -1) {
-      this.#projectCache.splice(idx, 1);
-
-      await this._syncProjectList();
+      const newProjects = projects.toSpliced(idx, 1);
+      await del("ncrs:projects");
+      await set("ncrs:projects", newProjects);
     }
 
+    const cacheIdx = this.#projectCache.findIndex(project => project.id === uuid);
+
+    if (cacheIdx > -1) {
+      this.#projectCache.splice(idx, 1);
+    }
+    
     await del(projectKey(uuid));
+    await this._syncProjectList();
   }
 
   async syncFromEditor(editor) {

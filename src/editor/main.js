@@ -27,7 +27,7 @@ import ReplaceLayerMetadataEntry from "./history/entries/replace_layer_metadata_
 import UpdateLayerAttributionEntry from "./history/entries/update_layer_attribution_entry.js";
 import PersistLayerChangesEntry from "./history/entries/persist_layers_entry.js";
 import MoveTool from "./tools/toolset/move_tool.js";
-import { nonPolyfilledCtx } from "../helpers.js";
+import { clamp, nonPolyfilledCtx } from "../helpers.js";
 import ProjectLoader from "./format/project_loader.js";
 import ProjectData from "./format/project_data.js";
 import EditorConfig from "./config/editor_config.js";
@@ -522,6 +522,30 @@ class Editor extends LitElement {
   async switchProject(uuid) {
     await this.projectManager.syncFromEditor(this);
     this.projectManager.switch(uuid);
+  }
+
+  async deleteProject(uuid) {
+    const currentUUID = await this.projectManager.currentUUID();
+    const projects = await ProjectManager.list();
+    const idx = projects.findIndex(p => p.id === uuid);
+    
+    await this.projectManager.delete(uuid);
+
+    if (uuid === currentUUID) {
+      let switchUUID;
+
+      projects.splice(idx, 1);
+
+      if (projects.length < 1) {
+        const newProject = await this.projectManager.new();
+        switchUUID = newProject.id;
+      } else {
+        const newIdx = clamp(idx + 1, 0, projects.length - 1);
+        switchUUID = projects[newIdx].id;
+      }
+
+      await this.projectManager.switch(switchUUID);
+    }
   }
 
   async renameProject(name) {
