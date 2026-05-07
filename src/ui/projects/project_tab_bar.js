@@ -32,7 +32,7 @@ class ProjectTabBar extends LitElement {
     this.editor.projectManager.addEventListener("update", event => {
       this.projects = event.detail.projects;
       this.current = event.detail.current;
-    })
+    });
   }
 
   render() {
@@ -41,6 +41,10 @@ class ProjectTabBar extends LitElement {
       tab.selected = (project.id === this.current);
       tab.addEventListener("select", event => {
         this.editor.switchProject(event.detail.id);
+      });
+
+      tab.addEventListener("rename", event => {
+        this.editor.renameProject(event.detail.name);
       });
 
       return tab;

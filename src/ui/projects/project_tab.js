@@ -74,12 +74,21 @@ class ProjectTab extends LitElement {
 
     this.id = id;
     this.name = name;
+    this._nameTemp = name;
   }
 
   render() {
     return html`
       <div id="main">
-        <button @click=${this.select} id="tab-button">${this.name}</button>
+        <button @click=${this.select} id="tab-button">
+          <span
+            spellcheck="false" aria-label="Editable project name"
+            @click=${this._onClick}
+            @input=${this._onInput}
+            @focusout=${this.rename}
+            contenteditable=${this.selected ? "plaintext-only" : "none"}
+          >${this.name}</span>
+        </button>
         <div id="cross">
           <button @click=${this.delete}><ncrs-icon icon="cross" color="var(--icon-color)"></ncrs-icon></button>
         </div>
@@ -87,12 +96,32 @@ class ProjectTab extends LitElement {
     `;
   }
 
+  rename() {
+    const name = this._nameTemp.length > 0 ? this._nameTemp : this.name;
+    this.dispatchEvent(new CustomEvent("rename", {detail: {name: name}}));
+  }
+
   select() {
+    if (this.selected) return;
+
     this.dispatchEvent(new CustomEvent("select", {detail: {id: this.id}}));
   }
 
   delete() {
     this.dispatchEvent(new CustomEvent("delete", {detail: {id: this.id}}));
+  }
+
+  _onInput(event) {
+    if (event.inputType === "insertLineBreak") {
+      event.target.innerText = this._nameTemp;
+      return this.rename();
+    }
+    
+    this._nameTemp = event.target.innerText.trim();
+  }
+
+  _onClick(event) {
+    window.getSelection().selectAllChildren(event.target);
   }
 }
 

@@ -524,6 +524,13 @@ class Editor extends LitElement {
     this.projectManager.switch(uuid);
   }
 
+  async renameProject(name) {
+    const projectData = this.project.get("project");
+    projectData.name = name;
+    this.project.set("project", projectData, true);
+    await this.projectManager.syncFromEditor(this);
+  }
+
   _upgradeFormat() {
     const format = this.project.get("format", -1);
 

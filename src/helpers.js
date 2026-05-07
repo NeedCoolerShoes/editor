@@ -63,7 +63,7 @@ function getFocusedElement() {
 function isKeybindIgnored(element) {
   const ignoredElements = ["TEXTAREA", "INPUT", "SELECT"];
   
-  return ignoredElements.includes(element.nodeName);
+  return ignoredElements.includes(element.nodeName) || element.isContentEditable;
 }
 
 function download(filename, url) {
