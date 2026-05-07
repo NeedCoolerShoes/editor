@@ -1,4 +1,4 @@
-import { del, get, set } from "idb-keyval";
+import { del, get, set, update } from "idb-keyval";
 import Project from "./project";
 
 const PROJECT_FORMAT = 1;
@@ -24,9 +24,24 @@ class ProjectManager extends EventTarget {
   }
 
   static async untitledName() {
-    const count = await this.count();
+    let highestProject = await this.count();
 
-    return `Project ${count + 1}`;
+    const projects = await this.list();
+    projects.forEach(project => {
+      const name = project.name || "";
+
+      const match = name.match(/Project (?<number>\d+)/);
+
+      if (!match) return;
+
+      const number = parseInt(match.groups?.number || "0");
+
+      if (number > highestProject) {
+        highestProject = number;
+      }
+    });
+
+    return `Project ${highestProject + 1}`;
   }
 
   constructor(editor) {
@@ -100,23 +115,30 @@ class ProjectManager extends EventTarget {
   }
 
   async delete(uuid) {
-    const projects = await ProjectManager.list();
-    const idx = projects.findIndex(p => p.id === uuid);
+    const current = await this.currentUUID();
 
-    if (idx > -1) {
-      const newProjects = projects.toSpliced(idx, 1);
-      await del("ncrs:projects");
-      await set("ncrs:projects", newProjects);
-    }
+    update("ncrs:projects", projects => {
+      const idx = projects.findIndex(p => p.id === uuid);
+  
+      if (idx > -1) {
+        const newProjects = projects.toSpliced(idx, 1);
+        return newProjects;
+      }
+        
+      return projects;
+    }).then(() => {
+      ProjectManager.list().then(projects => {
+        this._sendUpdateEvent(projects, current);
+      });
+    });
 
     const cacheIdx = this.#projectCache.findIndex(project => project.id === uuid);
 
     if (cacheIdx > -1) {
-      this.#projectCache.splice(idx, 1);
+      this.#projectCache.splice(cacheIdx, 1);
     }
     
     await del(projectKey(uuid));
-    await this._syncProjectList();
   }
 
   async syncFromEditor(editor) {
@@ -135,21 +157,28 @@ class ProjectManager extends EventTarget {
   }
 
   async _syncProjectList() {
-    const projects = await ProjectManager.list();
     const current = await this.currentUUID();
 
-    this.#projectCache.map(project => {
-      if (!projects.find(p => p.id == project.id)) {
-        projects.push({id: project.id, name: project.getName()});
-      } else {
-        const idx = projects.findIndex(p => p.id == project.id);
+    update("ncrs:projects", projects => {
+      projects = projects || [];
 
-        projects.splice(idx, 1, {id: project.id, name: project.getName()});
-      }
+      this.#projectCache.map(project => {
+        if (!projects.find(p => p.id == project.id)) {
+          projects.push({id: project.id, name: project.getName()});
+        } else {
+          const idx = projects.findIndex(p => p.id == project.id);
+  
+          projects.splice(idx, 1, {id: project.id, name: project.getName()});
+        }
+      });
+
+      this._sendUpdateEvent(projects, current);
+
+      return projects;
     });
-
-    await set("ncrs:projects", projects);
-
+  }
+  
+  _sendUpdateEvent(projects, current) {
     this.dispatchEvent(new CustomEvent("update", {detail: {projects: projects, current: current}}));
   }
 }
