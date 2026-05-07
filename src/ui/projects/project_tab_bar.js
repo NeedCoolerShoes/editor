@@ -1,5 +1,6 @@
 import { css, html, LitElement } from "lit";
 import ProjectTab from "./project_tab";
+import { ProjectManager } from "../../editor/project/project_manager";
 
 class ProjectTabBar extends LitElement {
   static properties = {
@@ -43,6 +44,9 @@ class ProjectTabBar extends LitElement {
       this.projects = event.detail.projects;
       this.current = event.detail.current;
     });
+
+    this.editor.projectManager.currentUUID().then(id => this.current = id);
+    ProjectManager.list().then(list => this.projects = list);
   }
 
   render() {

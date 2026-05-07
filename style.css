@@ -14,9 +14,9 @@ html, body, #app {
 #app {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   margin: auto;
+  margin-top: 2rem;
 }
 
 ncrs-ui {

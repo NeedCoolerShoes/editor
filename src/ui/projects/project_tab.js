@@ -85,7 +85,7 @@ class ProjectTab extends LitElement {
             id="name"
             spellcheck="false"
             aria-label="Editable project name"
-            @click=${this._onClick}
+            @keydown=${this._onKeyDown}
             @input=${this._onInput}
             @focusout=${this.rename}
             contenteditable=${this.selected ? "plaintext-only" : "none"}
@@ -128,6 +128,16 @@ class ProjectTab extends LitElement {
 
   _onClick(event) {
     window.getSelection().selectAllChildren(event.target);
+  }
+
+  _onKeyDown(event) {
+    if (event.key === "Escape") {
+      const nameField = this.renderRoot.getElementById("name");
+      nameField.innerText = this.name;
+      this._nameTemp = this.name;
+
+      nameField.blur();
+    }
   }
 }
 
