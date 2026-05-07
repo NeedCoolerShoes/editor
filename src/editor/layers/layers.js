@@ -102,6 +102,17 @@ class Layers extends EventTarget {
     return output;
   }
 
+  setLayers(layers) {
+    this.layers = [];
+
+    if (layers.length > 0) {
+      layers.forEach(layer => this.addLayer(layer));
+    } else {
+      this.addBlankLayer();
+      this.selectLayer(0);
+    }
+  }
+
   deserializeLayers(serializedLayers) {
     this.layers = [];
 

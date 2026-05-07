@@ -44,6 +44,7 @@ class Project {
 
     this.undoHistory = [];
     this.redoHistory = [];
+    this.layersCache = [];
 
     this.layers = [];
     this.config = {};
@@ -61,6 +62,7 @@ class Project {
   saveFromEditor(editor) {
     this.undoHistory = editor.history.undoStack;
     this.redoHistory = editor.history.redoStack;
+    this.layersCache = editor.layers.layers;
 
     this.layers = editor.layers.serializeLayers();
     this.config = editor.config.serialize();
@@ -71,10 +73,17 @@ class Project {
   async loadToEditor(editor) {
     editor.history.load(this.undoHistory, this.redoHistory);
 
-    editor.layers.deserializeLayers(this.layers);
+    if (this.layersCache.length > 0) {
+      editor.layers.setLayers(this.layersCache);
+    } else {
+      editor.layers.deserializeLayers(this.layers);
+    }
+
     editor.config.deserialize(this.config);
     editor.toolConfig.deserialize(this.toolConfig);
     editor.project.deserialize(this.projectData);
+
+    editor.updateVisibility();
   }
 
   serialize() {
