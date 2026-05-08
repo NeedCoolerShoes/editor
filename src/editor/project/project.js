@@ -83,6 +83,7 @@ class Project {
     editor.toolConfig.deserialize(this.toolConfig);
     editor.project.deserialize(this.projectData);
 
+    editor.setVariant(this.projectData.variant);
     editor.updateVisibility();
   }
 
