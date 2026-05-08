@@ -36,6 +36,15 @@ class ProjectTabBar extends LitElement {
     }
   `;
 
+  firstUpdated(){
+    this.tabs = this.renderRoot.getElementById("tabs");
+
+    this.tabs.addEventListener("wheel", event => {
+      event.preventDefault();
+      this.tabs.scrollLeft += event.deltaY + event.deltaX;
+    });
+  }
+
   constructor(editor) {
     super();
     this.editor = editor;
