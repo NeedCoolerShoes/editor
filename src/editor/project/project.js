@@ -84,7 +84,6 @@ class Project {
     editor.project.deserialize(this.projectData);
 
     editor.setVariant(this.projectData.variant);
-    editor.updateVisibility();
   }
 
   serialize() {

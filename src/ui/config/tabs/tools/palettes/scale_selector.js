@@ -29,6 +29,12 @@ class NCRSPaletteScaleSelector extends LitElement {
       color: white;
       font-size: 16px;
     }
+
+    ncrs-icon {
+      width: 0.75rem;
+      height: 0.6rem;
+      padding: 1px;
+    }
   `;
 
   constructor() {
@@ -53,9 +59,13 @@ class NCRSPaletteScaleSelector extends LitElement {
     const incrementDisabled = this.scale >= this.max;
 
     return html`
-      <ncrs-button ?disabled=${decrementDisabled} @click=${this._onDecrement} title="Decrement scale.">-</ncrs-button>
+      <ncrs-button ?disabled=${decrementDisabled} @click=${this._onDecrement} title="Decrement scale.">
+        <ncrs-icon icon="minus" color="#fff"></ncrs-icon>
+      </ncrs-button>
       ${this._input}
-      <ncrs-button ?disabled=${incrementDisabled} @click=${this._onIncrement} title="Increment scale.">+</ncrs-button>
+      <ncrs-button ?disabled=${incrementDisabled} @click=${this._onIncrement} title="Increment scale.">
+        <ncrs-icon icon="add" color="#fff"></ncrs-icon>
+      </ncrs-button>
     `;
   }
 
