@@ -139,7 +139,7 @@ class Editor extends LitElement {
     orbit.reset();
   }
 
-  toolCheck(parts, pointerEvent) {    
+  toolCheck(parts, pointerEvent) {
     if (this.config.get("pick-color", false)) {
       const toolData = this._createSkinToolData(parts, pointerEvent.buttons);
       this._pickColor(toolData);
@@ -161,6 +161,12 @@ class Editor extends LitElement {
     }
 
     return this.currentTool.check(parts, pointerEvent);
+  }
+
+  toolCursor() {
+    if (!this.currentTool) return "crosshair";
+
+    return this.currentTool.getCursorStyle(this);
   }
 
   toolDown(parts, pointerEvent) {

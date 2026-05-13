@@ -27,6 +27,7 @@ class Controls {
     this.panning = false;
     this.firstClickOutside = false;
     this.drawing = false;
+    this.failedCheck = false;
     this.drawOnPointerUp = false;
     this.keybindEyedropper = false;
 
@@ -79,8 +80,13 @@ class Controls {
   toolAction(parts, event) {
     const parent = this.parent;
 
+    if (this.failedCheck) return;
+
     if (!this.drawing) {
-      if (!parent.toolCheck(parts, event)) { return; }
+      if (!parent.toolCheck(parts, event)) {
+        this.failedCheck = true;
+        return;
+      }
       
       parent.toolDown(parts, event);
       this.drawing = true;
@@ -234,7 +240,7 @@ class Controls {
         return CURSOR_EYEDROPPER;
       }
 
-      return "crosshair";
+      return this.parent.toolCursor();
     }
 
     if (this.ctrlKey || this.shiftKey) {
