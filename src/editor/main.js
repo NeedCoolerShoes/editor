@@ -146,7 +146,7 @@ class Editor extends LitElement {
     }
 
     if (this.config.get("pick-color", false)) {
-      const toolData = this._createSkinToolData(parts, pointerEvent.buttons);
+      const toolData = this._createToolData(parts, pointerEvent.buttons);
       this._pickColor(toolData);
       if (this.currentTool == this.getToolById("eraser")) {
         this.selectTool(this.getToolById("pen"));
@@ -158,7 +158,7 @@ class Editor extends LitElement {
   }
 
   toolDown(parts, pointerEvent) {
-    const toolData = this._createLayerToolData(parts, pointerEvent.buttons);
+    const toolData = this._createToolData(parts, pointerEvent.buttons);
     const texture = this.currentTool.down(toolData);
 
     const layer = this.layers.getSelectedLayer();
@@ -170,7 +170,7 @@ class Editor extends LitElement {
   }
 
   toolMove(parts, pointerEvent) {
-    const toolData = this._createLayerToolData(parts, pointerEvent.buttons);
+    const toolData = this._createToolData(parts, pointerEvent.buttons);
     const texture = this.currentTool.move(toolData);
 
     this.layers.getSelectedLayer().replaceTexture(texture);
@@ -544,11 +544,11 @@ class Editor extends LitElement {
 
   _pickColor(toolData) {
     const point = toolData.getCoords();
-    let color = toolData.texture.getPixel({ x: point.x, y: point.y });
+    let color = toolData.globalTexture.getPixel({ x: point.x, y: point.y });
 
     if (color.alpha() <= 0 && toolData.hasOverlay()) {
       const point2 = toolData.getCoords(1);
-      color = toolData.texture.getPixel({ x: point2.x, y: point2.y });
+      color = toolData.globalTexture.getPixel({ x: point2.x, y: point2.y });
     }
     
     if (this.config.get("pick-color-toggle")) {
@@ -561,17 +561,13 @@ class Editor extends LitElement {
     this.toolConfig.set("color", color);
   }
 
-  _createLayerToolData(parts, button) {
+  _createToolData(parts, button) {
     const layer = this.layers.getSelectedLayer();
     const texture = layer.texture.image;
 
-    return new ToolData({ texture, parts, button, variant: this.project.get("variant") });
-  }
+    const globalTexture = this.layers.render();
 
-  _createSkinToolData(parts, button) {
-    const texture = this.layers.render();
-
-    return new ToolData({ texture, parts, button, variant: this.project.get("variant") });
+    return new ToolData({ texture, globalTexture, parts, button, variant: this.project.get("variant") });
   }
 
   _setupResizeObserver() {

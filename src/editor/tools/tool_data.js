@@ -5,6 +5,7 @@ import { IMAGE_HEIGHT, IMAGE_WIDTH } from "../../constants.js";
 class ToolData {
   constructor(params) {
     this.texture = this._setupCanvas(params.texture);
+    this.globalTexture = this._setupCanvas(params.globalTexture);
     this.parts = params.parts;
     this.button = params.button;
     this.variant = params.variant;

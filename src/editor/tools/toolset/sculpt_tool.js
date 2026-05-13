@@ -27,6 +27,7 @@ class SculptTool extends BrushBaseTool {
     this._checkFlatten(toolData);
 
     const texture = toolData.texture;
+    const colorTexture = this.config.get("sculptGlobal", true) ? toolData.globalTexture : toolData.texture;
     const part = toolData.parts[0];
     const point = toolData.getCoords();
 
@@ -36,17 +37,17 @@ class SculptTool extends BrushBaseTool {
 
     function getColor(offsetX, offsetY) {
       return function (pos) {
-        const currentColor = texture.getPixel(pos);
+        const currentColor = colorTexture.getPixel(pos);
         if (currentColor.valpha !== 0) { return currentColor; }
 
-        return texture.getPixel({x: pos.x + offsetX, y: pos.y + offsetY})
+        return colorTexture.getPixel({x: pos.x + offsetX, y: pos.y + offsetY})
       };
     }
 
     function getColor2(pos) {
-      const currentColor = texture.getPixel({x: point.x + pos.offsetX, y: point.y + pos.offsetY});
+      const currentColor = colorTexture.getPixel({x: point.x + pos.offsetX, y: point.y + pos.offsetY});
 
-      if (currentColor.valpha === 0) { return texture.getPixel(pos); }
+      if (currentColor.valpha === 0) { return colorTexture.getPixel(pos); }
 
       return currentColor;
     }

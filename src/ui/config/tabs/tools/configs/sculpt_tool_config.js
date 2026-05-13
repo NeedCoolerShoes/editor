@@ -25,6 +25,7 @@ class SculptToolConfig extends BaseToolConfig {
       },
       mirror: {type: "toggle", icon: "mirror", title: "Toggle mirror\nMirrors the stroke across the skin"},
       sculptFlatten: {type: "toggle", icon: "merge", title: "Toggle flatten mode"},
+      sculptGlobal: {type: "toggle", icon: "globe", title: "Toggle global sculpt.\n When disabled, the sculpt will only draw from the current layer."}
     }, mobile);
     this.tool = new SculptTool(config);
   }
@@ -48,6 +49,7 @@ class SculptToolConfig extends BaseToolConfig {
           <div class="group-sm">
             ${this._mirrorControl()}
             ${this._sculptFlattenControl()}
+            ${this._sculptGlobalControl()}
           </div>
         </div>
         <p class="description">${this.tool.properties.description}</p>
@@ -63,6 +65,7 @@ class SculptToolConfig extends BaseToolConfig {
           <div class="group-sm">
             ${this._mirrorControl()}
             ${this._sculptFlattenControl()}
+            ${this._sculptGlobalControl()}
           </div>
         </div>
         <div>

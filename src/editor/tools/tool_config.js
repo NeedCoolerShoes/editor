@@ -25,6 +25,7 @@ const VALUE_MAP = {
   fillStyle: {default: "fill-cube-connected", persistence: true},
   bucketErase: {default: false, persistence: true},
   sculptFlatten: {default: false, persistence: true},
+  sculptGlobal: {default: true, persistence: true},
 }
 
 class ToolConfig extends Config {

@@ -77,6 +77,7 @@ import imgToolConfig from "../../../assets/images/icons/misc/tool-config.svg";
 import imgIconArrowUp from "../../../assets/images/icons/misc/arrow-up.svg";
 import imgIconArrowDown from "../../../assets/images/icons/misc/arrow-down.svg";
 import imgIconInvisible from "../../../assets/images/icons/misc/invisible.svg";
+import imgIconGlobe from "../../../assets/images/icons/modifiers/globe.svg";
 
 const ICON_MAP = {
   "add": imgIconAdd,
@@ -157,6 +158,7 @@ const ICON_MAP = {
   "arrow-up": imgIconArrowUp,
   "arrow-down": imgIconArrowDown,
   "invisible": imgIconInvisible,
+  "globe": imgIconGlobe,
 }
 
 class Icon extends LitElement {
