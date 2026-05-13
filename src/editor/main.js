@@ -139,18 +139,24 @@ class Editor extends LitElement {
     orbit.reset();
   }
 
-  toolCheck(parts, pointerEvent) {
-    const layer = this.layers.getSelectedLayer();
-    if (!layer?.visible) {
-      return false;
-    }
-
+  toolCheck(parts, pointerEvent) {    
     if (this.config.get("pick-color", false)) {
       const toolData = this._createSkinToolData(parts, pointerEvent.buttons);
       this._pickColor(toolData);
       if (this.currentTool == this.getToolById("eraser")) {
         this.selectTool(this.getToolById("pen"));
       }
+      return false;
+    }
+
+    const layer = this.layers.getSelectedLayer();
+    if (!layer?.visible) {
+      this.dispatchEvent(new CustomEvent("tool-warning", {detail: {message: "Current layer is not editable (hidden)."}}));
+      return false;
+    }
+
+    if (!this.config.get("overlayVisible", false) && this.currentTool === this.getToolById("sculpt")) {
+      this.dispatchEvent(new CustomEvent("tool-warning", {detail: {message: "Cannot sculpt without overlay being visible."}}));
       return false;
     }
 

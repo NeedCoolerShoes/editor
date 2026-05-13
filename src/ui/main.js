@@ -225,6 +225,10 @@ class UI extends LitElement {
     }
   }
 
+  displayWarningPopup(message) {
+    this.layout.displayWarningPopup(message);
+  }
+
   _getValidLayout() {
     if (this.clientWidth >= DESKTOP_MIN_WIDTH) {
       return "desktop";
@@ -372,6 +376,10 @@ class UI extends LitElement {
 
     this.exportModal.addEventListener("hide", () => {
       this.disableKeybinds = false;
+    });
+
+    this.editor.addEventListener("tool-warning", event => {
+      this.displayWarningPopup(event.detail.message);
     })
   }
 }
