@@ -17,6 +17,18 @@ class ProjectTab extends LitElement {
       --text-color: #55b2ff;
     }
 
+    span {
+      display:inline-block;
+      padding: 2px;
+      min-width: 40px;
+    }
+
+    span:focus {
+      border: 0;
+      border-radius:4px;
+      outline: #55b2ff solid 2px;
+    }
+
     #main {
       display: flex;
       position: relative;

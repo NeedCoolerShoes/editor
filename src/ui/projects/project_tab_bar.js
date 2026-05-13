@@ -32,9 +32,27 @@ class ProjectTabBar extends LitElement {
     }
 
     ncrs-button::part(button) {
-      padding: 0.125rem 0.5rem;
+      padding: 0.25rem 0.25rem;
+      height:calc(100% - 2px);
+      width:auto;
+      aspect-ratio: 1/1;
+    }
+
+    ncrs-icon {
+      width: 70%;
+      height: 70%;
+      padding: 15%;
     }
   `;
+
+  firstUpdated(){
+    this.tabs = this.renderRoot.getElementById("tabs");
+
+    this.tabs.addEventListener("wheel", event => {
+      event.preventDefault();
+      this.tabs.scrollLeft += event.deltaY + event.deltaX;
+    });
+  }
 
   constructor(editor) {
     super();
@@ -75,7 +93,9 @@ class ProjectTabBar extends LitElement {
         <div id="tabs">
           ${tabs}
         </div>
-        <ncrs-button title="New Project" @click=${this.addTab}>+</ncrs-button>
+        <ncrs-button title="New Project" @click=${this.addTab}>
+          <ncrs-icon icon="add" color="#fff"></ncrs-icon>
+        </ncrs-button>
       </div>
     `;
   }
