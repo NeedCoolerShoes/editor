@@ -164,11 +164,11 @@ class ProjectManager extends EventTarget {
 
       this.#projectCache.map(project => {
         if (!projects.find(p => p.id == project.id)) {
-          projects.push({id: project.id, name: project.getName()});
+          projects.push(project.cacheEntry());
         } else {
           const idx = projects.findIndex(p => p.id == project.id);
   
-          projects.splice(idx, 1, {id: project.id, name: project.getName()});
+          projects.splice(idx, 1, project.cacheEntry());
         }
       });
 

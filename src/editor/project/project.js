@@ -53,6 +53,13 @@ class Project {
     this.projectData.project.id = id;
   }
 
+  cacheEntry() {
+    return {
+      id: this.id,
+      name: this.getName(),
+    }
+  }
+
   getName() {
     if (!this.projectData.project) return;
 
