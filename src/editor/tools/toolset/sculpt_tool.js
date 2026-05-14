@@ -23,6 +23,16 @@ class SculptTool extends BrushBaseTool {
     return this.process(toolData);
   }
 
+  getCursorStyle(editor) {
+    const cursor = super.getCursorStyle(editor);
+
+    if (cursor === "crosshair" && !editor.config.get("overlayVisible", false)) {
+      return "not-allowed";
+    } else {
+      return cursor;
+    }
+  }
+
   process(toolData) {
     this._checkFlatten(toolData);
 

@@ -13,6 +13,15 @@ class BaseTool {
   move(_part, _x, _y, _pointerButton) {}
   up(_x, _y) {}
   check(_parts, _event) { return true; }
+  
+  getCursorStyle(editor) {
+    const layer = editor.layers.getSelectedLayer();
+    if (!layer?.visible) {
+      return "not-allowed"
+    }
+
+    return "crosshair"
+  };
 
   tempCanvas() {
     return new CanvasHelper();

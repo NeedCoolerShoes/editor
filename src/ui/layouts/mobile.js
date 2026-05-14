@@ -465,6 +465,40 @@ const STYLES = css`
     width: 1.25rem;
     height: 1.25rem;
   }
+
+
+  #warningPopup {
+    position: absolute;
+    pointer-events: none;
+    top: calc(50% - 0.5rem);
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+  }
+
+  #warningPopup > div {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(0.25rem);
+    color: white;
+    animation: fadeOut 1.5s ease-out;
+    opacity: 0;
+    padding: 0.25rem;
+    border-radius: 0.125rem;
+  }
+
+  #warningPopup > div:nth-child(n + 4) {
+    display: none;
+  }
+
+  @keyframes fadeOut {
+    0% { opacity: 1; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+  }
 `;
 
 const DRAWER_OPEN_DRAG_THRESHOLD = 15;
@@ -537,6 +571,17 @@ class NCRSUIMobileLayout extends BaseLayout {
     }
   }
 
+  displayWarningPopup(message) {
+    const warning = document.createElement("div");
+    warning.innerText = message;
+
+    this.renderRoot.getElementById("warningPopup").prepend(warning);
+
+    setTimeout(() => {
+      warning.remove();
+    }, 2000);
+  }
+
   render() {
     const eyedropper = this.editor.config.get("pick-color", false);
 
@@ -565,6 +610,7 @@ class NCRSUIMobileLayout extends BaseLayout {
         <div id="editor">
           ${this.editor}
           ${this.warningManager}
+          <div id="warningPopup"></div>
           <div id="layers">
             <div class="main">
               <div class="button">

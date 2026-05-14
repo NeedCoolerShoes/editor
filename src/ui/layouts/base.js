@@ -29,6 +29,8 @@ class BaseLayout extends LitElement {
     this.#updateWarning();
   }
 
+  displayWarningPopup(message) {}
+
   #updateWarning() {
     const layer = this.editor.layers.getSelectedLayer();
 

@@ -140,11 +140,6 @@ class Editor extends LitElement {
   }
 
   toolCheck(parts, pointerEvent) {
-    const layer = this.layers.getSelectedLayer();
-    if (!layer?.visible) {
-      return false;
-    }
-
     if (this.config.get("pick-color", false)) {
       const toolData = this._createToolData(parts, pointerEvent.buttons);
       this._pickColor(toolData);
@@ -154,7 +149,24 @@ class Editor extends LitElement {
       return false;
     }
 
+    const layer = this.layers.getSelectedLayer();
+    if (!layer?.visible) {
+      this.dispatchEvent(new CustomEvent("tool-warning", {detail: {message: "Current layer is not editable (hidden)."}}));
+      return false;
+    }
+
+    if (!this.config.get("overlayVisible", false) && this.currentTool === this.getToolById("sculpt")) {
+      this.dispatchEvent(new CustomEvent("tool-warning", {detail: {message: "Cannot sculpt without overlay being visible."}}));
+      return false;
+    }
+
     return this.currentTool.check(parts, pointerEvent);
+  }
+
+  toolCursor() {
+    if (!this.currentTool) return "crosshair";
+
+    return this.currentTool.getCursorStyle(this);
   }
 
   toolDown(parts, pointerEvent) {
