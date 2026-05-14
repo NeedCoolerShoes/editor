@@ -169,11 +169,10 @@ class NCRSUIDesktopLayout extends BaseLayout {
       display: none;
     }
 
-
     @keyframes fadeOut {
-        0% { opacity: 1; }
-        50% { opacity: 1; }
-        100% { opacity: 0; }
+      0% { opacity: 1; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
     }
   `;
 
@@ -200,7 +199,6 @@ class NCRSUIDesktopLayout extends BaseLayout {
     setTimeout(() => {
       warning.remove();
     }, 2000);
-
   }
 
   render() {
