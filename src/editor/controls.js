@@ -183,7 +183,7 @@ class Controls {
       this.handleIntersects();
     }
     
-    if (this.drawing || this.drawOnPointerUp) {
+    if (!this.failedCheck && (this.drawing || this.drawOnPointerUp)) {
       this.parent.toolUp();
     }
 
