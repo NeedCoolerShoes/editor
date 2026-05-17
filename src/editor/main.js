@@ -313,9 +313,11 @@ class Editor extends LitElement {
   }
 
   selectLayer(layer) {
+    if (layer === this.layers.getSelectedLayer()) return;
+
     this.history.add(
       new SelectLayerEntry(this.layers, {layer})
-    )
+    );
   }
 
   addLayer(optionalLayer = undefined, setMetadata = {}) {
