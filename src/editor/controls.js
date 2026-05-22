@@ -23,6 +23,7 @@ class Controls {
     this.pointer = new THREE.Vector2(100000, 100000);
     this.pointerDown = false;
     this.pointerDownAt = new THREE.Vector2(0, 0);
+    this.tempPointer = new THREE.Vector2(0, 0);
     this.pointerEvent = undefined;
     this.panning = false;
     this.firstClickOutside = false;
@@ -157,7 +158,9 @@ class Controls {
   onMouseMove(event) {
     this.setPointer(event.offsetX, event.offsetY);
     this.pointerEvent = event;
-    this.handleIntersects();
+    requestAnimationFrame(() => {
+      this.handleIntersects();
+    });
   }
 
   onTouchMove(event) {
@@ -168,7 +171,8 @@ class Controls {
     if (this.drawing) return this.handleIntersects();
     
     const threshold = POINTER_MOVEMENT_THRESHOLD / this.camera.position.z;
-    const distance = this.pointerDownAt.distanceTo(new THREE.Vector2(event.offsetX, event.offsetY));
+    this.tempPointer.set(event.offsetX, event.offsetY);
+    const distance = this.pointerDownAt.distanceTo(this.tempPointer);
 
     if (distance < threshold) { return; }
 

@@ -119,7 +119,9 @@ class Editor extends LitElement {
 
   sceneRender() {
     this.renderer.render();
-    this.style.cursor = this.controls.getCursorStyle();
+    if (this.style.cursor !== this.controls.getCursorStyle()) {
+      this.style.cursor = this.controls.getCursorStyle();
+    }
 
     this.dispatchEvent(new CustomEvent("render"));
   }
