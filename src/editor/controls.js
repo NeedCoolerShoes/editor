@@ -201,7 +201,7 @@ class Controls {
     this.ctrlKey = event.ctrlKey;
     this.shiftKey = event.shiftKey;
 
-    if (event.key === "Control" || event.key === "Alt" && !event.repeat) {
+    if ((event.key === "Control" || event.key === "Alt") && !event.repeat) {
       this.parent.config.set("pick-color", true);
       this.keybindEyedropper = true;
     }
@@ -296,7 +296,7 @@ class Controls {
     document.addEventListener("keydown", this.onKeyDown.bind(this));
     document.addEventListener("keyup", this.onKeyUp.bind(this));
 
-    document.addEventListener("mousemove", event => {
+    document.addEventListener("blur", event => {
       this._checkEyedropper(event);
     })
   }
