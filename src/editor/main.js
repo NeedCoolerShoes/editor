@@ -593,8 +593,18 @@ class Editor extends LitElement {
 
       this.camera.aspect = target.clientWidth / target.clientHeight;
       this.camera.updateProjectionMatrix();
+
+      requestAnimationFrame(this._forceWebKitCanvasRender.bind(this));
     });
     obs.observe(this);
+  }
+
+  _forceWebKitCanvasRender() {
+    const canvas = this.renderer.canvas();
+    if (!canvas) return
+    canvas.style.transform = "translateZ(0)";
+    canvas.offsetHeight;
+    canvas.style.transform = "none";
   }
 
   async _loadSkin() {
