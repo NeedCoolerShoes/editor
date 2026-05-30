@@ -601,7 +601,7 @@ class Editor extends LitElement {
 
   _forceWebKitCanvasRender() {
     const canvas = this.renderer.canvas();
-    if (!canvas) return
+    if (!canvas) return;
     canvas.style.transform = "translateZ(0)";
     canvas.offsetHeight;
     canvas.style.transform = "none";
