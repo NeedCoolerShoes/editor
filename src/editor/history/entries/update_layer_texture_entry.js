@@ -12,8 +12,8 @@ class UpdateLayerTextureEntry extends BaseEntry {
   oldTexture;
 
   onPerform() {
-    this.oldTexture = this.oldTexture || this.layer.oldTexture;
     this.layer.flush();
+    this.oldTexture = this.oldTexture || this.layer.oldTexture;
     this.layer.replaceTexture(this.texture);
     this.layers.renderTexture();
   }
