@@ -19,8 +19,8 @@ class UpdateLayerTextureEntry extends BaseEntry {
   }
 
   onRevert() {
-    this.layer.flush();
     this.layer.replaceTexture(this.oldTexture);
+    this.layer.flush();
     this.layers.renderTexture();
   }
 }
