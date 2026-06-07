@@ -3,7 +3,7 @@ import { OrbitControls } from "./orbit.js";
 import { getFocusedElement, isKeybindIgnored } from "../helpers.js";
 
 import imgEyedropper from "../../assets/images/cursors/eyedropper.png"
-const CURSOR_EYEDROPPER = `url("${imgEyedropper}") 0 32, crosshair`;
+const CURSOR_EYEDROPPER = `url("${imgEyedropper}") 0 31, crosshair`;
 const POINTER_MOVEMENT_THRESHOLD = 16;
 
 class Controls {
