@@ -130,9 +130,11 @@ class BucketTool extends BaseTool {
     const visited = new Set();
     const width = texture.canvas.width;
     const height = texture.canvas.height;
+    let queue_length;
+    let previous_queue_legth;
 
     for (let i = 0; i<((box_width*box_height*2)+(box_width*box_depth*2)+(box_height*box_depth*2)); i++) {
-      let queue_length = queue.length;
+      queue_length = queue.length;
       for (let j = 0; j < queue_length; j++) {
         const { x, y } = queue[j];
         if (x < 0 || y < 0 || x >= width || y >= height) continue;
@@ -177,6 +179,10 @@ class BucketTool extends BaseTool {
           this.UV(y-1>=0&&!((y==(offset_y)||y==(offset_y+box_depth))), { x, y: y - 1 },texture,old_color,queue);
         }
       }
+      if (previous_queue_legth === queue.length){
+        break;
+      }
+      previous_queue_legth = queue.length;
     }
     for (let i = 0; i < queue.length; i++) {
       texture.putPixel({ x:queue[i].x, y:queue[i].y }, color());
