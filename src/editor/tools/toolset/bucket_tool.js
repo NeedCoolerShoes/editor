@@ -29,68 +29,40 @@ class BucketTool extends BaseTool {
     const point = toolData.getCoords();
     const color = this.config.get("bucketErase", false) ? () => TRANSPARENT_COLOR : this.config.getColor.bind(this.config);
     const old_color = toolData.texture.getPixel({ x: point.x, y: point.y });
+    const limbs = {
+      "head_inner": [8, 8, 8, 0, 0],
+      "head_outer": [8, 8, 8, 32, 0],
+      "torso_inner": [8, 12, 4, 16, 16],
+      "torso_outer": [8, 12, 4, 16, 32],
+      "right_arm_inner_classic": [4, 12, 4, 40, 16],
+      "right_arm_outer_classic": [4, 12, 4, 40, 32],
+      "left_arm_inner_classic": [4, 12, 4, 32, 48],
+      "left_arm_outer_classic": [4, 12, 4, 48, 48],
+      "right_arm_inner_slim": [3, 12, 4, 40, 16],
+      "right_arm_outer_slim": [3, 12, 4, 40, 32],
+      "left_arm_inner_slim": [3, 12, 4, 32, 48],
+      "left_arm_outer_slim": [3, 12, 4, 48, 48],
+      "right_leg_inner": [4, 12, 4, 0, 16],
+      "right_leg_outer": [4, 12, 4, 0, 32],
+      "left_leg_inner": [4, 12, 4, 16, 48],
+      "left_leg_outer": [4, 12, 4, 0, 48],
+      "ears": [6, 6, 1, 24, 0],
+    }
 
-    this.replaceColor = this.config.get("fillStyle")=="replace-color";
-    this.cubeUV = this.config.get("fillStyle")=="fill-cube-connected" || this.config.get("fillStyle")=="fill-cube-replace";
-    this.replaceWithColor = this.config.get("fillStyle")=="fill-cube-replace"||this.config.get("fillStyle")=="fill-face-replace";
+    this.replaceColor = this.config.get("fillStyle")==="replace-color";
+    this.cubeUV = this.config.get("fillStyle")==="fill-cube-connected" || this.config.get("fillStyle")==="fill-cube-replace";
+    this.replaceWithColor = this.config.get("fillStyle")==="fill-cube-replace"||this.config.get("fillStyle")==="fill-face-replace";
 
     this.cursor = point;
     if (!this.replaceColor) {
-      if (this.isInArea(point,0,8,31,15)||this.isInArea(point,8,0,23,7)) {
-        this.draw_head_inner(texture, point, color, old_color);
-      }
-      if (this.isInArea(point,32,8,63,15)||this.isInArea(point,40,0,55,7)) {
-        this.draw_head_outer(texture, point, color, old_color);
-      }
-      if (this.isInArea(point,20,16,35,19)||this.isInArea(point,16,20,39,31)) {
-        this.draw_torso_inner(texture, point, color, old_color);
-      }
-      if (this.isInArea(point,20,32,35,35)||this.isInArea(point,16,36,39,47)) {
-        this.draw_torso_outer(texture, point, color, old_color);
-      }
+      Object.keys(limbs).forEach(key => {
+        if ((toolData.variant === 'slim' && key.endsWith("classic")) ||
+            (toolData.variant === 'classic' && key.endsWith("slim"))) {
+          return;
+        }
+        this.draw_box_uv(limbs[key], texture, point, color, old_color);
+      });
 
-      if (toolData.variant=='classic'&&(this.isInArea(point,44,16,51,19)||this.isInArea(point,40,20,55,31))) {
-        this.draw_right_arm_inner_classic(texture, point, color, old_color);
-      }
-      if (toolData.variant=='classic'&&(this.isInArea(point,44,32,51,35)||this.isInArea(point,40,36,55,47))) {
-        this.draw_right_arm_outer_classic(texture, point, color, old_color);
-      }
-      if (toolData.variant=='classic'&&(this.isInArea(point,36,48,43,51)||this.isInArea(point,32,52,47,63))) {
-        this.draw_left_arm_inner_classic(texture, point, color, old_color);
-      }
-      if (toolData.variant=='classic'&&(this.isInArea(point,52,48,59,51)||this.isInArea(point,48,52,63,63))) {
-        this.draw_left_arm_outer_classic(texture, point, color, old_color);
-      }
-
-      if (toolData.variant=='slim'&&(this.isInArea(point,44,16,49,19)||this.isInArea(point,40,20,53,31))) {
-        this.draw_right_arm_inner_slim(texture, point, color, old_color);
-      }
-      if (toolData.variant=='slim'&&(this.isInArea(point,44,32,49,35)||this.isInArea(point,40,36,53,47))) {
-        this.draw_right_arm_outer_slim(texture, point, color, old_color);
-      }
-      if (toolData.variant=='slim'&&(this.isInArea(point,36,48,41,51)||this.isInArea(point,32,52,45,63))) {
-        this.draw_left_arm_inner_slim(texture, point, color, old_color);
-      }
-      if (toolData.variant=='slim'&&(this.isInArea(point,52,48,57,51)||this.isInArea(point,48,52,61,63))) {
-        this.draw_left_arm_outer_slim(texture, point, color, old_color);
-      }
-
-      if ((this.isInArea(point,4,16,11,19)||this.isInArea(point,0,20,15,31))) {
-        this.draw_right_leg_inner(texture, point, color, old_color);
-      }
-      if ((this.isInArea(point,4,32,11,35)||this.isInArea(point,0,36,15,47))) {
-        this.draw_right_leg_outer(texture, point, color, old_color);
-      }
-      if ((this.isInArea(point,20,48,27,61)||this.isInArea(point,16,52,31,63))) {
-        this.draw_left_leg_inner(texture, point, color, old_color);
-      }
-      if ((this.isInArea(point,4,48,11,61)||this.isInArea(point,0,52,15,63))) {
-        this.draw_left_leg_outer(texture, point, color, old_color);
-      }
-
-      if ((this.isInArea(point,25,0,36,0)||this.isInArea(point,24,1,37,6))) {
-        this.draw_ears(texture, point, color, old_color);
-      }
     } else {
         this.draw_replace_color(texture, color, old_color);
     }
@@ -125,137 +97,70 @@ class BucketTool extends BaseTool {
     }
   }
 
-  draw_box_uv(box_width, box_height, box_depth, offset_x, offset_y, texture, point, color, old_color) {
-    const queue = [point];
-    const visited = new Set();
-    const width = texture.canvas.width;
-    const height = texture.canvas.height;
-    let queue_length;
-    let previous_queue_legth;
+  draw_box_uv([box_width, box_height, box_depth, offset_x, offset_y], texture, point, color, old_color) {
+    if (this.isInArea(point,offset_x+box_depth,offset_y,offset_x+box_depth+(2*box_width),offset_y+box_depth+box_height)||this.isInArea(point,offset_x,offset_y+box_depth,offset_x+(2*(box_depth+box_width)),offset_y+box_depth+box_height)) {
+      const queue = [point];
+      const visited = new Set();
+      const width = texture.canvas.width;
+      const height = texture.canvas.height;
+      let queue_length;
+      let previous_queue_legth;
 
-    for (let i = 0; i<((box_width*box_height*2)+(box_width*box_depth*2)+(box_height*box_depth*2)); i++) {
-      queue_length = queue.length;
-      for (let j = 0; j < queue_length; j++) {
-        const { x, y } = queue[j];
-        if (x < 0 || y < 0 || x >= width || y >= height) continue;
-        if (visited.has(`${x},${y}`)) continue;
-        visited.add(`${x},${y}`);
+      for (let i = 0; i<((box_width*box_height*2)+(box_width*box_depth*2)+(box_height*box_depth*2)); i++) {
+        queue_length = queue.length;
+        for (let j = 0; j < queue_length; j++) {
+          const { x, y } = queue[j];
+          if (x < 0 || y < 0 || x >= width || y >= height) continue;
+          if (visited.has(`${x},${y}`)) continue;
+          visited.add(`${x},${y}`);
 
-        if (this.cubeUV) {
-          // The lines below limit the bucket tool from spilling over to other limbs and parts of the cube that aren't physically connected
-          this.UV(x+1<=width&&!((x==(offset_x+box_depth+box_width-1)&&y>=offset_y&&y<=(offset_y+box_depth-1))||(x==(offset_x+box_depth+(box_width*2)-1)&&y>=offset_y&&y<=(offset_y+box_depth-1))||(x==(offset_x+(box_depth*2)+(box_width*2)-1)&&y>=(offset_y+box_depth)&&y<=(offset_y+box_depth+box_height-1))), { x: x + 1, y },texture,old_color,queue);
-          this.UV(x-1>=0&&!((x==(offset_x+box_depth)&&y>=(offset_y)&&y<=(offset_y+box_depth-1))||(x==(offset_x+box_depth+box_width)&&y>=(offset_y)&&y<=(offset_y+box_depth-1))||(x==offset_x&&y>=(offset_y+box_depth)&&y<=(offset_y+box_depth+box_height-1))), { x: x - 1, y },texture,old_color,queue);
-          this.UV(y+1<=height&&!((y==(offset_y+box_depth-1)&&x>=(offset_x+box_depth+box_width)&&x<=(offset_x+box_depth+(box_width*2)-1))||(y==(offset_y+box_depth+box_height-1)&&x>=offset_x&&x<=(offset_x+(box_width*2)+(box_depth*2)-1))), { x, y: y + 1 },texture,old_color,queue);
-          this.UV(y-1>=0&&!((y==offset_y&&x>=(offset_x+box_depth)&&x<=(offset_x+box_depth+box_width*2))||(y==(offset_y+box_depth)&&x>=offset_x&&x<=(offset_x+box_depth-1))||(y==(offset_y+box_depth)&&x>=(offset_x+box_depth+box_width)&&x<=(offset_x+(box_depth*2)+(box_width*2)-1))), { x, y: y - 1 },texture,old_color,queue);
+          if (this.cubeUV) {
+            // The lines below limit the bucket tool from spilling over to other limbs and parts of the cube that aren't physically connected
+            this.UV(x+1<=width&&!((x==(offset_x+box_depth+box_width-1)&&y>=offset_y&&y<=(offset_y+box_depth-1))||(x==(offset_x+box_depth+(box_width*2)-1)&&y>=offset_y&&y<=(offset_y+box_depth-1))||(x==(offset_x+(box_depth*2)+(box_width*2)-1)&&y>=(offset_y+box_depth)&&y<=(offset_y+box_depth+box_height-1))), { x: x + 1, y },texture,old_color,queue);
+            this.UV(x-1>=0&&!((x==(offset_x+box_depth)&&y>=(offset_y)&&y<=(offset_y+box_depth-1))||(x==(offset_x+box_depth+box_width)&&y>=(offset_y)&&y<=(offset_y+box_depth-1))||(x==offset_x&&y>=(offset_y+box_depth)&&y<=(offset_y+box_depth+box_height-1))), { x: x - 1, y },texture,old_color,queue);
+            this.UV(y+1<=height&&!((y==(offset_y+box_depth-1)&&x>=(offset_x+box_depth+box_width)&&x<=(offset_x+box_depth+(box_width*2)-1))||(y==(offset_y+box_depth+box_height-1)&&x>=offset_x&&x<=(offset_x+(box_width*2)+(box_depth*2)-1))), { x, y: y + 1 },texture,old_color,queue);
+            this.UV(y-1>=0&&!((y==offset_y&&x>=(offset_x+box_depth)&&x<=(offset_x+box_depth+box_width*2))||(y==(offset_y+box_depth)&&x>=offset_x&&x<=(offset_x+box_depth-1))||(y==(offset_y+box_depth)&&x>=(offset_x+box_depth+box_width)&&x<=(offset_x+(box_depth*2)+(box_width*2)-1))), { x, y: y - 1 },texture,old_color,queue);
 
-          // Left-Right UV
-          this.UV(x==offset_x&&y>=(offset_y+box_depth)&&y<=(offset_y+box_depth+box_height-1), { x: (offset_x+(box_depth*2)+(box_width*2)-1), y },texture,old_color,queue);
-          this.UV(x==(offset_x+(box_depth*2)+(box_width*2)-1)&&y>=(offset_y+box_depth)&&y<=(offset_y+box_depth+box_height-1), { x: offset_x, y },texture,old_color,queue);
-          // 1st Top UV
-          this.UV(x>=offset_x&&x<=(offset_x+box_depth)&&y==(offset_y+box_depth), { x: (offset_x+box_depth), y: (offset_y+(x-offset_x)) },texture,old_color,queue);
-          this.UV(y>=offset_y&&y<=(offset_y+box_depth-1)&&x==(offset_x+box_depth), { x: (offset_x+(y-offset_y)), y: (offset_y+box_depth) },texture,old_color,queue);
-          // 2nd Top UV
-          this.UV(x>=(offset_x+box_depth+box_width)&&x<=(offset_x+(box_depth*2)+box_width-1)&&y==(offset_y+box_depth), { x: (offset_x+box_depth+box_width-1), y: (offset_y+((offset_x+(box_depth*2)+box_width-1)-x)) },texture,old_color,queue);
-          this.UV(y>=offset_y&&y<=(offset_y+box_depth)&&x==(offset_x+box_depth+box_width-1), { x: (offset_x+((offset_y+(box_depth*2)+box_width-1)-y)), y: (offset_y+box_depth) },texture,old_color,queue);
-          // 3rd Top UV
-          this.UV(y==(offset_y+box_depth)&&x>=(offset_x+(box_depth*2)+box_width)&&x<=(offset_x+(box_depth*2)+(box_width*2)), { x: (offset_x*2+box_depth*3+box_width*2-x-1), y: offset_y },texture,old_color,queue);
-          this.UV(y==offset_y&&x>=(offset_x+box_depth)&&x<=(offset_x+box_depth+box_width-1), { x: ((offset_x*2)+(box_depth*3)+(box_width*2)-x-1), y: (offset_y+box_depth) },texture,old_color,queue);
-          // 1st Bottom UV
-          this.UV(y==(offset_y+box_depth+box_height-1)&&x>=offset_x&&x<=(offset_x+box_depth-1), { x: (offset_x+box_depth+box_width), y: (offset_y+(x-offset_x)) },texture,old_color,queue);
-          this.UV(x==(offset_x+box_depth+box_width)&&y>=offset_y&&y<=(offset_y+box_depth-1), { x: (offset_x+(y-offset_y)), y: (offset_y+box_depth+box_height-1) },texture,old_color,queue);
-          // 2nd Bottom UV
-          this.UV(y==(offset_y+box_depth+box_height-1)&&x>=(offset_x+box_depth)&&x<=(offset_x+box_depth+box_width-1), { x: (x+(box_width)), y: (offset_y+box_depth-1) },texture,old_color,queue);
-          this.UV(y==(offset_y+box_depth-1)&&x>=(offset_x+box_depth+box_width)&&x<=(offset_x+box_depth+(box_width*2)-1), { x: (x-(box_width)), y: (offset_y+box_depth+box_height-1) },texture,old_color,queue);
-          // 3rd Bottom UV
-          this.UV(y==(offset_y+box_depth+box_height-1)&&x>=(offset_x+box_depth+box_width)&&x<=(offset_x+(box_depth*2)+box_width-1), { x: (offset_x+box_depth+box_width*2-1), y: (offset_y+(offset_x+box_depth*2+box_width-x-1)) },texture,old_color,queue);
-          this.UV(x==(offset_x+box_depth+box_width*2-1)&&y>=offset_y&&y<=(offset_y+box_depth-1), { x: (offset_x+box_depth*2+box_width+(offset_y-y-1)), y: (offset_y+box_depth+box_height-1) },texture,old_color,queue);
-          // 4th Bottom UV
-          this.UV(y==(offset_y+box_depth+box_height-1)&&x>=(offset_x+box_depth*2+box_width)&&x<=(offset_x+(box_depth*2)+(box_width*2)-1), { x: (offset_x*2 + box_depth*3 + box_width*3 - x - 1), y: offset_y },texture,old_color,queue);
-          this.UV(y==offset_y&&x>=(offset_x+box_depth+box_width)&&x<=(offset_x+box_depth+box_width*2-1), { x: (offset_x*2 + box_depth*3 + box_width*3 - x - 1), y: (offset_y+box_depth+box_height-1) },texture,old_color,queue);
-        } else {
-          this.UV(x+1<=width&&!((x==(offset_x+box_depth-1)&&y>=(offset_y+box_depth))||(x==(offset_x+box_depth+box_width-1))||(x==(offset_x+box_depth+box_width*2-1)&&y<(offset_y+box_depth))||(x==(offset_x+box_depth*2+box_width-1)&&y>=(offset_y+box_depth))||(x==(offset_x+box_depth*2+box_width*2-1))), { x: x + 1, y },texture,old_color,queue);
-          this.UV(x-1>=0&&!((x==(offset_x))||(x==(offset_x+box_depth))||(x==(offset_x+box_depth+box_width)||(x==(offset_x+box_depth*2+box_width))&&(y>=(offset_y+box_depth)))), { x: x - 1, y },texture,old_color,queue);
-          this.UV(y+1<=height&&!(y==(offset_y+box_depth-1)||(y==(offset_y+box_depth+box_height-1))), { x, y: y + 1 },texture,old_color,queue);
-          this.UV(y-1>=0&&!((y==(offset_y)||y==(offset_y+box_depth))), { x, y: y - 1 },texture,old_color,queue);
+            // Left-Right UV
+            this.UV(x==offset_x&&y>=(offset_y+box_depth)&&y<=(offset_y+box_depth+box_height-1), { x: (offset_x+(box_depth*2)+(box_width*2)-1), y },texture,old_color,queue);
+            this.UV(x==(offset_x+(box_depth*2)+(box_width*2)-1)&&y>=(offset_y+box_depth)&&y<=(offset_y+box_depth+box_height-1), { x: offset_x, y },texture,old_color,queue);
+            // 1st Top UV
+            this.UV(x>=offset_x&&x<=(offset_x+box_depth)&&y==(offset_y+box_depth), { x: (offset_x+box_depth), y: (offset_y+(x-offset_x)) },texture,old_color,queue);
+            this.UV(y>=offset_y&&y<=(offset_y+box_depth-1)&&x==(offset_x+box_depth), { x: (offset_x+(y-offset_y)), y: (offset_y+box_depth) },texture,old_color,queue);
+            // 2nd Top UV
+            this.UV(x>=(offset_x+box_depth+box_width)&&x<=(offset_x+(box_depth*2)+box_width-1)&&y==(offset_y+box_depth), { x: (offset_x+box_depth+box_width-1), y: (offset_y+((offset_x+(box_depth*2)+box_width-1)-x)) },texture,old_color,queue);
+            this.UV(y>=offset_y&&y<=(offset_y+box_depth)&&x==(offset_x+box_depth+box_width-1), { x: (offset_x+((offset_y+(box_depth*2)+box_width-1)-y)), y: (offset_y+box_depth) },texture,old_color,queue);
+            // 3rd Top UV
+            this.UV(y==(offset_y+box_depth)&&x>=(offset_x+(box_depth*2)+box_width)&&x<=(offset_x+(box_depth*2)+(box_width*2)), { x: (offset_x*2+box_depth*3+box_width*2-x-1), y: offset_y },texture,old_color,queue);
+            this.UV(y==offset_y&&x>=(offset_x+box_depth)&&x<=(offset_x+box_depth+box_width-1), { x: ((offset_x*2)+(box_depth*3)+(box_width*2)-x-1), y: (offset_y+box_depth) },texture,old_color,queue);
+            // 1st Bottom UV
+            this.UV(y==(offset_y+box_depth+box_height-1)&&x>=offset_x&&x<=(offset_x+box_depth-1), { x: (offset_x+box_depth+box_width), y: (offset_y+(x-offset_x)) },texture,old_color,queue);
+            this.UV(x==(offset_x+box_depth+box_width)&&y>=offset_y&&y<=(offset_y+box_depth-1), { x: (offset_x+(y-offset_y)), y: (offset_y+box_depth+box_height-1) },texture,old_color,queue);
+            // 2nd Bottom UV
+            this.UV(y==(offset_y+box_depth+box_height-1)&&x>=(offset_x+box_depth)&&x<=(offset_x+box_depth+box_width-1), { x: (x+(box_width)), y: (offset_y+box_depth-1) },texture,old_color,queue);
+            this.UV(y==(offset_y+box_depth-1)&&x>=(offset_x+box_depth+box_width)&&x<=(offset_x+box_depth+(box_width*2)-1), { x: (x-(box_width)), y: (offset_y+box_depth+box_height-1) },texture,old_color,queue);
+            // 3rd Bottom UV
+            this.UV(y==(offset_y+box_depth+box_height-1)&&x>=(offset_x+box_depth+box_width)&&x<=(offset_x+(box_depth*2)+box_width-1), { x: (offset_x+box_depth+box_width*2-1), y: (offset_y+(offset_x+box_depth*2+box_width-x-1)) },texture,old_color,queue);
+            this.UV(x==(offset_x+box_depth+box_width*2-1)&&y>=offset_y&&y<=(offset_y+box_depth-1), { x: (offset_x+box_depth*2+box_width+(offset_y-y-1)), y: (offset_y+box_depth+box_height-1) },texture,old_color,queue);
+            // 4th Bottom UV
+            this.UV(y==(offset_y+box_depth+box_height-1)&&x>=(offset_x+box_depth*2+box_width)&&x<=(offset_x+(box_depth*2)+(box_width*2)-1), { x: (offset_x*2 + box_depth*3 + box_width*3 - x - 1), y: offset_y },texture,old_color,queue);
+            this.UV(y==offset_y&&x>=(offset_x+box_depth+box_width)&&x<=(offset_x+box_depth+box_width*2-1), { x: (offset_x*2 + box_depth*3 + box_width*3 - x - 1), y: (offset_y+box_depth+box_height-1) },texture,old_color,queue);
+          } else {
+            this.UV(x+1<=width&&!((x==(offset_x+box_depth-1)&&y>=(offset_y+box_depth))||(x==(offset_x+box_depth+box_width-1))||(x==(offset_x+box_depth+box_width*2-1)&&y<(offset_y+box_depth))||(x==(offset_x+box_depth*2+box_width-1)&&y>=(offset_y+box_depth))||(x==(offset_x+box_depth*2+box_width*2-1))), { x: x + 1, y },texture,old_color,queue);
+            this.UV(x-1>=0&&!((x==(offset_x))||(x==(offset_x+box_depth))||(x==(offset_x+box_depth+box_width)||(x==(offset_x+box_depth*2+box_width))&&(y>=(offset_y+box_depth)))), { x: x - 1, y },texture,old_color,queue);
+            this.UV(y+1<=height&&!(y==(offset_y+box_depth-1)||(y==(offset_y+box_depth+box_height-1))), { x, y: y + 1 },texture,old_color,queue);
+            this.UV(y-1>=0&&!((y==(offset_y)||y==(offset_y+box_depth))), { x, y: y - 1 },texture,old_color,queue);
+          }
         }
+        if (previous_queue_legth === queue.length){
+          break;
+        }
+        previous_queue_legth = queue.length;
       }
-      if (previous_queue_legth === queue.length){
-        break;
+      for (let i = 0; i < queue.length; i++) {
+        texture.putPixel({ x:queue[i].x, y:queue[i].y }, color());
       }
-      previous_queue_legth = queue.length;
     }
-    for (let i = 0; i < queue.length; i++) {
-      texture.putPixel({ x:queue[i].x, y:queue[i].y }, color());
-    }
-  }
-
-  draw_head_inner(texture, point, color, old_color) {
-    this.draw_box_uv(8, 8, 8, 0, 0, texture, point, color, old_color);
-  }
-
-  draw_head_outer(texture, point, color, old_color) {
-    this.draw_box_uv(8, 8, 8, 32, 0, texture, point, color, old_color);
-  }
-
-  draw_torso_inner(texture, point, color, old_color) {
-    this.draw_box_uv(8, 12, 4, 16, 16, texture, point, color, old_color);
-  }
-  
-  draw_torso_outer(texture, point, color, old_color) {
-    this.draw_box_uv(8, 12, 4, 16, 32, texture, point, color, old_color);
-  }
-
-  draw_right_arm_inner_classic(texture, point, color, old_color) {
-    this.draw_box_uv(4, 12, 4, 40, 16, texture, point, color, old_color);
-  }
-
-  draw_right_arm_outer_classic(texture, point, color, old_color) {
-    this.draw_box_uv(4, 12, 4, 40, 32, texture, point, color, old_color);
-  }
-
-  draw_left_arm_inner_classic(texture, point, color, old_color) {
-    this.draw_box_uv(4, 12, 4, 32, 48, texture, point, color, old_color);
-  }
-
-  draw_left_arm_outer_classic(texture, point, color, old_color) {
-    this.draw_box_uv(4, 12, 4, 48, 48, texture, point, color, old_color);
-  }
-
-  draw_right_arm_inner_slim(texture, point, color, old_color) {
-    this.draw_box_uv(3, 12, 4, 40, 16, texture, point, color, old_color);
-  }
-
-  draw_right_arm_outer_slim(texture, point, color, old_color) {
-    this.draw_box_uv(3, 12, 4, 40, 32, texture, point, color, old_color);
-  }
-
-  draw_left_arm_inner_slim(texture, point, color, old_color) {
-    this.draw_box_uv(3, 12, 4, 32, 48, texture, point, color, old_color);
-  }
-
-  draw_left_arm_outer_slim(texture, point, color, old_color) {
-    this.draw_box_uv(3, 12, 4, 48, 48, texture, point, color, old_color);
-  }
-
-  draw_right_leg_inner(texture, point, color, old_color) {
-    this.draw_box_uv(4, 12, 4, 0, 16, texture, point, color, old_color);
-  }
-
-  draw_right_leg_outer(texture, point, color, old_color) {
-    this.draw_box_uv(4, 12, 4, 0, 32, texture, point, color, old_color);
-  }
-
-  draw_left_leg_inner(texture, point, color, old_color) {
-    this.draw_box_uv(4, 12, 4, 16, 48, texture, point, color, old_color);
-  }
-
-  draw_left_leg_outer(texture, point, color, old_color) {
-    this.draw_box_uv(4, 12, 4, 0, 48, texture, point, color, old_color);
-  }
-
-
-  draw_ears(texture, point, color, old_color) {
-    this.draw_box_uv(6, 6, 1, 24, 0, texture, point, color, old_color);
   }
 
 
