@@ -1,5 +1,6 @@
 import { BaseEntry } from "../base_entry.js";
 
+// Make sure to layer.flush() before using this, to properly set what the old texture should be.
 class UpdateLayerTextureEntry extends BaseEntry {
   constructor(layers, layer, texture) {
     super();
