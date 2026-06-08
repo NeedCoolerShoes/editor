@@ -98,7 +98,7 @@ class BucketTool extends BaseTool {
   }
 
   draw_box_uv([box_width, box_height, box_depth, offset_x, offset_y], texture, point, color, old_color) {
-    if (this.isInArea(point,offset_x+box_depth,offset_y,offset_x+box_depth+(2*box_width),offset_y+box_depth+box_height)||this.isInArea(point,offset_x,offset_y+box_depth,offset_x+(2*(box_depth+box_width)),offset_y+box_depth+box_height)) {
+    if (this.isInArea(point, offset_x+box_depth, offset_y, offset_x+box_depth+(2*box_width)-1, offset_y+box_depth+box_height-1)||this.isInArea(point, offset_x, offset_y+box_depth, offset_x+(2*(box_depth+box_width))-1, offset_y+box_depth+box_height-1)) {
       const queue = [point];
       const visited = new Set();
       const width = texture.canvas.width;
