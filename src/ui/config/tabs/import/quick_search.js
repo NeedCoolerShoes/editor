@@ -5,6 +5,7 @@ import { clamp } from "../../../../helpers.js";
 class QuickSearch extends LitElement {
   static properties = {
     _galleryData: {state: true},
+    ignoreModel: {type: Boolean},
   }
 
   static styles = css`
@@ -34,6 +35,7 @@ class QuickSearch extends LitElement {
       border-radius: 4px;
       box-shadow: 0 0 0 2px #313436;
       padding-left: 0.25rem;
+      width: 11rem;
     }
 
     #skins {
@@ -101,6 +103,35 @@ class QuickSearch extends LitElement {
       box-shadow: 0 0 0 2px #313436;
       padding-left: 0.25rem;
     }
+
+    #search-area {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      height: 34px;
+    }
+
+    #ignore-variant {
+      --text-color: white;
+
+      color: var(--text-color);
+      font-size: x-small;
+    }
+
+    #ignore-variant::part(button) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    #ignore-variant[toggled] {
+      --text-color: #55b2ff;
+    }
+
+    #ignore-variant ncrs-icon {
+      width: 18px;
+      height: 18px;
+    }
   `;
 
   constructor(ui) {
@@ -142,11 +173,18 @@ class QuickSearch extends LitElement {
     }
 
     return html`
-      <div id="search">
-        ${this.searchField}
-        <ncrs-button id="search-button" part="search-button" title="Submit search" @click=${this._setQuery}>
-          <ncrs-icon icon="search" color="var(--text-color)"></ncrs-icon>
-        </ncrs-button>
+      <div id="search-area">
+        <div id="search">
+          ${this.searchField}
+          <ncrs-button id="search-button" part="search-button" title="Submit search" @click=${this._setQuery}>
+            <ncrs-icon icon="search" color="var(--text-color)"></ncrs-icon>
+          </ncrs-button>
+        </div>
+        <ncrs-toggle id="ignore-variant" @toggle=${this._toggleIgnoreModel} title="Ignore skin model when searching the gallery.">
+          <div slot="before">Ignore Model</div>
+          <ncrs-icon slot="off" icon="box-unchecked" color="var(--text-color)"></ncrs-icon>
+          <ncrs-icon slot="on" icon="box-checked" color="var(--text-color)"></ncrs-icon>
+        </ncrs-toggle>
       </div>
       <div id="filters">
         <div>
@@ -205,7 +243,9 @@ class QuickSearch extends LitElement {
       params.set("category", this.category);
     }
 
-    params.set("model", this.editor.project.get("variant", "classic"));
+    if (!this.ignoreModel) {
+      params.set("model", this.editor.getVariant());
+    }
 
     return this.ui.galleryURL() + `/${this.page}?${params}`;
   }
@@ -339,8 +379,16 @@ class QuickSearch extends LitElement {
     return btoa(str);
   }
 
+  _toggleIgnoreModel(event) {
+    this.ignoreModel = event.detail;
+
+    this._syncGalleryData();
+  }
+
   _setupEvents() {
     this.editor.project.addEventListener("variant-change", () => {
+      if (this.ignoreModel) return;
+
       this._syncGalleryData();
     })
   }
