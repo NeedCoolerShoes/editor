@@ -98,7 +98,7 @@ class LayersTabButtons extends LitElement {
   swapFrontBack() {
     const layers = this.editor.layers;
     const layer = this._getLayer();
-    const canvas = layer.swapFrontBackTexture(this.editor.project.get("variant", "classic"));
+    const canvas = layer.swapFrontBackTexture(this.editor.getVariant());
     const texture = new THREE.Texture(canvas, IMAGE_WIDTH, IMAGE_HEIGHT);
 
     layer.flush();
@@ -111,7 +111,7 @@ class LayersTabButtons extends LitElement {
   swapLeftRight() {
     const layers = this.editor.layers;
     const layer = this._getLayer();
-    const canvas = layer.swapLeftRightTexture(this.editor.project.get("variant", "classic"));
+    const canvas = layer.swapLeftRightTexture(this.editor.getVariant());
     const texture = new THREE.Texture(canvas, IMAGE_WIDTH, IMAGE_HEIGHT);
 
     layer.flush();
@@ -124,7 +124,7 @@ class LayersTabButtons extends LitElement {
   clearLayerBase() {
     const layers = this.editor.layers;
     const layer = this._getLayer();
-    const canvas = layer.clearBase(this.editor.project.get("variant", "classic"));
+    const canvas = layer.clearBase(this.editor.getVariant());
     const texture = new THREE.Texture(canvas, IMAGE_WIDTH, IMAGE_HEIGHT);
 
     layer.flush();
@@ -137,7 +137,7 @@ class LayersTabButtons extends LitElement {
   clearLayerOverlay() {
     const layers = this.editor.layers;
     const layer = this._getLayer();
-    const canvas = layer.clearOverlay(this.editor.project.get("variant", "classic"));
+    const canvas = layer.clearOverlay(this.editor.getVariant());
     const texture = new THREE.Texture(canvas, IMAGE_WIDTH, IMAGE_HEIGHT);
 
     layer.flush();
@@ -150,7 +150,7 @@ class LayersTabButtons extends LitElement {
   flattenLayerOverlay() {
     const layers = this.editor.layers;
     const layer = this._getLayer();
-    const canvas = layer.flattenOverlay(this.editor.project.get("variant", "classic"));
+    const canvas = layer.flattenOverlay(this.editor.getVariant());
     const texture = new THREE.Texture(canvas, IMAGE_WIDTH, IMAGE_HEIGHT);
 
     layer.flush();

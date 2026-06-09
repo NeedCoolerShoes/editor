@@ -295,7 +295,7 @@ class Editor extends LitElement {
   }
 
   getVariant() {
-    this.project.get("variant", "classic");
+    return this.project.get("variant", "classic");
   }
 
   getToolById(id) {

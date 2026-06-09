@@ -99,7 +99,7 @@ class MinecraftImport extends LitElement {
         const uuid = res.headers.get("X-NeedCoolerShoes-UUID");
         const model = res.headers.get("X-NeedCoolerShoes-Model");
 
-        if (model !== this.editor.project.get("variant") && this.editor.layers.isBlank()) {
+        if (model !== this.editor.getVariant() && this.editor.layers.isBlank()) {
           this.editor.setVariant(model);
         }
 
