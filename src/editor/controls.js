@@ -3,16 +3,18 @@ import { OrbitControls } from "./orbit.js";
 import { getFocusedElement, isKeybindIgnored } from "../helpers.js";
 
 import imgEyedropper from "../../assets/images/cursors/eyedropper.png"
+import { lerp } from "three/src/math/MathUtils.js";
+import { getPartFromCoords } from "./layers/texture_utils.js";
 const CURSOR_EYEDROPPER = `url("${imgEyedropper}") 0 31, crosshair`;
 const POINTER_MOVEMENT_THRESHOLD = 16;
 
 class Controls {
-  constructor(parent) {
-    this.parent = parent;
+  constructor(editor) {
+    this.editor = editor;
     this.raycaster = new THREE.Raycaster();
-    this.camera = this.parent.camera;
-    this.orbit = this._setupOrbit(this.camera, parent);
-    this._setupEvents(parent);
+    this.camera = this.editor.camera;
+    this.orbit = this._setupOrbit(this.camera, editor);
+    this._setupEvents(editor);
     this.resetVariables();
   }
 
@@ -21,6 +23,7 @@ class Controls {
   
   resetVariables() {
     this.pointer = new THREE.Vector2(100000, 100000);
+    this.lastPointer = new THREE.Vector2(100000, 100000);
     this.pointerDown = false;
     this.pointerDownAt = new THREE.Vector2(0, 0);
     this.tempPointer = new THREE.Vector2(0, 0);
@@ -31,18 +34,21 @@ class Controls {
     this.failedCheck = false;
     this.drawOnPointerUp = false;
     this.keybindEyedropper = false;
+    this.variant = this.editor.getVariant();
+    this.part = "none";
+    this.lastPart = "none";
 
     this.orbit.enabled = true;
     this.orbit.enableRotate = true;
   }
 
-  handleIntersects(draw = true) {
+  handleIntersects(pointer, draw = true) {
     if (!this.shouldRaycast()) {
       this.targetingModel = false;
       return;
     }
 
-    const intersects = this.raycast();
+    const intersects = this.raycast(pointer);
 
     function isValidIntersect(part) {
       if (part.object.type != "Mesh") { return false; }
@@ -69,30 +75,30 @@ class Controls {
     }
   }
 
-  raycast() {
+  raycast(pointer) {
     const raycaster = this.raycaster;
-    raycaster.layers.mask = this.parent.camera.layers.mask;
+    raycaster.layers.mask = this.editor.camera.layers.mask;
 
-    raycaster.setFromCamera(this.pointer, this.parent.camera);
+    raycaster.setFromCamera(pointer, this.editor.camera);
 
-    return raycaster.intersectObjects(this.parent.scene.children);
+    return raycaster.intersectObjects(this.editor.scene.children);
   }
 
   toolAction(parts, event) {
-    const parent = this.parent;
+    const editor = this.editor;
 
     if (this.failedCheck) return;
 
     if (!this.drawing) {
-      if (!parent.toolCheck(parts, event)) {
+      if (!editor.toolCheck(parts, event)) {
         this.failedCheck = true;
         return;
       }
       
-      parent.toolDown(parts, event);
+      editor.toolDown(parts, event);
       this.drawing = true;
     } else {
-      parent.toolMove(parts, event);
+      editor.toolMove(parts, event);
     }
   }
 
@@ -114,7 +120,7 @@ class Controls {
     
     this.pointerEvent = event;
     this.pointerDown = true;
-    this.handleIntersects(false);
+    this.handleIntersects(this.pointer, false);
     
     if (this.targetingModel) {
       this.orbit.enableRotate = false;
@@ -144,7 +150,7 @@ class Controls {
         break;
       }
     }
-    this.handleIntersects();
+    this.handleIntersects(this.pointer);
   }
 
   onPointerMove(event) {
@@ -159,7 +165,7 @@ class Controls {
     this.setPointer(event.offsetX, event.offsetY);
     this.pointerEvent = event;
     requestAnimationFrame(() => {
-      this.handleIntersects();
+      this.smootherHandleIntersects(24);
     });
   }
 
@@ -168,7 +174,7 @@ class Controls {
     this.pointerEvent = event;
 
     if (this.firstClickOutside) return;
-    if (this.drawing) return this.handleIntersects();
+    if (this.drawing) return this.smootherHandleIntersects(48);
     
     const threshold = POINTER_MOVEMENT_THRESHOLD / this.camera.position.z;
     this.tempPointer.set(event.offsetX, event.offsetY);
@@ -179,16 +185,31 @@ class Controls {
     this.orbit.enabled = false;
     this.drawOnPointerUp = false;
 
-    this.handleIntersects();
+    this.smootherHandleIntersects(32);
+  }
+
+  smootherHandleIntersects(smoothness) {
+    this.handleIntersects(this.pointer);
+    this.variant = this.editor.getVariant();
+    this.part = getPartFromCoords(this.variant, this.editor.currentTool.cursor);
+
+    if (this.part!==this.lastPart) {
+      const linePoints = Math.min(Math.ceil(2+(smoothness*this.vectorDelta(this.lastPointer,this.pointer))), smoothness);
+
+      for(let i = 0; i<linePoints; i++){
+        this.handleIntersects(this.lerpVector(this.lastPointer,this.pointer,(1/linePoints)*i));
+      }
+    }
+    this.lastPart = this.part;
   }
 
   onPointerUp() {
     if (this.drawOnPointerUp) {
-      this.handleIntersects();
+      this.handleIntersects(this.pointer);
     }
     
     if (!this.failedCheck && (this.drawing || this.drawOnPointerUp)) {
-      this.parent.toolUp();
+      this.editor.toolUp();
     }
 
     this.resetVariables();
@@ -202,7 +223,7 @@ class Controls {
     this.shiftKey = event.shiftKey;
 
     if ((event.key === "Control" || event.key === "Alt") && !event.repeat) {
-      this.parent.config.set("pick-color", true);
+      this.editor.config.set("pick-color", true);
       this.keybindEyedropper = true;
     }
   }
@@ -210,7 +231,7 @@ class Controls {
   onKeyUp(event) {
     if (event.key === "Control" || event.key === "Alt") {
       event.preventDefault();
-      this.parent.config.set("pick-color", false);
+      this.editor.config.set("pick-color", false);
       this.keybindEyedropper = false;
     }
 
@@ -229,7 +250,9 @@ class Controls {
   }
 
   setPointer(x, y) {
-    const domElement = this.parent.renderer.canvas();
+    const domElement = this.editor.renderer.canvas();
+    this.lastPointer.x = this.pointer.x;
+    this.lastPointer.y = this.pointer.y;
     (this.pointer.x = (x / domElement.clientWidth) * 2 - 1), (this.pointer.y = -(y / domElement.clientHeight) * 2 + 1);
   }
 
@@ -240,11 +263,11 @@ class Controls {
     }
 
     if ((this.targetingModel || this.pointerDown) && !this.firstClickOutside) {
-      if (this.parent.config.get("pick-color", false)) {
+      if (this.editor.config.get("pick-color", false)) {
         return CURSOR_EYEDROPPER;
       }
 
-      return this.parent.toolCursor();
+      return this.editor.toolCursor();
     }
 
     if (this.ctrlKey || this.shiftKey) {
@@ -259,21 +282,21 @@ class Controls {
   }
 
   shouldRaycast() {
-    if (this.parent.config.get("pick-color", false)) return true;
+    if (this.editor.config.get("pick-color", false)) return true;
 
-    return this.parent.currentTool.properties.id !== "move";
+    return this.editor.currentTool.properties.id !== "move";
   }
 
   _checkEyedropper(event) {
     if (!this.keybindEyedropper) { return; };
     if (event.ctrlKey || event.altKey) { return; }
 
-    this.parent.config.set("pick-color", false);
+    this.editor.config.set("pick-color", false);
     this.keybindEyedropper = false;
   }
 
-  _setupOrbit(camera, parent) {
-    const orbit = new OrbitControls(camera, parent);
+  _setupOrbit(camera, editor) {
+    const orbit = new OrbitControls(camera, editor);
     orbit.minDistance = 1;
     orbit.maxDistance = 15;
     orbit.panSpeed = 0.75;
@@ -282,12 +305,12 @@ class Controls {
     return orbit;
   }
 
-  _setupEvents(parent) {
-    parent.addEventListener("pointerdown", this.onPointerDown.bind(this));
-    parent.addEventListener("pointermove", this.onPointerMove.bind(this));
-    parent.addEventListener("pointerup", this.onPointerUp.bind(this));
+  _setupEvents(editor) {
+    editor.addEventListener("pointerdown", this.onPointerDown.bind(this));
+    editor.addEventListener("pointermove", this.onPointerMove.bind(this));
+    editor.addEventListener("pointerup", this.onPointerUp.bind(this));
 
-    parent.addEventListener("contextmenu", event => {
+    editor.addEventListener("contextmenu", event => {
       if (!this.targetingModel) { return; }
 
       event.preventDefault();
@@ -299,6 +322,14 @@ class Controls {
     document.addEventListener("blur", event => {
       this._checkEyedropper(event);
     })
+  }
+
+  lerpVector(a, b, t) {
+    return {x:lerp(a.x,b.x,t), y:lerp(a.y,b.y,t)};
+  }
+  
+  vectorDelta(a,b) {
+    return Math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2);
   }
 }
 
