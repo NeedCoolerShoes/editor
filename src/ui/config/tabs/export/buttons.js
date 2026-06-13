@@ -61,9 +61,9 @@ class ExportTabButtons extends LitElement {
 
   downloadNCRS() {
     const data = ProjectLoader.export(this.editor);
-    const blob = new Blob([JSON.stringify(data)], {type: "text/plain"});
+    const blob = new Blob([JSON.stringify(data)], {type: "attachment/plain"});
 
-    this.download(`${this._filename()}.ncrs`, blob, "text/plain");
+    this.download(`${this._filename()}.ncrs`, blob, "attachment/plain");
     // download(`${this._filename()}.ncrs`, URL.createObjectURL(blob));
   }
 
