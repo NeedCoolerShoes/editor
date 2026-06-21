@@ -174,7 +174,7 @@ class Controls {
     this.pointerEvent = event;
 
     if (this.firstClickOutside) return;
-    if (this.drawing) return this.smootherHandleIntersects(48);
+    if (this.drawing) return this.smootherHandleIntersects(8);
     
     const threshold = POINTER_MOVEMENT_THRESHOLD / this.camera.position.z;
     this.tempPointer.set(event.offsetX, event.offsetY);
