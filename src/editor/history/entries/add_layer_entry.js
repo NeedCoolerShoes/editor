@@ -11,8 +11,9 @@ class AddLayerEntry extends BaseEntry {
   }
 
   onPerform() {
+    const idx = this.layers.selectedLayerIndex;
     this.layer = this.layer || this._createLayer();
-    this.layers.addLayer(this.layer);
+    this.layers.insertLayer(this.layer, idx + 1);
   }
 
   onRevert() {

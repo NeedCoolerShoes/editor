@@ -14,7 +14,7 @@ class DeleteLayerEntry extends BaseEntry {
     this.index = this.layers.layerIndex(this.layer);
     this.selected = (this.layers.selectedLayerIndex == this.index);
     this.layers.removeLayer(this.layer);
-    this.layers.selectLayer(this.layers.getSelectedLayerIndex());
+    this.layers.selectLayer(Math.max(this.index-1,0));
   }
 
   onRevert() {
