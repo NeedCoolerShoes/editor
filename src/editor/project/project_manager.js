@@ -83,11 +83,16 @@ class ProjectManager extends EventTarget {
     await this.save(uuid);
   }
 
-  async new() {
-    const project = Project.createBlank();
+  async add(project) {
     this.#projectCache.push(project);
 
     await this._syncProjectList();
+  }
+
+  async new() {
+    const project = Project.createBlank();
+
+    await this.add(project);
 
     return project;
   }

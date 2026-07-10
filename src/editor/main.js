@@ -362,18 +362,33 @@ class Editor extends LitElement {
     const reader = new FileReader();
 
     reader.onload = () => {
-      let confirmText = "Load new Project?";
-      confirmText += "\nThis will replace your current project, and you will lose your history.";
-      confirmText += "\nMake sure you have saved the current project."
-
-      const check = confirm(confirmText);
-      if (!check) { return; }
-
       const text = reader.result;
       const json = JSON.parse(text);
 
       const projectLoader = new ProjectLoader(json);
-      projectLoader.load(this);
+      const newProject = Project.createFromNCRS(projectLoader.getData());
+      
+      this.projectManager.get(newProject.id).then(project => {
+        if (project) {
+          const older = newProject.isOlder(project);
+
+          let confirmText = "Overwrite Project?";
+          confirmText += "\nThe project you are loading has a matching ID as one you already have loaded.";
+          confirmText += `\nThe version you are loading is ${older ? "older" : "newer"} than the current version.`;
+          confirmText += "\nAre you sure you wish to continue?"
+
+          const check = confirm(confirmText);
+          if (!check) { return; }
+          
+          this.switchProject(newProject.id).then(() => {
+            newProject.loadToEditor(this);
+          });
+        } else {
+          this.projectManager.add(newProject).then(() => {
+            this.switchProject(newProject.id);
+          });
+        }
+      });
     }
 
     reader.readAsText(file);
@@ -532,6 +547,10 @@ class Editor extends LitElement {
 
   canRedoHistory() {
     return this.history.canRedo();
+  }
+
+  getProjectId() {
+    return this.project.get("project", {}).id;
   }
 
   async switchProject(uuid) {

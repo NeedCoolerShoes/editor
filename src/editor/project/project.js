@@ -13,6 +13,18 @@ class Project {
     return project;
   }
 
+  static createFromNCRS(data) {
+    const project = new Project(data.project.id);
+
+    project.projectData.format = data.format;
+    project.projectData.project = data.project;
+    project.projectData.variant = data.variant;
+    project.toolConfig["blend-palette"] = data.blendPalette;
+    project.layers = data.layers;
+
+    return project;
+  }
+
   static deserialize(id, data) {
     const project = new Project(id);
 
@@ -75,6 +87,10 @@ class Project {
     this.config = editor.config.serialize();
     this.toolConfig = editor.toolConfig.serialize();
     this.projectData = editor.project.serialize();
+  }
+
+  isOlder(project) {
+    return this.projectData.project.modifiedAt <= project.projectData.project.modifiedAt;
   }
 
   async loadToEditor(editor) {

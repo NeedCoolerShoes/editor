@@ -160,6 +160,13 @@ class ProjectTab extends LitElement {
   }
 
   delete() {
+    let confirmText = "Delete Project?";
+    confirmText += "\nThis will permanently delete your project.";
+    confirmText += "\nAre you sure you wish to continue?"
+
+    const check = confirm(confirmText);
+    if (!check) { return; }
+    
     this.dispatchEvent(new CustomEvent("delete", {detail: {id: this.id}}));
   }
 

@@ -54,7 +54,8 @@ class ProjectTabBar extends LitElement {
     });
 
     this.editor.addEventListener("render", () => {
-      const tab = this.tabs.querySelector(`ncrs-ui-project-tab[id="${this.current}"]`)
+      const id = this.editor.project.get("project").id;
+      const tab = this.tabs.querySelector(`ncrs-ui-project-tab[id="${id}"]`)
 
       if (!tab) return;
 
