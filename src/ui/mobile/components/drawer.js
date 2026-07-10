@@ -37,7 +37,7 @@ class MobileDrawer extends LitElement {
     #drawer {
       background-color: rgb(26, 26, 26);
       height: var(--drawer-height);
-      max-height: 100vh;
+      max-height: 100%;
       width: 100%;
       border-top-left-radius: 0.5rem;
       border-top-right-radius: 0.5rem;
