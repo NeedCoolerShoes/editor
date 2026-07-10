@@ -23,27 +23,6 @@ class ProjectManager extends EventTarget {
     return list.length;
   }
 
-  static async untitledName() {
-    let highestProject = await this.count();
-
-    const projects = await this.list();
-    projects.forEach(project => {
-      const name = project.name || "";
-
-      const match = name.match(/Project (?<number>\d+)/);
-
-      if (!match) return;
-
-      const number = parseInt(match.groups?.number || "0");
-
-      if (number > highestProject) {
-        highestProject = number;
-      }
-    });
-
-    return `Project ${highestProject + 1}`;
-  }
-
   constructor(editor) {
     super();
 
@@ -105,8 +84,7 @@ class ProjectManager extends EventTarget {
   }
 
   async new() {
-    const name = await ProjectManager.untitledName();
-    const project = Project.createBlank(name);
+    const project = Project.createBlank();
     this.#projectCache.push(project);
 
     await this._syncProjectList();

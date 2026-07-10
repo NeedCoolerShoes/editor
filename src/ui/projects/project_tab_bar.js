@@ -33,7 +33,7 @@ class ProjectTabBar extends LitElement {
 
     ncrs-button::part(button) {
       padding: 0.25rem 0.25rem;
-      height:calc(100% - 2px);
+      height:calc(100% - 4px);
       width:auto;
       aspect-ratio: 1/1;
     }
@@ -52,12 +52,20 @@ class ProjectTabBar extends LitElement {
       event.preventDefault();
       this.tabs.scrollLeft += event.deltaY + event.deltaX;
     });
+
+    this.editor.addEventListener("render", () => {
+      const tab = this.tabs.querySelector(`ncrs-ui-project-tab[id="${this.current}"]`)
+
+      if (!tab) return;
+
+      tab.thumbnail = this.editor.project.get("thumbnail");
+    });
   }
 
   constructor(editor) {
     super();
     this.editor = editor;
-    this.projects = [{id: "", name: "Loading..."}];
+    this.projects = [{id: "", name: "Loading...", thumbnail: undefined}];
 
     this.editor.projectManager.addEventListener("update", event => {
       this.projects = event.detail.projects;
@@ -67,10 +75,23 @@ class ProjectTabBar extends LitElement {
     this.editor.projectManager.currentUUID().then(id => this.current = id);
     ProjectManager.list().then(list => this.projects = list);
   }
+  #untitledCache = {};
+  #untitled = 0;
 
   render() {
     const tabs = this.projects.map(project => {
-      const tab = new ProjectTab(project.id, project.name);
+      let name = project.name;
+
+      if (!name) {
+        if (!this.#untitledCache[project.id]) {
+          this.#untitled++;
+          this.#untitledCache[project.id] = this.#untitled;
+        }
+
+        name = `Project ${this.#untitledCache[project.id]}`;
+      }
+
+      const tab = new ProjectTab(project.id, name, project.thumbnail);
       tab.selected = (project.id === this.current);
 
       tab.addEventListener("select", event => {

@@ -11,9 +11,10 @@ class ProjectData extends Config {
 
     return {
       format: {default: FORMAT, persistence: true},
-      project: {default: {id: genUUID(), name: "Project 1", createdAt: time, modifiedAt: time}, persistence: true},
+      project: {default: {id: genUUID(), name: undefined, createdAt: time, modifiedAt: time}, persistence: true},
       variant: {default: "classic", persistence: true},
       layers: {default: [], persistence: true},
+      thumbnail: {default: undefined, persistence: true}
     }
   }
 

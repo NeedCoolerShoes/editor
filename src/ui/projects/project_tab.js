@@ -1,4 +1,6 @@
-import { css, html, LitElement } from "lit";
+import { css, html, LitElement, unsafeCSS } from "lit";
+import imgGridGray from "../../../assets/images/grid-editor-gray.png";
+
 
 class ProjectTab extends LitElement {
   static styles = css`
@@ -68,7 +70,7 @@ class ProjectTab extends LitElement {
     #tab-button {
       width: 100%;
       height: 100%;
-      padding: 0rem 0.75rem;
+      padding: 0rem 0.5rem;
       padding-right: 2rem;
       flex-grow: 1;
       color: var(--text-color);
@@ -84,17 +86,35 @@ class ProjectTab extends LitElement {
       width: 100%;
       height: 100%;
     }
+
+    #thumbnail-bg {
+      display: inline-block;
+      background-image: url(${unsafeCSS(imgGridGray)});
+      width: 16px;
+      height: 16px;
+      margin-bottom: -0.25rem;
+    }
+
+    #thumbnail {
+      image-rendering: pixelated;
+      width: 100%;
+      height: 100%;
+    }
   `;
 
   static properties = {
+    id: {type: String, reflect: true},
     selected: {type: Boolean, reflect: true},
+    thumbnail: {type: String}
   }
 
-  constructor(id, name) {
+  constructor(id, name, thumbnail) {
     super();
 
     this.id = id;
     this.name = name;
+    this.thumbnail = thumbnail;
+
     this._nameTemp = name;
   }
 
@@ -102,6 +122,9 @@ class ProjectTab extends LitElement {
     return html`
       <div id="main">
         <button @click=${this.select} id="tab-button">
+          <div id="thumbnail-bg">
+            <img id="thumbnail" src="${this.thumbnail}">
+          </div>
           <span
             id="name"
             spellcheck="false"
@@ -120,6 +143,8 @@ class ProjectTab extends LitElement {
   }
 
   rename() {
+    if (this._nameTemp == this.name) return;
+
     if (this._nameTemp.length > 0) {
       this.dispatchEvent(new CustomEvent("rename", {detail: {name: this._nameTemp}}));
     } else {

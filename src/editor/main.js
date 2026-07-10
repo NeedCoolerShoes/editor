@@ -102,6 +102,8 @@ class Editor extends LitElement {
     this.renderer.render();
     this.style.cursor = this.controls.getCursorStyle();
 
+    this.project.set("thumbnail", this.skinToThumbnail());
+
     this.dispatchEvent(new CustomEvent("render"));
   }
 
@@ -491,6 +493,19 @@ class Editor extends LitElement {
     return canvas.toDataURL();
   }
 
+  skinToThumbnail() {
+    const canvas = document.createElement("canvas");
+    canvas.width = 8;
+    canvas.height = 8;
+
+    const ctx = nonPolyfilledCtx(canvas.getContext("2d"));
+    const source = this.skinToCanvas();
+    ctx.drawImage(source, 8, 8, 8, 8, 0, 0, 8, 8);
+    ctx.drawImage(source, 40, 8, 8, 8, 0, 0, 8, 8);
+
+    return canvas.toDataURL();
+  }
+
   resetCamera() {
     this.controls.orbit.reset();
 
@@ -631,11 +646,6 @@ class Editor extends LitElement {
     }
 
     const projectData = this.project.get("project", {});
-    if (!projectData.name) {
-      const name = await ProjectManager.untitledName();
-      projectData.name = name;
-      this.project.set("project", projectData);
-    }
 
     this.projectManager.syncFromEditor(this);
   }

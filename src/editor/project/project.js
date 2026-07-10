@@ -32,9 +32,8 @@ class Project {
     return this.deserialize(id, data);
   }
 
-  static createBlank(name) {
+  static createBlank() {
     const project = new Project(genUUID());
-    project.projectData.project.name = name;
 
     return project;
   }
@@ -57,13 +56,14 @@ class Project {
     return {
       id: this.id,
       name: this.getName(),
+      thumbnail: this.projectData.thumbnail
     }
   }
 
   getName() {
     if (!this.projectData.project) return;
 
-    return this.projectData.project.name || this.id;
+    return this.projectData.project.name;
   }
 
   saveFromEditor(editor) {
