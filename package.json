@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lit/localize": "^0.12.2",
     "@m3e/core": "^1.1.2",
     "@m3e/tooltip": "^1.1.2",
     "@simonwep/pickr": "^1.9.1",
@@ -26,5 +27,8 @@
     "three": "^0.184.0",
     "uuid": "^11.1.0",
     "vite": "^5.4.1"
+  },
+  "devDependencies": {
+    "@lit/localize-tools": "^0.8.2"
   }
 }
