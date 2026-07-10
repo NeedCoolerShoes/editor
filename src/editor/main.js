@@ -102,7 +102,11 @@ class Editor extends LitElement {
     this.renderer.render();
     this.style.cursor = this.controls.getCursorStyle();
 
-    this.project.set("thumbnail", this.skinToThumbnail());
+    const scope = this;
+    async function setThumbnail() {
+      scope.project.set("thumbnail", scope.skinToDataURL());
+    }
+    setThumbnail();
 
     this.dispatchEvent(new CustomEvent("render"));
   }
@@ -379,7 +383,7 @@ class Editor extends LitElement {
 
           const check = confirm(confirmText);
           if (!check) { return; }
-          
+
           this.switchProject(newProject.id).then(() => {
             newProject.loadToEditor(this);
           });

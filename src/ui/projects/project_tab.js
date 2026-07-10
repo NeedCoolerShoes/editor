@@ -1,24 +1,40 @@
 import { css, html, LitElement, unsafeCSS } from "lit";
 import imgGridGray from "../../../assets/images/grid-editor-gray.png";
+import "../misc/skin_2d";
+import "../misc/face_2d";
 
+const GLOBAL_STYLES = css`
+  :host {
+    --text-color: white;
+    --icon-color: white;
+  }
 
-class ProjectTab extends LitElement {
-  static styles = css`
-    :host {
+  :host(:hover) {
+    --text-color: #BBBBBB;
+  }
+
+  :host([selected]) {
+    --text-color: #55b2ff;
+  }
+`;
+
+const DESKTOP_STYLES = css`
+  :host(:not([mobile]):hover) {
+    --text-color: #BBBBBB;
+  }
+
+  :host(:not([mobile])[selected]) #main {
+    background-color: #1A1A1A;
+    margin-top: 0px;
+    font-weight: bold;
+  }
+
+  :host(:not([mobile])) {
+    & {
       height: 100%;
       display: flex;
-      --text-color: white;
-      --icon-color: white;
     }
-
-    :host(:hover) {
-      --text-color: #BBBBBB;
-    }
-
-    :host([selected]) {
-      --text-color: #55b2ff;
-    }
-
+    
     span {
       display:inline-block;
       padding: 2px;
@@ -45,12 +61,6 @@ class ProjectTab extends LitElement {
       margin-top: 0.25rem;
     }
 
-    :host([selected]) #main {
-      background-color: #1A1A1A;
-      margin-top: 0px;
-      font-weight: bold;
-    }
-
     #cross {
       position: absolute;
       display: flex;
@@ -68,6 +78,9 @@ class ProjectTab extends LitElement {
     }
 
     #tab-button {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
       width: 100%;
       height: 100%;
       padding: 0rem 0.5rem;
@@ -92,7 +105,6 @@ class ProjectTab extends LitElement {
       background-image: url(${unsafeCSS(imgGridGray)});
       width: 16px;
       height: 16px;
-      margin-bottom: -0.25rem;
     }
 
     #thumbnail {
@@ -100,32 +112,109 @@ class ProjectTab extends LitElement {
       width: 100%;
       height: 100%;
     }
-  `;
+  }
+`;
+
+const MOBILE_STYLES = css`
+  :host([mobile]) {
+    & {
+      --background-color: transparent;
+      color: var(--text-color);
+      max-height: fit-content;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    button {
+      all: unset;
+      display: block;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    #main {
+      padding: 0.5rem;
+      border: 2px solid #232428;
+      border-radius: 0.5rem;
+      background-color: var(--background-color);
+    }
+
+    #title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    #title span {
+      text-wrap: nowrap;
+      overflow: hidden;
+    }
+
+    #thumbnail-bg {
+      display: inline-block;
+      background-image: url(${unsafeCSS(imgGridGray)});
+      width: 100%;
+      height: auto;
+      padding: 0.25rem;
+      box-sizing: border-box;
+    }
+
+    #thumbnail {
+      image-rendering: pixelated;
+      width: 100%;
+      height: 100%;
+    }
+
+    #cross button {
+      width: 12px;
+      height: 12px;
+    }
+
+    ncrs-icon {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  :host([mobile][selected]) {
+    --background-color: #131315;
+
+    font-weight: bold;
+    overflow: hidden;
+  }
+`;
+
+class ProjectTab extends LitElement {
+  static styles = [GLOBAL_STYLES, DESKTOP_STYLES, MOBILE_STYLES];
 
   static properties = {
     id: {type: String, reflect: true},
     selected: {type: Boolean, reflect: true},
-    thumbnail: {type: String}
+    thumbnail: {type: String},
+    mobile: {type: Boolean, reflect: true}
   }
 
-  constructor(id, name, thumbnail) {
+  constructor(id, name, thumbnail, variant, mobile = false) {
     super();
 
     this.id = id;
     this.name = name;
     this.thumbnail = thumbnail;
+    this.mobile = mobile;
+    this.variant = variant;
 
     this._nameTemp = name;
   }
 
   render() {
-    return html`
-      <div id="main">
-        <button @click=${this.select} id="tab-button">
-          <div id="thumbnail-bg">
-            <img id="thumbnail" src="${this.thumbnail}">
-          </div>
-          <span
+    if (this.mobile) {
+      return html`
+        <div id="main" @click=${this.select} tabindex="0">
+          <div id="title">
+            <span
             id="name"
             spellcheck="false"
             aria-label="Editable project name"
@@ -133,13 +222,40 @@ class ProjectTab extends LitElement {
             @input=${this._onInput}
             @focusout=${this.rename}
             contenteditable=${this.selected ? "plaintext-only" : "none"}
-          >${this.name}</span>
-        </button>
-        <div id="cross">
-          <button @click=${this.delete}><ncrs-icon icon="cross" color="var(--icon-color)"></ncrs-icon></button>
+            >${this.name}</span>              
+            <div id="cross">
+              <button @click=${this.delete}><ncrs-icon icon="cross" color="var(--icon-color)"></ncrs-icon></button>
+            </div>
+          </div>
+          <div id="thumbnail-bg">
+            <ncrs-skin-2d src=${this.thumbnail} variant=${this.variant} id="thumbnail">
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    } else {
+      return html`
+        <div id="main">
+          <button @click=${this.select} id="tab-button">
+            <div id="thumbnail-bg">
+              <ncrs-face-2d src=${this.thumbnail} id="thumbnail">
+            </div>
+            <span
+              id="name"
+              spellcheck="false"
+              aria-label="Editable project name"
+              @keydown=${this._onKeyDown}
+              @input=${this._onInput}
+              @focusout=${this.rename}
+              contenteditable=${this.selected ? "plaintext-only" : "none"}
+            >${this.name}</span>
+          </button>
+          <div id="cross">
+            <button @click=${this.delete}><ncrs-icon icon="cross" color="var(--icon-color)"></ncrs-icon></button>
+          </div>
+        </div>
+      `;
+    }
+
   }
 
   rename() {
@@ -166,7 +282,7 @@ class ProjectTab extends LitElement {
 
     const check = confirm(confirmText);
     if (!check) { return; }
-    
+
     this.dispatchEvent(new CustomEvent("delete", {detail: {id: this.id}}));
   }
 
@@ -191,6 +307,11 @@ class ProjectTab extends LitElement {
 
       nameField.blur();
     }
+  }
+
+  _setupThumbnailCanvas() {
+    const canvas = document.createElement("canvas");
+    
   }
 }
 

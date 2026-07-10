@@ -68,7 +68,8 @@ class Project {
     return {
       id: this.id,
       name: this.getName(),
-      thumbnail: this.projectData.thumbnail
+      thumbnail: this.projectData.thumbnail,
+      variant: this.projectData.variant,
     }
   }
 

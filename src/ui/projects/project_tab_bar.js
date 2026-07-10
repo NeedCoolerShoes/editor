@@ -6,6 +6,7 @@ class ProjectTabBar extends LitElement {
   static properties = {
     projects: {},
     current: {},
+    mobile: {type: Boolean, reflect: true}
   }
 
   static styles = css`
@@ -20,11 +21,31 @@ class ProjectTabBar extends LitElement {
       border-bottom-width: 1px;
     }
 
+    :host([mobile]) #main {
+      height: 100%;
+      background-color: transparent;
+      overflow: auto;
+    }
+
     #tabs {
       display: flex;
       gap: 0.25rem;
       overflow: auto;
       scrollbar-width: thin;
+    }
+
+    :host([mobile]) #tabs {
+      height: fit-content;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 1fr;
+    }
+
+    @media screen and (min-width: 400px) {
+      :host([mobile]) #tabs {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
 
     ncrs-ui-project-tab {
@@ -43,12 +64,36 @@ class ProjectTabBar extends LitElement {
       height: 70%;
       padding: 15%;
     }
+
+    :host([mobile]) {
+    #add-button {
+        cursor: pointer;
+        padding: 0.5rem;
+        border: 2px solid #232428;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        --icon-color: white;
+      }
+
+      #add-button:hover {
+        --icon-color: #BBBBBB;
+      }
+
+      ncrs-icon {
+        width: 64px;
+        height: 64px;
+      }
+    }
   `;
 
   firstUpdated(){
     this.tabs = this.renderRoot.getElementById("tabs");
 
     this.tabs.addEventListener("wheel", event => {
+      if (this.mobile) return;
+      
       event.preventDefault();
       this.tabs.scrollLeft += event.deltaY + event.deltaX;
     });
@@ -63,9 +108,10 @@ class ProjectTabBar extends LitElement {
     });
   }
 
-  constructor(editor) {
+  constructor(editor, mobile = false) {
     super();
     this.editor = editor;
+    this.mobile = mobile;
     this.projects = [{id: "", name: "Loading...", thumbnail: undefined}];
 
     this.editor.projectManager.addEventListener("update", event => {
@@ -92,7 +138,7 @@ class ProjectTabBar extends LitElement {
         name = `Project ${this.#untitledCache[project.id]}`;
       }
 
-      const tab = new ProjectTab(project.id, name, project.thumbnail);
+      const tab = new ProjectTab(project.id, name, project.thumbnail, project.variant, this.mobile);
       tab.selected = (project.id === this.current);
 
       tab.addEventListener("select", event => {
@@ -109,21 +155,34 @@ class ProjectTabBar extends LitElement {
 
       return tab;
     });
-    
-    return html`
-      <div id="main">
-        <div id="tabs">
-          ${tabs}
+
+    if (this.mobile) {
+      return html`
+        <div id="main">
+          <div id="tabs">
+            ${tabs}
+            <div id="add-button" @click=${this.addTab} tabindex="0">
+              <ncrs-icon icon="add" color="var(--icon-color)"></ncrs-icon>
+            </div>
+          </div>
         </div>
-        <ncrs-button title="New Project" @click=${this.addTab}>
-          <ncrs-icon icon="add" color="#fff"></ncrs-icon>
-        </ncrs-button>
-      </div>
-    `;
+      `;
+    } else {
+      return html`
+        <div id="main">
+          <div id="tabs">
+            ${tabs}
+          </div>
+          <ncrs-button title="New Project" @click=${this.addTab}>
+            <ncrs-icon icon="add" color="#fff"></ncrs-icon>
+          </ncrs-button>
+        </div>
+      `;
+    }
+    
   }
 
   async addTab() {
-
     const project = await this.editor.projectManager.new();
     this.editor.switchProject(project.id);
   }

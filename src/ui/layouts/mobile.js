@@ -21,6 +21,8 @@ import SculptToolConfig from "../config/tabs/tools/configs/sculpt_tool_config";
 import { ColorDrawer, COLOR_DRAWER_STYLES } from "../mobile/color_drawer";
 import { CONFIG_DRAWER_STYLES, ConfigDrawer } from "../mobile/config_drawer";
 import { GALLERY_DRAWER_STYLES, GalleryDrawer } from "../mobile/gallery_drawer";
+import { ProjectManager } from "../../editor/project/project_manager";
+import { PROJECTS_DRAWER_STYLES, ProjectsDrawer } from "../mobile/projects_drawer";
 
 const STYLES = css`
   :host {
@@ -467,13 +469,48 @@ const STYLES = css`
     width: 1.25rem;
     height: 1.25rem;
   }
+
+  #projectsButton {
+    color: #999999ee;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 3px solid #999999ee;
+    border-radius: 0.25rem;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  #addProjectButton {
+    --icon-color: #999999ee;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  #addProjectButton ncrs-icon {
+    width: 100%;
+    height: 100%;
+  }
+
+  #top .center {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: #999999ee;
+  }
 `;
 
 const DRAWER_OPEN_DRAG_THRESHOLD = 15;
 const LAYERS_OPEN_DRAG_THRESHOLD = 5;
 
 class NCRSUIMobileLayout extends BaseLayout {
-  static styles = [STYLES, COLOR_DRAWER_STYLES, CONFIG_DRAWER_STYLES, GALLERY_DRAWER_STYLES];
+  static styles = [STYLES, COLOR_DRAWER_STYLES, CONFIG_DRAWER_STYLES, GALLERY_DRAWER_STYLES, PROJECTS_DRAWER_STYLES];
+  static properties = {
+    _projectsCount: {type: Number}
+  }
 
   constructor(ui) {
     super(ui, "mobile");
@@ -484,6 +521,8 @@ class NCRSUIMobileLayout extends BaseLayout {
     this.colorDrawer = new ColorDrawer(this);
     this.configDrawer = new ConfigDrawer(this.ui);
     this.galleryDrawer = new GalleryDrawer(this.ui);
+    this.projectsDrawer = new ProjectsDrawer(this.ui);
+
     this.partToggles = new PartToggles(this.editor);
     this.modelToggle = new ModelToggle(this.editor);
     this.editorToggles = new EditorToggles(this.editor);
@@ -493,6 +532,16 @@ class NCRSUIMobileLayout extends BaseLayout {
 
     this._setupToolConfigs();
     this._setToolConfig();
+
+    ProjectManager.count().then(count => {
+      this._projectsCount = count;
+    });
+
+    this.editor.projectManager.addEventListener("update", () => {
+      ProjectManager.count().then(count => {
+        this._projectsCount = count;
+      });
+    });
 
     this.addEventListener("dblclick", event => event.preventDefault());
 
@@ -524,6 +573,7 @@ class NCRSUIMobileLayout extends BaseLayout {
     this.colorDrawer.firstUpdated();
     this.configDrawer.firstUpdated();
     this.galleryDrawer.firstUpdated();
+    this.projectsDrawer.firstUpdated();
 
     this._setupButtonDrag();
     this._setupEvents();
@@ -541,6 +591,11 @@ class NCRSUIMobileLayout extends BaseLayout {
 
   render() {
     const eyedropper = this.editor.config.get("pick-color", false);
+    let projectsCount = this._projectsCount;
+
+    if (projectsCount > 99) {
+      projectsCount = "∞";
+    }
 
     return html`
       <div id="main">
@@ -554,6 +609,13 @@ class NCRSUIMobileLayout extends BaseLayout {
               <ncrs-icon title="Switch to dusk mode." icon="dusk-mode" color="var(--icon-color)" class="dark"></ncrs-icon>
               <ncrs-icon title="Switch to light mode." icon="light-mode" color="var(--icon-color)" class="gray"></ncrs-icon>
               <ncrs-icon title="Switch to dark mode." icon="dark-mode" color="var(--icon-color)" class="light"></ncrs-icon>
+            </button>
+          </div>
+          <div class="center">
+            <button id="projectsButton" @click=${this._showProjectsDrawer}>${projectsCount}</button>
+            <span>|</span>
+            <button id="addProjectButton" @click=${this._addProject}>
+              <ncrs-icon icon="add" color="var(--icon-color)"></ncrs-icon>
             </button>
           </div>
           <div class="right">
@@ -623,6 +685,7 @@ class NCRSUIMobileLayout extends BaseLayout {
         ${this.colorDrawer.render()}
         ${this.configDrawer.render()}
         ${this.galleryDrawer.render()}
+        ${this.projectsDrawer.render()}
       </div>
       <slot name="footer"></slot>
     `;
@@ -638,6 +701,10 @@ class NCRSUIMobileLayout extends BaseLayout {
 
   _showGalleryDrawer() {
     this.galleryDrawer.show();
+  }
+
+  _showProjectsDrawer() {
+    this.projectsDrawer.show();
   }
 
   _scrollToToggles() {
@@ -747,6 +814,11 @@ class NCRSUIMobileLayout extends BaseLayout {
 
   _redo() {
     this.editor.redoHistory();
+  }
+
+  async _addProject() {
+    const project = await this.editor.projectManager.new();
+    this.editor.switchProject(project.id);
   }
 
   _setupEvents() {

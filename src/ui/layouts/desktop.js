@@ -27,10 +27,13 @@ class NCRSUIDesktopLayout extends BaseLayout {
     #main {
       display: flex;
       width: 100%;
-      height: 100%;
+      height: calc(100% - 40px);
       position: relative;
     }
 
+    ncrs-ui-project-tab-bar {
+      height: 40px;
+    }
 
     ncrs-warning-manager {
       position: absolute;
