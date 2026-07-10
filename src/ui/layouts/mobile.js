@@ -500,6 +500,11 @@ const STYLES = css`
     justify-content: center;
     gap: 0.75rem;
     color: #999999ee;
+    pointer-events: none;
+  }
+
+  #top .center * {
+    pointer-events: auto;
   }
 `;
 
