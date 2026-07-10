@@ -16,8 +16,8 @@ html, body, #app {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin: auto;
-  padding-top: 2rem;
 }
 
 ncrs-ui {

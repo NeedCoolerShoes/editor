@@ -1,4 +1,4 @@
-import {default as VERSION} from "./versions/ncrs_format_4.js";
+import {default as VERSION} from "./versions/ncrs_format_5.js";
 
 class ProjectLoader {
   static version = VERSION;
