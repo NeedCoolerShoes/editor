@@ -9,7 +9,7 @@ function createShaderMaterial(texture, color = DEFAULT_GRID_COLOR, width, height
       derivatives: true,
     },
     uniforms: {
-      stroke: { value: color },
+      stroke: { value: color.convertLinearToSRGB() },
       thickness: { value: 0.5 },
       segments: { value: [width, height, depth] },
       texture: { value: texture },
