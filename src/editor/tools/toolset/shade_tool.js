@@ -1,3 +1,4 @@
+import {msg} from '@lit/localize';
 import BrushBaseTool from "../brush_tool.js";
 
 // Scales the force
@@ -8,8 +9,8 @@ class ShadeTool extends BrushBaseTool {
     super(config, {
       id: "shade",
       icon: "shading",
-      name: "Shade [S]",
-      description: "Makes pixels lighter/darker or adjusts their color based on the palette.\nUse the left mouse button to darken, and the right mouse button to lighten.",
+      name: msg(`Shade`, {id:`tool.shade.tooltip.name`})+" [S]",
+      description: msg(`Makes pixels lighter/darker or adjusts their color based on the palette.\nUse the left mouse button to darken, and the right mouse button to lighten.`, {id:`tool.shade.tooltip.name`}),
       providesColor: false, // Whether or not drawing with this tool adds to recent colors.,
       disableMirror: true, // Whether to disable the mirror.
       desktopLayout: true,

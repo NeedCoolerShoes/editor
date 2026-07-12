@@ -1,3 +1,4 @@
+import {msg} from '@lit/localize';
 import BrushBaseTool from "../brush_tool.js";
 
 class PenTool extends BrushBaseTool {
@@ -5,8 +6,8 @@ class PenTool extends BrushBaseTool {
     super(config, {
       id: "pen",
       icon: "brush",
-      name: "Brush [B]",
-      description: "Simple tool for drawing.\nUse the left mouse button to draw, and the right mouse button to erase.",
+      name: msg(`Brush`, {id:`tool.brush.tooltip.name`})+" [B]",
+      description: msg(`Simple tool for drawing.\nUse the left mouse button to draw, and the right mouse button to erase.`, {id:`tool.brush.tooltip.description`}),
       providesColor: true, // Whether or not drawing with this tool adds to recent colors.
       desktopLayout: true,
       mobileLayout: true,

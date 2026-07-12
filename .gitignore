@@ -23,5 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
+# Localization
+src/generated
+
 # Other
 /working/

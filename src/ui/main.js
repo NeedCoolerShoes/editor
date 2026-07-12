@@ -23,6 +23,8 @@ import imgGridGray from "../../assets/images/grid-editor-gray.png";
 import imgGridLight from "../../assets/images/grid-editor-light.png";
 import { isIOS } from "../helpers.js";
 
+import { setLocale } from '../localization.js';
+
 const DESKTOP_MIN_WIDTH = 670;
 
 class UI extends LitElement {
