@@ -1,4 +1,5 @@
 import { css, html, LitElement } from "lit";
+import { msg } from "@lit/localize";
 import PartToggles from "./part_toggles.js";
 
 import EditorToggles from "./editor_toggles.js";
@@ -73,9 +74,9 @@ class Toolbar extends LitElement {
       <div id="toolbar">
         ${this.toolSet}
         <div>
-          <p class="label">Parts</p>
+          <p class="label">${msg(`Parts`, {id: `toolbar.label.parts`})}</p>
           ${this.partToggles}
-          <p class="label">Model</p>
+          <p class="label">${msg(`Model`, {id: `toolbar.label.model`})}</p>
           ${this.modelToggle}
           ${this.editorToggles}
         </div>

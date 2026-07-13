@@ -44,6 +44,104 @@ Use the left mouse copy pixels up, and the right mouse button to copy them down.
   <source>Makes pixels lighter/darker or adjusts their color based on the palette.
 Use the left mouse button to darken, and the right mouse button to lighten.</source>
 </trans-unit>
+<trans-unit id="popup_warning.layer.layer_hidden">
+  <source>Current layer is not editable (hidden).</source>
+</trans-unit>
+<trans-unit id="popup_warning.sculpt.overlay_hidden">
+  <source>Cannot sculpt without overlay being visible.</source>
+</trans-unit>
+<trans-unit id="s29c44cbd060628e2">
+  <source>Load new Project?
+This will replace your current project, and you will lose your history.
+Make sure you have saved the current project.</source>
+</trans-unit>
+<trans-unit id="warning.layer.layer_hidden">
+  <source>Current layer is hidden, and cannot be edited.</source>
+</trans-unit>
+<trans-unit id="warning.layer.filters">
+  <source>Colors drawn on the current layer will appear altered by filters.</source>
+</trans-unit>
+<trans-unit id="warning.blend.blend_enabled">
+  <source>Blend palette enabled. Colors drawn might not match color picker.</source>
+</trans-unit>
+<trans-unit id="toolbar.label.layer">
+  <source>Layer</source>
+</trans-unit>
+<trans-unit id="toolbar.toggle.base">
+  <source>Toggle base</source>
+</trans-unit>
+<trans-unit id="toolbar.toggle.overlay">
+  <source>Toggle overlay</source>
+</trans-unit>
+<trans-unit id="toolbar.label.grid">
+  <source>Grid</source>
+</trans-unit>
+<trans-unit id="toolbar.toggle.base_grid">
+  <source>Toggle base grid</source>
+</trans-unit>
+<trans-unit id="toolbar.toggle.overlay_grid">
+  <source>Toggle overlay grid</source>
+</trans-unit>
+<trans-unit id="toolbar.label.render">
+  <source>Render</source>
+</trans-unit>
+<trans-unit id="toolbar.toggle.backface_culling">
+  <source>Toggle backface culling</source>
+</trans-unit>
+<trans-unit id="toolbar.toggle.grid_culling">
+  <source>Toggle grid culling</source>
+</trans-unit>
+<trans-unit id="toolbar.toggle.shading">
+  <source>Toggle shading</source>
+</trans-unit>
+<trans-unit id="toolbar.toggle.blow_up_model">
+  <source>Blow up model</source>
+</trans-unit>
+<trans-unit id="toolbar.toggle.model">
+  <source>Toggle skin model</source>
+</trans-unit>
+<trans-unit id="toolbar.part_toggle.head">
+  <source>Toggle head</source>
+</trans-unit>
+<trans-unit id="toolbar.part_toggle.head.description">
+  <source><x id="0" equiv-text="${key}"/> + click to toggle only head</source>
+</trans-unit>
+<trans-unit id="toolbar.part_toggle.right_arm">
+  <source>Toggle right arm</source>
+</trans-unit>
+<trans-unit id="toolbar.part_toggle.right_arm.description">
+  <source><x id="0" equiv-text="${key}"/> + click to toggle only right arm</source>
+</trans-unit>
+<trans-unit id="toolbar.part_toggle.torso">
+  <source>Toggle torso</source>
+</trans-unit>
+<trans-unit id="toolbar.part_toggle.torso.description">
+  <source><x id="0" equiv-text="${key}"/> + click to toggle only torso</source>
+</trans-unit>
+<trans-unit id="toolbar.part_toggle.left_arm">
+  <source>Toggle left arm</source>
+</trans-unit>
+<trans-unit id="toolbar.part_toggle.left_arm.description">
+  <source><x id="0" equiv-text="${key}"/> + click to toggle only left arm</source>
+</trans-unit>
+<trans-unit id="toolbar.part_toggle.right_leg">
+  <source>Toggle right leg</source>
+</trans-unit>
+<trans-unit id="toolbar.part_toggle.right_leg.description">
+  <source><x id="0" equiv-text="${key}"/> + click to toggle only right leg</source>
+</trans-unit>
+<trans-unit id="toolbar.part_toggle.left_leg">
+  <source>Toggle left leg</source>
+</trans-unit>
+<trans-unit id="toolbar.part_toggle.left_leg.description">
+  <source><x id="0" equiv-text="${key}"/> + click to toggle only left leg</source>
+</trans-unit>
+<trans-unit id="toolbar.label.parts">
+  <source>Parts</source>
+</trans-unit>
+<trans-unit id="toolbar.label.model">
+  <source>Model</source>
+</trans-unit>
 </body>
 </file>
 </xliff>
