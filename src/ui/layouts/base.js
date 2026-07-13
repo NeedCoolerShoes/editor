@@ -1,4 +1,5 @@
 import { LitElement } from "lit";
+import { msg } from "@lit/localize";
 import WarningManager from "../misc/warnings";
 
 class BaseLayout extends LitElement {
@@ -37,13 +38,13 @@ class BaseLayout extends LitElement {
     if (!layer) { return; }
 
     if (!layer.visible) {
-      this.warningManager.add("layer-invisible", "invisible", "Current layer is hidden, and cannot be edited.");
+      this.warningManager.add("layer-invisible", "invisible", msg(`Current layer is hidden, and cannot be edited.`, {id:`warning.layer.layer_hidden`}));
     } else {
       this.warningManager.remove("layer-invisible");
     }
 
     if (layer.hasFilters()) {
-      this.warningManager.add("layer-filters", "tool-config", "Colors drawn on the current layer will appear altered by filters.");
+      this.warningManager.add("layer-filters", "tool-config", msg(`Colors drawn on the current layer will appear altered by filters.`, {id:`warning.layer.filters`}));
     } else {
       this.warningManager.remove("layer-filters");
     }
@@ -51,7 +52,7 @@ class BaseLayout extends LitElement {
     if (this.editor.toolConfig.get("blend", false)) {
       this.warningManager.add(
         "blend-enabled", "blend",
-        "Blend palette enabled. Colors drawn might not match color picker."
+        msg(`Blend palette enabled. Colors drawn might not match color picker.`, {id:`warning.blend.blend_enabled`})
       );
     } else {
       this.warningManager.remove("blend-enabled");

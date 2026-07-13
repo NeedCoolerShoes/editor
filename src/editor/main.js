@@ -1,4 +1,5 @@
 import { LitElement, css, html } from "lit";
+import { msg } from "@lit/localize";
 import * as THREE from "three";
 import { Controls } from "./controls.js";
 import { Layers } from "./layers/layers.js";
@@ -153,12 +154,12 @@ class Editor extends LitElement {
 
     const layer = this.layers.getSelectedLayer();
     if (!layer?.visible) {
-      this.dispatchEvent(new CustomEvent("tool-warning", {detail: {message: "Current layer is not editable (hidden)."}}));
+      this.dispatchEvent(new CustomEvent("tool-warning", {detail: {message: msg(`Current layer is not editable (hidden).`, {id:`popup_warning.layer.layer_hidden`})}}));
       return false;
     }
 
     if (!this.config.get("overlayVisible", false) && this.currentTool === this.getToolById("sculpt")) {
-      this.dispatchEvent(new CustomEvent("tool-warning", {detail: {message: "Cannot sculpt without overlay being visible."}}));
+      this.dispatchEvent(new CustomEvent("tool-warning", {detail: {message: msg(`Cannot sculpt without overlay being visible.`, {id:`popup_warning.sculpt.overlay_hidden`})}}));
       return false;
     }
 
@@ -395,9 +396,7 @@ class Editor extends LitElement {
     const reader = new FileReader();
 
     reader.onload = () => {
-      let confirmText = "Load new Project?";
-      confirmText += "\nThis will replace your current project, and you will lose your history.";
-      confirmText += "\nMake sure you have saved the current project."
+      const confirmText = msg(`Load new Project?\nThis will replace your current project, and you will lose your history.\nMake sure you have saved the current project.`);
 
       const check = confirm(confirmText);
       if (!check) { return; }
