@@ -10,7 +10,7 @@ class BucketTool extends BaseTool {
       id: "bucket",
       icon: "bucket",
       name: msg(`Paint Bucket`, {id:`tool.bucket.tooltip.name`})+" [G]",
-      description: msg(`Simple tool for filling large closed areas with a specific color.\nUse the left mouse button to fill, and the right mouse button to erase.`, {id: `tool.bucket.tooltip.description`}),
+      description: msg(`Simple tool for filling large closed areas with a specific color.\nUse the left mouse button to fill, and the right mouse button to erase.`, {id: `tool.bucket.description`}),
       providesColor: true, // Whether or not drawing with this tool adds to recent colors.
       desktopLayout: true,
       mobileLayout: true,

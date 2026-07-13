@@ -7,7 +7,7 @@ class MoveTool extends BaseTool {
       id: "move",
       icon: "move",
       name: msg(`Move Tool`, {id:`tool.move.tooltip.name`}),
-      description: msg(`Allows you to rotate and move your skin without accidentally drawing on it.`, {id:`tool.move.tooltip.description`}),
+      description: msg(`Allows you to rotate and move your skin without accidentally drawing on it.`, {id:`tool.move.description`}),
       providesColor: false, // Whether or not drawing with this tool adds to recent colors.
       desktopLayout: false,
       mobileLayout: true,

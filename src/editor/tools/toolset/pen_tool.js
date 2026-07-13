@@ -7,7 +7,7 @@ class PenTool extends BrushBaseTool {
       id: "pen",
       icon: "brush",
       name: msg(`Brush`, {id:`tool.brush.tooltip.name`})+" [B]",
-      description: msg(`Simple tool for drawing.\nUse the left mouse button to draw, and the right mouse button to erase.`, {id:`tool.brush.tooltip.description`}),
+      description: msg(`Simple tool for drawing.\nUse the left mouse button to draw, and the right mouse button to erase.`, {id:`tool.brush.description`}),
       providesColor: true, // Whether or not drawing with this tool adds to recent colors.
       desktopLayout: true,
       mobileLayout: true,

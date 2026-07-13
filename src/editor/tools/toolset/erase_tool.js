@@ -9,7 +9,7 @@ class EraseTool extends BrushBaseTool {
         id: "eraser",
         icon: "eraser",
         name: msg(`Erase`, {id:`tool.erase.tooltip.name`})+" [E]",
-        description: msg(`Simple tool for erasing.\nUse either the left or right mouse button to erase.`, {id:`tool.erase.tooltip.description`}),
+        description: msg(`Simple tool for erasing.\nUse either the left or right mouse button to erase.`, {id:`tool.erase.description`}),
         providesColor: false, // Whether or not drawing with this tool adds to recent colors.
         desktopLayout: true,
         mobileLayout: true,
