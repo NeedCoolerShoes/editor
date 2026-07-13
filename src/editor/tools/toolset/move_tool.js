@@ -1,4 +1,4 @@
-import {msg} from '@lit/localize';
+import { msg } from "@lit/localize";
 import { BaseTool } from "../base_tool";
 
 class MoveTool extends BaseTool {

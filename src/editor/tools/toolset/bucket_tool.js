@@ -1,4 +1,4 @@
-import {msg} from '@lit/localize';
+import { msg } from "@lit/localize";
 import Color from "color";
 import { BaseTool } from "../base_tool.js";
 
