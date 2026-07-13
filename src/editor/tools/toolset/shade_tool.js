@@ -10,7 +10,7 @@ class ShadeTool extends BrushBaseTool {
       id: "shade",
       icon: "shading",
       name: msg(`Shade`, {id:`tool.shade.tooltip.name`})+" [S]",
-      description: msg(`Makes pixels lighter/darker or adjusts their color based on the palette.\nUse the left mouse button to darken, and the right mouse button to lighten.`, {id:`tool.shade.tooltip.name`}),
+      description: msg(`Makes pixels lighter/darker or adjusts their color based on the palette.\nUse the left mouse button to darken, and the right mouse button to lighten.`, {id:`tool.shade.tooltip.description`}),
       providesColor: false, // Whether or not drawing with this tool adds to recent colors.,
       disableMirror: true, // Whether to disable the mirror.
       desktopLayout: true,

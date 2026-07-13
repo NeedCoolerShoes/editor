@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file target-language="pl-pl" source-language="en-us" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="tool.bucket.tooltip.name">
+  <source>Paint Bucket</source>
+</trans-unit>
+<trans-unit id="tool.bucket.tooltip.description">
+  <source>Simple tool for filling large closed areas with a specific color.
+Use the left mouse button to fill, and the right mouse button to erase.</source>
+</trans-unit>
+<trans-unit id="tool.erase.tooltip.name">
+  <source>Erase</source>
+</trans-unit>
+<trans-unit id="tool.erase.tooltip.description">
+  <source>Simple tool for erasing.
+Use either the left or right mouse button to erase.</source>
+</trans-unit>
+<trans-unit id="tool.move.tooltip.name">
+  <source>Move Tool</source>
+</trans-unit>
+<trans-unit id="tool.move.tooltip.description">
+  <source>Allows you to rotate and move your skin without accidentally drawing on it.</source>
+</trans-unit>
+<trans-unit id="tool.brush.tooltip.name">
+  <source>Brush</source>
+</trans-unit>
+<trans-unit id="tool.brush.tooltip.description">
+  <source>Simple tool for drawing.
+Use the left mouse button to draw, and the right mouse button to erase.</source>
+</trans-unit>
+<trans-unit id="tool.sculpt.tooltip.name">
+  <source>Sculpt</source>
+</trans-unit>
+<trans-unit id="tool.sculpt.tooltip.description">
+  <source>Copy pixels from base layer to overlay.
+Only works when overlay is visible.
+Use the left mouse copy pixels up, and the right mouse button to copy them down.</source>
+</trans-unit>
+<trans-unit id="tool.shade.tooltip.name">
+  <source>Shade</source>
+</trans-unit>
+<trans-unit id="tool.shade.tooltip.description">
+  <source>Makes pixels lighter/darker or adjusts their color based on the palette.
+Use the left mouse button to darken, and the right mouse button to lighten.</source>
+</trans-unit>
+</body>
+</file>
+</xliff>
