@@ -4,6 +4,7 @@ import UpdateLayerFiltersEntry from "../../../../editor/history/entries/update_l
 import MergeFiltersEntry from "../../../../editor/history/entries/merge_filters_entry";
 import BrightnessFilterSlider from "../layers/brightness_filter_slider";
 import AlphaFilterSlider from "../layers/alpha_filter_slider";
+import ContrastFilterSlider from "../layers/contrast_filter_slider";
 import HueFilterSlider from "../layers/hue_filter_slider";
 import SaturationFilterSlider from "../layers/saturation_filter_slider";
 
@@ -78,6 +79,10 @@ class LayersTabFilters extends LitElement {
         hsl(from var(--current-color) h s l),
         hsl(from var(--current-color) h s 100%)
       );
+    }
+
+    #contrast-slider::part(slider) {
+      background: linear-gradient(to right, #808080, #000);
     }
 
     #filter-buttons {
@@ -196,6 +201,13 @@ class LayersTabFilters extends LitElement {
               <ncrs-icon icon="undo" color="var(--icon-color)"></ncrs-icon>
             </button>
           </div>
+          <label for="contrast-slider">Adjust Layer Contrast</label>
+          <div class="slider">
+            ${this.contrastSlider.slider}
+            <button class="reset" title="Reset contrast." data-slider="contrast" @click=${this._resetSlider}>
+              <ncrs-icon icon="undo" color="var(--icon-color)"></ncrs-icon>
+            </button>
+          </div>
           <label for="opacity-slider">Adjust Layer Opacity</label>
           <div class="slider">
             ${this.opacitySlider.slider}
@@ -229,6 +241,7 @@ class LayersTabFilters extends LitElement {
     switch (slider) {
       case "hue": { this.hueSlider.reset(); break; }
       case "saturation": { this.saturationSlider.reset(); break; }
+      case "contrast": { this.contrastSlider.reset(); break; }
       case "brightness": { this.brightnessSlider.reset(); break; }
       case "opacity": { this.opacitySlider.reset(); break; }
     }
@@ -306,10 +319,13 @@ class LayersTabFilters extends LitElement {
     this.saturationSlider = new SaturationFilterSlider(layers);
     this.saturationSlider.slider.id = "saturation-slider";
 
+    this.contrastSlider = new ContrastFilterSlider(layers);
+    this.contrastSlider.slider.id = "contrast-slider";
+
     this.brightnessSlider = new BrightnessFilterSlider(layers);
     this.brightnessSlider.slider.id = "brightness-slider";
 
-    const sliders = [this.opacitySlider, this.hueSlider, this.saturationSlider, this.brightnessSlider];
+    const sliders = [this.opacitySlider, this.hueSlider, this.saturationSlider, this.contrastSlider, this.brightnessSlider];
 
     sliders.forEach(element => {
       element.addEventListener("slider-change", () => this._syncFilters());
