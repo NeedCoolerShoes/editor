@@ -194,17 +194,17 @@ class LayersTabFilters extends LitElement {
               <ncrs-icon icon="undo" color="var(--icon-color)"></ncrs-icon>
             </button>
           </div>
-          <label for="contrast-slider">Adjust Layer Contrast</label>
-          <div class="slider">
-            ${this.contrastSlider.slider}
-            <button class="reset" title="Reset contrast." data-slider="contrast" @click=${this._resetSlider}>
-              <ncrs-icon icon="undo" color="var(--icon-color)"></ncrs-icon>
-            </button>
-          </div>
           <label for="brightness-slider">Adjust Layer Brightness</label>
           <div class="slider">
             ${this.brightnessSlider.slider}
             <button class="reset" title="Reset brightness." data-slider="brightness" @click=${this._resetSlider}>
+              <ncrs-icon icon="undo" color="var(--icon-color)"></ncrs-icon>
+            </button>
+          </div>
+          <label for="contrast-slider">Adjust Layer Contrast</label>
+          <div class="slider">
+            ${this.contrastSlider.slider}
+            <button class="reset" title="Reset contrast." data-slider="contrast" @click=${this._resetSlider}>
               <ncrs-icon icon="undo" color="var(--icon-color)"></ncrs-icon>
             </button>
           </div>
