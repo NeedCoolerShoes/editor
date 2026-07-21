@@ -88,26 +88,6 @@ class ProjectTabBar extends LitElement {
     }
   `;
 
-  firstUpdated(){
-    this.tabs = this.renderRoot.getElementById("tabs");
-
-    this.tabs.addEventListener("wheel", event => {
-      if (this.mobile) return;
-      
-      event.preventDefault();
-      this.tabs.scrollLeft += event.deltaY + event.deltaX;
-    });
-
-    this.editor.addEventListener("render", () => {
-      const id = this.editor.project.get("project").id;
-      const tab = this.tabs.querySelector(`ncrs-ui-project-tab[id="${id}"]`)
-
-      if (!tab) return;
-
-      tab.thumbnail = this.editor.project.get("thumbnail");
-    });
-  }
-
   constructor(editor, mobile = false) {
     super();
     this.editor = editor;
@@ -124,6 +104,30 @@ class ProjectTabBar extends LitElement {
   }
   #untitledCache = {};
   #untitled = 0;
+
+  getTab(id) {
+    return this.tabs.querySelector(`ncrs-ui-project-tab[id="${id}"]`);
+  }
+
+  firstUpdated(){
+    this.tabs = this.renderRoot.getElementById("tabs");
+
+    this.tabs.addEventListener("wheel", event => {
+      if (this.mobile) return;
+      
+      event.preventDefault();
+      this.tabs.scrollLeft += event.deltaY + event.deltaX;
+    });
+
+    this.editor.addEventListener("render", () => {
+      const id = this.editor.project.get("project").id;
+      const tab = this.getTab(id);
+
+      if (!tab) return;
+
+      tab.thumbnail = this.editor.project.get("thumbnail");
+    });
+  }
 
   render() {
     const tabs = this.projects.map(project => {
@@ -179,12 +183,15 @@ class ProjectTabBar extends LitElement {
         </div>
       `;
     }
-    
   }
 
   async addTab() {
     const project = await this.editor.projectManager.new();
     this.editor.switchProject(project.id);
+  }
+
+  renameTab() {
+    this.getTab(this.current).focusName();
   }
 }
 

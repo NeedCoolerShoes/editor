@@ -1,6 +1,7 @@
 import { clear, del } from "idb-keyval";
 import { getFocusedElement, isKeybindIgnored } from "../helpers";
 import PersistenceManager from "../persistence";
+import NCRSUIDesktopLayout from "./layouts/desktop";
 
 // All keybind definitions, ^ = ctrl, + = shift, ! = alt
 const KEYBINDS = {
@@ -40,6 +41,7 @@ const KEYBINDS = {
   "^+o": "toggleBaseGrid",
   "+f": "toggleBackfaceCulling",
   "^+f": "toggleGridCulling",
+  "F2": "renameProject",
 }
 
 function checkKeybinds(event) {
@@ -180,6 +182,10 @@ function setupKeybinds(ui, editor) {
       case "toggleGridCulling":
         editor.toggleGridCulling();
         break;
+      case "renameProject":
+        if (this.ui.layout instanceof NCRSUIDesktopLayout) {
+          this.ui.layout.projectTabBar.renameTab();
+        }
       }
   });
 }

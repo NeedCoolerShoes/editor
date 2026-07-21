@@ -112,6 +112,16 @@ const DESKTOP_STYLES = css`
       width: 100%;
       height: 100%;
     }
+
+    m3e-tooltip {
+      --m3e-tooltip-padding: 0px;
+    }
+
+    #tooltip-bg {
+      border: 2px solid #313436;
+      background-image: url(${unsafeCSS(imgGridGray)});
+      padding: 0.5rem;
+    }
   }
 `;
 
@@ -221,6 +231,7 @@ class ProjectTab extends LitElement {
             @keydown=${this._onKeyDown}
             @input=${this._onInput}
             @focusout=${this.rename}
+            part="name"
             contenteditable=${this.selected ? "plaintext-only" : "none"}
             >${this.name}</span>              
             <div id="cross">
@@ -247,15 +258,20 @@ class ProjectTab extends LitElement {
               @input=${this._onInput}
               @focusout=${this.rename}
               contenteditable=${this.selected ? "plaintext-only" : "none"}
+              part="name"
             >${this.name}</span>
           </button>
           <div id="cross">
             <button @click=${this.delete}><ncrs-icon icon="cross" color="var(--icon-color)"></ncrs-icon></button>
           </div>
         </div>
+        <m3e-tooltip for="main" show-delay="750" ?disabled=${this.selected}>
+          <div id="tooltip-bg">
+            <ncrs-skin-2d src=${this.thumbnail} variant=${this.variant} id="thumbnail">
+          </div>
+        </m3e-tooltip>
       `;
     }
-
   }
 
   rename() {
@@ -267,6 +283,10 @@ class ProjectTab extends LitElement {
       this.renderRoot.getElementById("name").innerText = this.name;
       this._nameTemp = this.name;
     }
+  }
+
+  focusName() {
+    this.renderRoot.getElementById("name").select();
   }
 
   select() {
