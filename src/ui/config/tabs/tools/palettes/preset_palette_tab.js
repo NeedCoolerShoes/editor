@@ -182,6 +182,24 @@ class PresetPaletteTab extends Tab {
     `;
   }
 
+  getIndexOfColor(color) {
+    const colors = this.renderRoot.getElementById("colors");
+    const el = colors.querySelector(`[color="${color}"]`);
+
+    if (!el) return -1;
+
+    return [...colors.children].indexOf(el);
+  }
+
+  getColorAtIndex(idx) {
+    const colors = this.renderRoot.getElementById("colors");
+    const color = colors.children.item(idx);
+
+    if (!color) return;
+
+    return color.getAttribute("color");
+  }
+
   _loadPalettes() {
     return defaultPalettes;
   }
