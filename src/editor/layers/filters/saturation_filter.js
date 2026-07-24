@@ -7,7 +7,8 @@ class SaturationFilter extends CssFilter {
   static filterId = "ncrs:saturation";
 
   static deserialize(data) {
-    if (data.id != this.filterId) { throw "Cannot deserialize filter!"; }
+    if (data.id != this.filterId) {
+      throw msg{`Cannot deserialize filter!`,{id:`error.layers.filters.deserealize`}}; }
 
     return new SaturationFilter(data.value, data.properties);
   }
