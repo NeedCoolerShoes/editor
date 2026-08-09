@@ -647,7 +647,7 @@ class NCRSUIMobileLayout extends BaseLayout {
             </div>
             <div class="container">
               <button id="config-button" class="side-button" @touchmove=${preventTouch} @click=${this._showConfigDrawer} title="Open config drawer">
-                <p class="label label-xs">Model</p>
+                <p class="label label-xs">Menu</p>
                 <ncrs-icon icon="menu" color="var(--icon-color)"></ncrs-icon>
               </button>
               <div>
