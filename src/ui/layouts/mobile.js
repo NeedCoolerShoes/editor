@@ -454,7 +454,12 @@ const STYLES = css`
   }
 
   .label-eyedropper {
-    transform: translate(-4px,-4px);
+    margin-top: -1rem;
+    transform: translateX(-4px);
+  }
+
+  .label-menu {
+    margin-bottom: -0.25rem;
   }
 
   ncrs-button {
@@ -647,7 +652,7 @@ class NCRSUIMobileLayout extends BaseLayout {
             </div>
             <div class="container">
               <button id="config-button" class="side-button" @touchmove=${preventTouch} @click=${this._showConfigDrawer} title="Open config drawer">
-                <p class="label label-xs">Menu</p>
+                <p class="label label-xs label-menu">Menu</p>
                 <ncrs-icon icon="menu" color="var(--icon-color)"></ncrs-icon>
               </button>
               <div>
