@@ -447,6 +447,21 @@ const STYLES = css`
     margin-bottom: 0.25rem;
   }
 
+  .label-xs {
+    color: rgb(134, 137, 139, 0.8);
+    margin-top: -0.75rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .label-eyedropper {
+    margin-top: -1rem;
+    transform: translateX(-4px);
+  }
+
+  .label-menu {
+    margin-bottom: -0.25rem;
+  }
+
   ncrs-button {
     text-align: center;
     font-size: large;
@@ -637,15 +652,22 @@ class NCRSUIMobileLayout extends BaseLayout {
             </div>
             <div class="container">
               <button id="config-button" class="side-button" @touchmove=${preventTouch} @click=${this._showConfigDrawer} title="Open config drawer">
+                <p class="label label-xs label-menu">Menu</p>
                 <ncrs-icon icon="menu" color="var(--icon-color)"></ncrs-icon>
               </button>
-              <div id="color-button-rainbow">
-                <button id="color-button" @touchmove=${preventTouch} @click=${this._showColorDrawer} title="Open color drawer"></button>
+              <div>
+                <p class="label label-xs">Color</p>
+                <div id="color-button-rainbow">
+                  <button id="color-button" @touchmove=${preventTouch} @click=${this._showColorDrawer} title="Open color drawer"></button>
+                </div>
               </div>
-              <ncrs-toggle ?toggled=${eyedropper} @click=${this._toggleEyedropper} class="side-button side-right">
-                <ncrs-icon slot="off" icon="eyedropper" color="var(--icon-color)"></ncrs-icon>
-                <ncrs-icon slot="on" icon="eyedropper" color="var(--icon-color-active)"></ncrs-icon>
-              </ncrs-toggle>
+              <div>
+                <p class="label label-xs label-eyedropper">Eyedropper</p>
+                <ncrs-toggle ?toggled=${eyedropper} @click=${this._toggleEyedropper} class="side-button side-right">
+                  <ncrs-icon slot="off" icon="eyedropper" color="var(--icon-color)"></ncrs-icon>
+                  <ncrs-icon slot="on" icon="eyedropper" color="var(--icon-color-active)"></ncrs-icon>
+                </ncrs-toggle>
+              </div>
             </div>
             <button class="menu-arrow menu-arrow-right" @click=${this._scrollToToggles}>
               <ncrs-icon icon="arrow-right" color="rgba(255, 255, 255, 0.2)"></ncrs-icon>
