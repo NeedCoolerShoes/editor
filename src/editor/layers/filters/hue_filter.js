@@ -13,7 +13,7 @@ class HueFilter extends CssFilter {
   }
 
   constructor(value, properties = {}) {
-    super(`hue-rotate(${value}deg)`, properties);
+    super(`hue-rotate(${(value+360)%360}deg)`, properties);
     this.value = value;
   }
 
