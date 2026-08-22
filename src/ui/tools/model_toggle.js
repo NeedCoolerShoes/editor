@@ -66,7 +66,9 @@ class ModelToggle extends LitElement {
     const isSlim = this.editor.getVariant() == "slim";
 
     return html`
-      <ncrs-toggle title="${msg(`Toggle skin model`, {id: `toolbar.toggle.model`})}" id="toggle-variant" ?toggled=${isSlim} @toggle=${this._toggleSkinModel}>
+      <ncrs-toggle  id="toggle-variant"
+       title="${msg(`Toggle Skin Model`,{id:`toolbar.toggle.model`})}"
+       ?toggled=${isSlim} @toggle=${this._toggleSkinModel}>
         <div id="toggle-classic" slot="off">
         </div>
         <div id="toggle-slim" slot="on">

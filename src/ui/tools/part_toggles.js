@@ -114,36 +114,30 @@ class PartToggles extends LitElement {
     return html`
       <div id="parts">
         <ncrs-toggle id="toggle-head"
-         name="${msg(`Toggle Head`,{id:`toolbar.part_toggle.head`})}"
-         title="${msg(`${key} + click to toggle only head`,{id:`toolbar.part_toggle.head.description`})}"
+         title="${msg(`Toggle Head<br>[Shift] + Click to toggle only head`,{id:`toolbar.part_toggle.head`})}"
          ?toggled=${toggled.head} @toggle=${this._toggleHeadPart}>
         </ncrs-toggle>
         <div>
           <ncrs-toggle id="toggle-rarm"
-           name="${msg(`Toggle Right Arm`,{id:`toolbar.part_toggle.right_arm`})}"
-           title="${msg(`${key} + click to toggle only right arm`,{id:`toolbar.part_toggle.right_arm.description`})}"
+           title="${msg(`Toggle Right Arm<br>[Shift] + Click to toggle only right arm`,{id:`toolbar.part_toggle.right_arm`})}"
            ?toggled=${toggled.arm_right} @toggle=${this._toggleRArmPart}>
           </ncrs-toggle>
           <ncrs-toggle id="toggle-torso"
-           name="${msg(`Toggle Torso`,{id:`toolbar.part_toggle.torso`})}"
-           title="${msg(`${key} + click to toggle only torso`,{id:`toolbar.part_toggle.torso.description`})}"
+           name="${msg(`Toggle Torso<br>[Shift] + Click to toggle only torso`,{id:`toolbar.part_toggle.torso`})}"
            ?toggled=${toggled.torso} @toggle=${this._toggleTorsoPart}>
           </ncrs-toggle>
           <ncrs-toggle id="toggle-larm"
-           name="${msg(`Toggle Left Arm`,{id:`toolbar.part_toggle.left_arm`})}"
-           title="${msg(`${key} + click to toggle only left arm`,{id:`toolbar.part_toggle.left_arm.description`})}"
+           name="${msg(`Toggle Left Arm<br>[Shift] + Click to toggle only left arm`,{id:`toolbar.part_toggle.left_arm`})}"
            ?toggled=${toggled.arm_left} @toggle=${this._toggleLArmPart}>
           </ncrs-toggle>
         </div>
         <div>
           <ncrs-toggle id="toggle-rleg"
-           name="${msg(`Toggle Right Leg`,{id:`toolbar.part_toggle.right_leg`})}"
-           title="${msg(`${key} + click to toggle only right leg`,{id:`toolbar.part_toggle.right_leg.description`})}"
+           name="${msg(`Toggle Right Leg<br>[Shift] + Click to toggle only right leg`,{id:`toolbar.part_toggle.right_leg`})}"
            ?toggled=${toggled.leg_right} @toggle=${this._toggleRLegPart}>
           </ncrs-toggle>
           <ncrs-toggle id="toggle-lleg"
-           name="${msg(`Toggle Left Leg`,{id:`toolbar.part_toggle.left_leg`})}"
-           title="${msg(`${key} + click to toggle only left leg`,{id:`toolbar.part_toggle.left_leg.description`})}"
+           name="${msg(`Toggle Left Leg<br>[Shift] + Click to toggle only left leg`,{id:`toolbar.part_toggle.left_leg`})}"
            ?toggled=${toggled.leg_left} @toggle=${this._toggleLLegPart}>
           </ncrs-toggle>
         </div>

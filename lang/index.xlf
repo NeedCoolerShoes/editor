@@ -68,74 +68,74 @@ Make sure you have saved the current project.</source>
   <source>Layer</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.base">
-  <source>Toggle base</source>
+  <source>Toggle Base</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.overlay">
-  <source>Toggle overlay</source>
+  <source>Toggle Overlay</source>
 </trans-unit>
 <trans-unit id="toolbar.label.grid">
   <source>Grid</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.base_grid">
-  <source>Toggle base grid</source>
+  <source>Toggle Base Grid</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.overlay_grid">
-  <source>Toggle overlay grid</source>
+  <source>Toggle Overlay Grid</source>
 </trans-unit>
 <trans-unit id="toolbar.label.render">
   <source>Render</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.backface_culling">
-  <source>Toggle backface culling</source>
+  <source>Toggle Backface Culling</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.grid_culling">
-  <source>Toggle grid culling</source>
+  <source>Toggle Grid Culling</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.shading">
-  <source>Toggle shading</source>
+  <source>Toggle Shading</source>
 </trans-unit>
-<trans-unit id="toolbar.toggle.blow_up_model">
-  <source>Blow up model</source>
+<trans-unit id="toolbar.toggle.exploded_view">
+  <source>Toggle Exploded View</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.model">
-  <source>Toggle skin model</source>
+  <source>Toggle Skin Model</source>
 </trans-unit>
 <trans-unit id="toolbar.part_toggle.head">
-  <source>Toggle head</source>
+  <source>Toggle Head<br>[Shift] + Click to toggle only head</source>
 </trans-unit>
-<trans-unit id="toolbar.part_toggle.head.description">
-  <source><x id="0" equiv-text="${key}"/> + click to toggle only head</source>
-</trans-unit>
+//<trans-unit id="toolbar.part_toggle.head.description">
+//  <source><x id="0" equiv-text="${key}"/> + click to toggle only head</source>
+//</trans-unit>
 <trans-unit id="toolbar.part_toggle.right_arm">
-  <source>Toggle right arm</source>
+  <source>Toggle Right Arm<br>[Shift] + Click to toggle only right arm</source>
 </trans-unit>
-<trans-unit id="toolbar.part_toggle.right_arm.description">
-  <source><x id="0" equiv-text="${key}"/> + click to toggle only right arm</source>
-</trans-unit>
+//<trans-unit id="toolbar.part_toggle.right_arm.description">
+//  <source><x id="0" equiv-text="${key}"/> + click to toggle only right arm</source>
+//</trans-unit>
 <trans-unit id="toolbar.part_toggle.torso">
-  <source>Toggle torso</source>
+  <source>Toggle Torso<br>[Shift] + Click to toggle only torso</source>
 </trans-unit>
-<trans-unit id="toolbar.part_toggle.torso.description">
-  <source><x id="0" equiv-text="${key}"/> + click to toggle only torso</source>
-</trans-unit>
+//<trans-unit id="toolbar.part_toggle.torso.description">
+//  <source><x id="0" equiv-text="${key}"/> + click to toggle only torso</source>
+//</trans-unit>
 <trans-unit id="toolbar.part_toggle.left_arm">
-  <source>Toggle left arm</source>
+  <source>Toggle Left Arm<br>[Shift] + Click to toggle only left arm</source>
 </trans-unit>
-<trans-unit id="toolbar.part_toggle.left_arm.description">
-  <source><x id="0" equiv-text="${key}"/> + click to toggle only left arm</source>
-</trans-unit>
+//<trans-unit id="toolbar.part_toggle.left_arm.description">
+//  <source><x id="0" equiv-text="${key}"/> + click to toggle only left arm</source>
+//</trans-unit>
 <trans-unit id="toolbar.part_toggle.right_leg">
-  <source>Toggle right leg</source>
+  <source>Toggle Right Leg<br>[Shift] + Click to toggle only right leg</source>
 </trans-unit>
-<trans-unit id="toolbar.part_toggle.right_leg.description">
-  <source><x id="0" equiv-text="${key}"/> + click to toggle only right leg</source>
-</trans-unit>
+//<trans-unit id="toolbar.part_toggle.right_leg.description">
+//  <source><x id="0" equiv-text="${key}"/> + click to toggle only right leg</source>
+//</trans-unit>
 <trans-unit id="toolbar.part_toggle.left_leg">
-  <source>Toggle left leg</source>
+  <source>Toggle Left Leg<br>[Shift] + Click to toggle only left leg</source>
 </trans-unit>
-<trans-unit id="toolbar.part_toggle.left_leg.description">
-  <source><x id="0" equiv-text="${key}"/> + click to toggle only left leg</source>
-</trans-unit>
+//<trans-unit id="toolbar.part_toggle.left_leg.description">
+//  <source><x id="0" equiv-text="${key}"/> + click to toggle only left leg</source>
+//</trans-unit>
 <trans-unit id="toolbar.label.parts">
   <source>Parts</source>
 </trans-unit>
