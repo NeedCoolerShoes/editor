@@ -4,8 +4,10 @@ import UpdateLayerFiltersEntry from "../../../../editor/history/entries/update_l
 import MergeFiltersEntry from "../../../../editor/history/entries/merge_filters_entry";
 import BrightnessFilterSlider from "../layers/brightness_filter_slider";
 import AlphaFilterSlider from "../layers/alpha_filter_slider";
+import ContrastFilterSlider from "../layers/contrast_filter_slider";
 import HueFilterSlider from "../layers/hue_filter_slider";
 import SaturationFilterSlider from "../layers/saturation_filter_slider";
+import "@lit/localize/lit-localize.js";
 
 class LayersTabFilters extends LitElement {
   static styles = css`
@@ -78,6 +80,10 @@ class LayersTabFilters extends LitElement {
         hsl(from var(--current-color) h s l),
         hsl(from var(--current-color) h s 100%)
       );
+    }
+
+    #contrast-slider::part(slider) {
+      background: linear-gradient(to right, #808080, #000);
     }
 
     #filter-buttons {
@@ -165,54 +171,61 @@ class LayersTabFilters extends LitElement {
       <div id="container">
         <div id="sliders">
           <div id="header">
-            <h2>Filters</h2>
+            <h2>${msg(`Filters`,{id:`com.tab.filters`})}</h2>
             <div id="clipboard">
-              <ncrs-button @click=${this._copyFilters} title="Copy filters" ?disabled=${!hasFilters}>
+              <ncrs-button @click=${this._copyFilters} title="${msg(`Copy Filters`,{id:`filters.label.copy`})}" ?disabled=${!hasFilters}>
                 <ncrs-icon icon="copy" color="var(--text-color)"></ncrs-icon>
               </ncrs-button>
-              <ncrs-button @click=${this._pasteFilters} title="Paste filters" ?disabled=${!hasClipboard || clipboardMatch}>
+              <ncrs-button @click=${this._pasteFilters} title="${msg(`Paste Filters`,{id:`filters.label.paste`})}" ?disabled=${!hasClipboard || clipboardMatch}>
                 <ncrs-icon icon="paste" color="var(--text-color)"></ncrs-icon>
               </ncrs-button>
             </div>
           </div>
-          <label for="hue-slider">Adjust Layer Hue</label>
+          <label for="hue-slider">${msg(`Adjust Layer Hue`,{id:`filters.label.adjustHue`})}</label>
           <div class="slider">
             ${this.hueSlider.slider}
-            <button class="reset" title="Reset hue." data-slider="hue" @click=${this._resetSlider}>
+            <button class="reset" title="${msg(`Reset Hue`,{id:`filters.label.resetHue`})}" data-slider="hue" @click=${this._resetSlider}>
               <ncrs-icon icon="undo" color="var(--icon-color)"></ncrs-icon>
             </button>
           </div>
-          <label for="saturation-slider">Adjust Layer Saturation</label>
+          <label for="saturation-slider">${msg(`Adjust Layer Saturation`,{id:`filters.label.adjustSat`})}</label>
           <div class="slider">
             ${this.saturationSlider.slider}
-            <button class="reset" title="Reset saturation." data-slider="saturation" @click=${this._resetSlider}>
+            <button class="reset" title="${msg(`Reset Raturation`,{id:`filters.label.resetSat`})}" data-slider="saturation" @click=${this._resetSlider}>
               <ncrs-icon icon="undo" color="var(--icon-color)"></ncrs-icon>
             </button>
           </div>
-          <label for="brightness-slider">Adjust Layer Brightness</label>
+          <label for="brightness-slider">${msg(`Adjust Layer Brightness`,{id:`filters.label.adjustBri`})}</label>
           <div class="slider">
             ${this.brightnessSlider.slider}
-            <button class="reset" title="Reset brightness." data-slider="brightness" @click=${this._resetSlider}>
+            <button class="reset" title="${msg(`Reset Brightness`,{id:`filters.label.resetBri`})}" data-slider="brightness" @click=${this._resetSlider}>
               <ncrs-icon icon="undo" color="var(--icon-color)"></ncrs-icon>
             </button>
           </div>
-          <label for="opacity-slider">Adjust Layer Opacity</label>
+          <label for="contrast-slider">${msg(`Adjust Layer Contrast`,{id:`filters.label.adjustCon`})}</label>
+          <div class="slider">
+            ${this.contrastSlider.slider}
+            <button class="reset" title="${msg(`Reset Contrast`,{id:`filters.label.resetCon`})}" data-slider="contrast" @click=${this._resetSlider}>
+              <ncrs-icon icon="undo" color="var(--icon-color)"></ncrs-icon>
+            </button>
+          </div>
+          <label for="opacity-slider">${msg(`Adjust Layer Opacity`,{id:`filters.label.adjustOpa`})}</label>
           <div class="slider">
             ${this.opacitySlider.slider}
-            <button class="reset" title="Reset opacity." data-slider="opacity" @click=${this._resetSlider}>
+            <button class="reset" title="${msg(`Reset Opacity`,{id:`filters.label.resetOpa`})}" data-slider="opacity" @click=${this._resetSlider}>
               <ncrs-icon icon="undo" color="var(--icon-color)"></ncrs-icon>
             </button>
           </div>
         </div>
         <div id="filter-buttons">
-          <ncrs-button @click=${this._resetSliders} title="Clear all active filters on the current layer.">
-            Clear Filters
+          <ncrs-button @click=${this._resetSliders} title="${msg(`Clear all active filters on the current layer.`,{id:`filters.desc.clear`})}">
+            ${msg(`Clear Filters`,{id:`filters.label.clear`})}
           </ncrs-button>
           <ncrs-button
             @click=${this._mergeFilters}
-            title="Applies the current filters to the pixels of the current layer."
+            title="${msg(`Applies the current filters to the active layer.`,{id:`filters.desc.merge`})}"
           >
-            Merge in to Layer
+            ${msg(`Merge in to Layer`,{id:`filters.label.merge`})}
           </ncrs-button>
         </div>
       </div>
@@ -229,6 +242,7 @@ class LayersTabFilters extends LitElement {
     switch (slider) {
       case "hue": { this.hueSlider.reset(); break; }
       case "saturation": { this.saturationSlider.reset(); break; }
+      case "contrast": { this.contrastSlider.reset(); break; }
       case "brightness": { this.brightnessSlider.reset(); break; }
       case "opacity": { this.opacitySlider.reset(); break; }
     }
@@ -306,10 +320,13 @@ class LayersTabFilters extends LitElement {
     this.saturationSlider = new SaturationFilterSlider(layers);
     this.saturationSlider.slider.id = "saturation-slider";
 
+    this.contrastSlider = new ContrastFilterSlider(layers);
+    this.contrastSlider.slider.id = "contrast-slider";
+
     this.brightnessSlider = new BrightnessFilterSlider(layers);
     this.brightnessSlider.slider.id = "brightness-slider";
 
-    const sliders = [this.opacitySlider, this.hueSlider, this.saturationSlider, this.brightnessSlider];
+    const sliders = [this.opacitySlider, this.hueSlider, this.saturationSlider, this.contrastSlider, this.brightnessSlider];
 
     sliders.forEach(element => {
       element.addEventListener("slider-change", () => this._syncFilters());
@@ -328,5 +345,4 @@ class LayersTabFilters extends LitElement {
 }
 
 customElements.define("ncrs-layers-tab-filters", LayersTabFilters);
-
 export default LayersTabFilters;

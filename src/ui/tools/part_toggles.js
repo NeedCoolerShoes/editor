@@ -1,6 +1,3 @@
-import { css, html, LitElement, unsafeCSS } from "lit";
-import { msg, str } from "@lit/localize";
-
 import imgHeadEnabled from "../../../assets/images/skin_parts/head_enabled.png";
 import imgHeadDisabled from "../../../assets/images/skin_parts/head_disabled.png";
 import imgTorsoEnabled from "../../../assets/images/skin_parts/torso_enabled.png";
@@ -13,6 +10,8 @@ import imgRightLegEnabled from "../../../assets/images/skin_parts/right_leg_enab
 import imgRightLegDisabled from "../../../assets/images/skin_parts/right_leg_disabled.png";
 import imgLeftLegEnabled from "../../../assets/images/skin_parts/left_leg_enabled.png";
 import imgLeftLegDisabled from "../../../assets/images/skin_parts/left_leg_disabled.png";
+import { css, html, LitElement, unsafeCSS } from "lit";
+import "@lit/localize/lit-localize.js";
 
 class PartToggles extends LitElement {
   static styles = css`
@@ -98,11 +97,11 @@ class PartToggles extends LitElement {
       --background-image-enabled: url(${unsafeCSS(imgLeftLegEnabled)});
       --background-image-disabled: url(${unsafeCSS(imgLeftLegDisabled)});
     }
-  `
+  `;
 
   constructor(editor) {
     super();
-    
+
     this.editor = editor;
     this.isShift = false;
 
@@ -110,23 +109,46 @@ class PartToggles extends LitElement {
   }
 
   render() {
-    const toggled = this.editor.config.get("partVisibility");
-    const key = "Shift";
+    const toggled = this.editor.config.get(partVisibility, {};);
 
     return html`
       <div id="parts">
-        <ncrs-toggle id="toggle-head" title="${msg(`Toggle head`, {id: `toolbar.part_toggle.head`})}\n${msg(str`${key} + click to toggle only head`, {id: `toolbar.part_toggle.head.description`})}" ?toggled=${toggled.head} @toggle=${this._toggleHeadPart}></ncrs-toggle>
+        <ncrs-toggle id="toggle-head"
+         name="${msg(`Toggle Head`,{id:`toolbar.part_toggle.head`})}"
+         title="${msg(`${key} + click to toggle only head`,{id:`toolbar.part_toggle.head.description`})}"
+         ?toggled=${toggled.head} @toggle=${this._toggleHeadPart}>
+        </ncrs-toggle>
         <div>
-          <ncrs-toggle id="toggle-rarm" title="${msg(`Toggle right arm`, {id: `toolbar.part_toggle.right_arm`})}\n${msg(str`${key} + click to toggle only right arm`, {id: `toolbar.part_toggle.right_arm.description`})}" ?toggled=${toggled.arm_right} @toggle=${this._toggleRArmPart}></ncrs-toggle>
-          <ncrs-toggle id="toggle-torso" title="${msg(`Toggle torso`, {id: `toolbar.part_toggle.torso`})}\n${msg(str`${key} + click to toggle only torso`, {id: `toolbar.part_toggle.torso.description`})}" ?toggled=${toggled.torso} @toggle=${this._toggleTorsoPart}></ncrs-toggle>
-          <ncrs-toggle id="toggle-larm" title="${msg(`Toggle left arm`, {id: `toolbar.part_toggle.left_arm`})}\n${msg(str`${key} + click to toggle only left arm`, {id: `toolbar.part_toggle.left_arm.description`})}" ?toggled=${toggled.arm_left} @toggle=${this._toggleLArmPart}></ncrs-toggle>
+          <ncrs-toggle id="toggle-rarm"
+           name="${msg(`Toggle Right Arm`,{id:`toolbar.part_toggle.right_arm`})}"
+           title="${msg(`${key} + click to toggle only right arm`,{id:`toolbar.part_toggle.right_arm.description`})}"
+           ?toggled=${toggled.arm_right} @toggle=${this._toggleRArmPart}>
+          </ncrs-toggle>
+          <ncrs-toggle id="toggle-torso"
+           name="${msg(`Toggle Torso`,{id:`toolbar.part_toggle.torso`})}"
+           title="${msg(`${key} + click to toggle only torso`,{id:`toolbar.part_toggle.torso.description`})}"
+           ?toggled=${toggled.torso} @toggle=${this._toggleTorsoPart}>
+          </ncrs-toggle>
+          <ncrs-toggle id="toggle-larm"
+           name="${msg(`Toggle Left Arm`,{id:`toolbar.part_toggle.left_arm`})}"
+           title="${msg(`${key} + click to toggle only left arm`,{id:`toolbar.part_toggle.left_arm.description`})}"
+           ?toggled=${toggled.arm_left} @toggle=${this._toggleLArmPart}>
+          </ncrs-toggle>
         </div>
         <div>
-          <ncrs-toggle id="toggle-rleg" title="${msg(`Toggle right leg`, {id: `toolbar.part_toggle.right_leg`})}\n${msg(str`${key} + click to toggle only right leg`, {id: `toolbar.part_toggle.right_leg.description`})}" ?toggled=${toggled.leg_right} @toggle=${this._toggleRLegPart}></ncrs-toggle>
-          <ncrs-toggle id="toggle-lleg" title="${msg(`Toggle left leg`, {id: `toolbar.part_toggle.left_leg`})}\n${msg(str`${key} + click to toggle only left leg`, {id: `toolbar.part_toggle.left_leg.description`})}" ?toggled=${toggled.leg_left} @toggle=${this._toggleLLegPart}></ncrs-toggle>
+          <ncrs-toggle id="toggle-rleg"
+           name="${msg(`Toggle Right Leg`,{id:`toolbar.part_toggle.right_leg`})}"
+           title="${msg(`${key} + click to toggle only right leg`,{id:`toolbar.part_toggle.right_leg.description`})}"
+           ?toggled=${toggled.leg_right} @toggle=${this._toggleRLegPart}>
+          </ncrs-toggle>
+          <ncrs-toggle id="toggle-lleg"
+           name="${msg(`Toggle Left Leg`,{id:`toolbar.part_toggle.left_leg`})}"
+           title="${msg(`${key} + click to toggle only left leg`,{id:`toolbar.part_toggle.left_leg.description`})}"
+           ?toggled=${toggled.leg_left} @toggle=${this._toggleLLegPart}>
+          </ncrs-toggle>
         </div>
       </div>
-    `
+    `;
   }
 
   _toggleHeadPart(event) {
@@ -249,5 +271,4 @@ class PartToggles extends LitElement {
 }
 
 customElements.define("ncrs-tools-part-toggles", PartToggles)
-
 export default PartToggles;

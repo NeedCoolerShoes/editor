@@ -2,6 +2,7 @@ import Color from "color";
 import { clamp } from "../../../../../helpers.js";
 import Tab from "../../../../misc/tab.js";
 import { css, html } from "lit";
+import "@lit/localize/lit-localize.js";
 
 const defaultColors = [];
 
@@ -99,11 +100,11 @@ class RecentColorPaletteTab extends Tab {
       .color.light:focus-visible {
         border: black solid 1px;
       }
-    `
+    `;
   ]
 
   constructor(ui, colorPicker) {
-    super({name: "Recent Colors"});
+    super({name: `${msg(`Recent Colors — Colors used in skin.`,{id:`palette.label.recent`})}`});
 
     this.ui = ui;
     this.editor = this.ui.editor;
@@ -122,12 +123,7 @@ class RecentColorPaletteTab extends Tab {
     if (this.colors.length < 1) {
       return html`
         <div id="main">
-          <p>
-            No recent colors.
-          </p>
-          <p>
-            Colors you use in your skin will show up here.
-          </p>
+          <p>${msg(`Colors used in skin will show up here.`,{id:`palette.desc.noRecent`})}</p>
         </div>
       `;
     }
@@ -169,7 +165,7 @@ class RecentColorPaletteTab extends Tab {
   _createColor(color) {
     const button = document.createElement("button");
     button.classList = ["color"];
-    button.title = `Set color to ${color}`
+    button.title = `${msg(`Set color to ${color}`,{id:`palette.desc.setColor`})}`
 
     button.style.backgroundColor = color;
     button.setAttribute("color", color);
@@ -187,7 +183,7 @@ class RecentColorPaletteTab extends Tab {
 
     button.addEventListener("click", () => {
       this.colorPicker.setColor(color);
-    })
+    });
 
     return button;
   }
@@ -199,8 +195,7 @@ class RecentColorPaletteTab extends Tab {
       const color = this.editor.toolConfig.get("color");
 
       this.addColor(color.hex().toLowerCase())
-    })
-
+    });
     this.addEventListener("wheel", this._onPaletteWheel.bind(this));
 
     this.colorPicker.addEventListener("color-change", event => {
@@ -215,7 +210,7 @@ class RecentColorPaletteTab extends Tab {
         if (!selected) return;
 
         selected.classList.remove("selected");
-      };
+      }
     });
   }
 
@@ -234,5 +229,4 @@ class RecentColorPaletteTab extends Tab {
 }
 
 customElements.define("ncrs-recent-color-palette-tab", RecentColorPaletteTab);
-
 export default RecentColorPaletteTab;

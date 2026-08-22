@@ -1,4 +1,5 @@
 import { css, html, LitElement } from "lit";
+import "@lit/localize/lit-localize.js";
 
 class GallerySkin extends LitElement {
   static styles = css`
@@ -42,15 +43,15 @@ class GallerySkin extends LitElement {
 
   constructor(metadata = {}) {
     super();
-    
+
     this.metadata = metadata;
   }
 
   render() {
     const meta = this.metadata;
-    let title = "Click to add skin to project\n\n";
+    let title = msg(`Click to add skin to project.<p>`,{id:`gallery.desc.meta`});
     title += meta.name + "\n";
-    title += "by " + meta.author.name;
+    title += msg(`by `,{id:`gallery.label.by`}) + meta.author.name;
 
     return html`
       <button @click=${this._addSkin} title=${title}>
@@ -59,7 +60,7 @@ class GallerySkin extends LitElement {
           <p>${meta.name}</p>
         </div>
       </button>
-    `
+    `;
   }
 
   _addSkin() {
@@ -68,5 +69,4 @@ class GallerySkin extends LitElement {
 }
 
 customElements.define("ncrs-gallery-skin", GallerySkin);
-
 export default GallerySkin;

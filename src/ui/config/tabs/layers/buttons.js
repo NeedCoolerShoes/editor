@@ -2,6 +2,7 @@ import { css, html, LitElement } from "lit";
 import * as THREE from "three";
 import UpdateLayerTextureEntry from "../../../../editor/history/entries/update_layer_texture_entry";
 import { IMAGE_HEIGHT, IMAGE_WIDTH } from "../../../../constants";
+import "@lit/localize/lit-localize.js";
 
 class LayersTabButtons extends LitElement {
   static styles = css`
@@ -41,7 +42,6 @@ class LayersTabButtons extends LitElement {
       text-align: center;
       width: 100%;
     }
-
   `;
 
   constructor(editor) {
@@ -54,32 +54,32 @@ class LayersTabButtons extends LitElement {
   render() {
     return html`
       <div id="layer-buttons">
-        <ncrs-button @click=${this.swapFrontBack} title="Flip the skin's front with its back.">
+        <ncrs-button @click=${this.swapFrontBack} title="${msg(`Flip the skin's front with its back.`,{id:`layers.desc.flipFB`})}">
           <ncrs-icon icon="flip-front-back" color="var(--text-color)"></ncrs-icon>
-          <p>Flip Front / Back</p>
+          <p>${msg(`Flip Front / Back`,{id:`layers.label.flipFB`})}</p>
         </ncrs-button>
-        <ncrs-button @click=${this.swapLeftRight} title="Flip the current skin horizontally.">
+        <ncrs-button @click=${this.swapLeftRight} title="${msg(`Flip the current skin horizontally.`,{id:`layers.desc.flipLR`})}">
           <ncrs-icon icon="flip-left-right" color="var(--text-color)"></ncrs-icon>
-          <p>Flip Left / Right</p>
+          <p>${msg(`Flip Left / Right`,{id:`layers.label.flipLR`})}</p>
         </ncrs-button>
-        <ncrs-button @click=${this.swapBodyOverlay} title="Swap the base layer of the skin with its overlay.">
+        <ncrs-button @click=${this.swapBodyOverlay} title="${msg(`Swap the base layer of the skin with its overlay.`,{id:`layers.desc.flipFrBa`})},{id:`layers.desc.swapBaseOver`})}">
           <ncrs-icon icon="swap-body-overlay" color="var(--text-color)"></ncrs-icon>
-          <p>Swap Base / Overlay</p>
+          <p>${msg(`Swap Base / Overlay`,{id:`layers.label.swapBaseOver`})}</p>
         </ncrs-button>
-        <ncrs-button @click=${this.flattenLayerOverlay} title="Flatten the overlay in to the base of the skin on the selected layer.">
+        <ncrs-button @click=${this.flattenLayerOverlay} title="${msg(`Flatten the overlay in to the base of the skin on the selected layer.`,{id:`layers.desc.flatten`})}">
           <ncrs-icon icon="flatten-overlay-base" color="var(--text-color)"></ncrs-icon>
-          <p>Flatten Overlay</p>
+          <p>${msg(`Flatten Overlay`,{id:`layers.label.flatten`})}</p>
         </ncrs-button>
-        <ncrs-button @click=${this.clearLayerBase} title="Erases the base of the skin on the selected layer.">
+        <ncrs-button @click=${this.clearLayerBase} title="${msg(`Erases the base of the skin on the selected layer.`,{id:`layers.desc.eraseBase`})}">
           <ncrs-icon icon="erase-base" color="var(--text-color)"></ncrs-icon>
-          <p>Erase Base</p>
+          <p>${msg(`Erase Base`,{id:`layers.label.eraseBase`})}</p>
         </ncrs-button>
-        <ncrs-button @click=${this.clearLayerOverlay} title="Erases the overlay of the skin on the selected layer.">
+        <ncrs-button @click=${this.clearLayerOverlay} title="${msg(`Erases the overlay of the skin on the selected layer.`,{id:`layers.desc.eraseOver`})}">
           <ncrs-icon icon="erase-overlay" color="var(--text-color)"></ncrs-icon>
-          <p>Erase Overlay</p>
+          <p>${msg(`Erase Overlay`,{id:`layers.label.eraseOver`})}</p>
         </ncrs-button>
       </div>
-      `;
+    `;
   }
 
   swapBodyOverlay() {
@@ -166,5 +166,4 @@ class LayersTabButtons extends LitElement {
 }
 
 customElements.define("ncrs-layers-tab-buttons", LayersTabButtons);
-
 export default LayersTabButtons;

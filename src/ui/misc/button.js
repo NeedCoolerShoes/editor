@@ -1,6 +1,7 @@
 import { css, html, LitElement } from "lit";
-import {unsafeHTML} from 'lit/directives/unsafe-html.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import "@m3e/tooltip";
+
 class Button extends LitElement {
   static styles = css`
     :host {
@@ -25,7 +26,6 @@ class Button extends LitElement {
       background-image: linear-gradient(to top, #24272a, #313436);
       box-shadow: #3d4042 0px 0px 0px 1px inset, #191a1c 0px 1px 3px, #1f2226 0px 4px, rgba(0, 0, 0, 0.2) 0px 4px 3px;
       box-sizing: border-box;
-
       margin-bottom: 0.375rem;
       color: var(--text-color);
       touch-action: auto;
@@ -60,7 +60,7 @@ class Button extends LitElement {
       box-shadow: #1c1e1f 0px 0px 0px 1px inset, #191a1c 0px 1px 3px, rgba(0, 0, 0, 0.2) 0px 4px 3px;
       cursor: initial
     }
-  `
+  `;
 
   static properties = {
     active: {type: Boolean, reflect: true},
@@ -74,7 +74,7 @@ class Button extends LitElement {
         <slot></slot>
       </button>
       <m3e-tooltip for="button" touch-gestures="on" position="above" show-delay=500>${unsafeHTML(this._tooltipContent())}</m3e-tooltip>
-    `
+    `;
   }
 
   _tooltipContent() {
@@ -82,11 +82,10 @@ class Button extends LitElement {
     const text = (this.touchTooltip || title).toString();
 
     if (text.length < 1) return undefined;
-          
+
     return text.split("\n").join("<br>");
   }
 }
 
 customElements.define("ncrs-button", Button);
-
 export default Button;

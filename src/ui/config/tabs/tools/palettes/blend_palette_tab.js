@@ -3,6 +3,7 @@ import { clamp } from "../../../../../helpers.js";
 import Tab from "../../../../misc/tab.js";
 import { css, html } from "lit";
 import "../../../../misc/icon_button";
+import "@lit/localize/lit-localize.js";
 
 class BlendPaletteTab extends Tab {
   static styles = [
@@ -126,11 +127,11 @@ class BlendPaletteTab extends Tab {
         width: 0.75rem;
         height: 0.75rem;
       }
-    `
+    `;
   ]
 
   constructor(ui, colorPicker) {
-    super({name: "Blend Palette", buttonPart: "blend-palette"});
+    super({name: `${msg(`Blend Palette`,{id:`palette.label.blend`})}`, buttonPart: "blend-palette"});
 
     this.ui = ui;
     this.editor = this.ui.editor;
@@ -149,7 +150,7 @@ class BlendPaletteTab extends Tab {
     plusButton.id = "plus";
     plusButton.classList.add("palette-element");
     plusButton.addEventListener("click", this._onPlusClick.bind(this));
-    plusButton.textContent = "+";
+    plusButton.textContent = `${msg(`+`,{id:`palette.label.plus`})}`;
 
     if (colors.length < 1) {
       return html`
@@ -157,15 +158,15 @@ class BlendPaletteTab extends Tab {
           <div id="colors">
             ${plusButton}
           </div>
-          <p>Click the plus to add a color to the blend palette.</p>
-          <p>Colors in this palette will be randomly sampled by tools with the blend effect on.</p>
+          <p>${msg(`Click the plus [+] button to add a color to the Blend Palette.</p>
+          <p>Tools with the Blend Effect enabled will randomly sample colors.`,{id:`palette.desc.plus`})}
         </div>
-      `
+      `;
     }
 
     const colorsDiv = document.createElement("div");
     colorsDiv.id = "colors";
-    
+
     colorsDiv.appendChild(plusButton);
     colors.forEach(color => {
       colorsDiv.appendChild(this._createColor(color))
@@ -251,7 +252,7 @@ class BlendPaletteTab extends Tab {
       button.classList.add("light");
     }
 
-    button.title = `Set color to ${color}`
+    button.title = msg(`Set color to ${color}`,{id:`palette.desc.setColor`});
 
     button.style.backgroundColor = color;
     button.setAttribute("color", color);
@@ -292,7 +293,7 @@ class BlendPaletteTab extends Tab {
         if (!selected) return;
 
         this.requestUpdate();
-      };
+      }
     });
   }
 
@@ -311,5 +312,4 @@ class BlendPaletteTab extends Tab {
 }
 
 customElements.define("ncrs-blend-palette-tab", BlendPaletteTab);
-
 export default BlendPaletteTab;

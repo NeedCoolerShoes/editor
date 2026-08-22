@@ -8,6 +8,7 @@ import ColorPicker from "../misc/color_picker";
 import Color from "color";
 import MobileTabGroup from "./components/tab_group";
 import MobileTab from "./components/tab";
+import "@lit/localize/lit-localize.js";
 
 const COLOR_DRAWER_STYLES = css`
   :host {
@@ -146,15 +147,15 @@ class ColorDrawer {
     drawer.id = "color-picker-drawer";
 
     const tabGroup = new MobileTabGroup();
-    
+
     const colorPickerTab = new MobileTab();
     colorPickerTab.id = "color-picker-tab";
-    colorPickerTab.name = "Color Picker";
+    colorPickerTab.name = msg(`Color Picker`,{id:`com.label.colors`});
     colorPickerTab.appendChild(this.colorPicker);
     tabGroup.appendChild(colorPickerTab);
-    
+
     const paletteTab = new MobileTab();
-    paletteTab.name = "Palettes";
+    paletteTab.name = msg(`Palettes`,{id:`com.label.palettes`});
     paletteTab.appendChild(this._createPaletteTabs());
     tabGroup.appendChild(paletteTab);
 

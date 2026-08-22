@@ -1,6 +1,7 @@
 import { css, html, LitElement } from "lit";
 import GallerySkin from "../../../gallery/skin.js";
 import { clamp } from "../../../../helpers.js";
+import "@lit/localize/lit-localize.js";
 
 class QuickSearch extends LitElement {
   static properties = {
@@ -113,7 +114,6 @@ class QuickSearch extends LitElement {
 
     #ignore-variant {
       --text-color: white;
-
       color: var(--text-color);
       font-size: x-small;
     }
@@ -176,31 +176,32 @@ class QuickSearch extends LitElement {
       <div id="search-area">
         <div id="search">
           ${this.searchField}
-          <ncrs-button id="search-button" part="search-button" title="Submit search" @click=${this._setQuery}>
+          <ncrs-button id="search-button" part="search-button" title="${msg(`Search`,{id:`search.label`})} @click=${this._setQuery}>
             <ncrs-icon icon="search" color="var(--text-color)"></ncrs-icon>
           </ncrs-button>
         </div>
-        <ncrs-toggle id="ignore-variant" @toggle=${this._toggleIgnoreModel} title="Ignore skin model when searching the gallery.">
-          <div slot="before">Ignore Model</div>
+        <ncrs-toggle id="ignore-variant" @toggle=${this._toggleIgnoreModel} title="${msg(`Enabled: Model Specific — Only known compatible parts shown.<p>
+        Disabled: Shows All — Visual issues may appear on the arms.`,{id:`search.desc.ignoreModel`})}">
+          <div slot="before">${msg(`Smart Sort`,{id:`search.label.ignoreModel`})}</div>
           <ncrs-icon slot="off" icon="box-unchecked" color="var(--text-color)"></ncrs-icon>
           <ncrs-icon slot="on" icon="box-checked" color="var(--text-color)"></ncrs-icon>
         </ncrs-toggle>
       </div>
       <div id="filters">
         <div>
-          <label for="parts">Part</label>
+          <label for="parts">${msg(`Part`,{id:`search.label.part`})}</label>
           ${this._createPartsFilter()}
         </div>
         <div>
-          <label for="parts">Category</label>
+          <label for="parts">${msg(`Category`,{id:`search.label.category`})}</label>
           ${this._createCategoriesFilter()}
         </div>
       </div>
       ${skins}
       <div id="nav">
-        <ncrs-button @click=${this._navBack}>Back</ncrs-button>
+        <ncrs-button @click=${this._navBack}>${msg(`Back`,{id:`search.label.back`})}</ncrs-button>
         <span>${this.page} / ${this.pageCount}</span>
-        <ncrs-button @click=${this._navNext}>Next</ncrs-button>
+        <ncrs-button @click=${this._navNext}>${msg(`Next`,{id:`search.label.next`})}</ncrs-button>
       </div>
     `;
   }
@@ -263,7 +264,7 @@ class QuickSearch extends LitElement {
       data.json().then(json => {
         this._galleryData = json;
       });
-    })
+    });
   }
 
   _renderSkins() {
@@ -277,7 +278,7 @@ class QuickSearch extends LitElement {
       const gallerySkin = new GallerySkin(skin);
       gallerySkin.addEventListener("add-skin", event => {
         this._addSkin(event.detail);
-      })
+      });
 
       div.appendChild(gallerySkin);
     });
@@ -288,7 +289,7 @@ class QuickSearch extends LitElement {
   _addSkin(metadata) {
     const layerMetadata = {
       attribution: `${metadata.url}\n${metadata.author.attribution_message}`
-    };
+    }
 
     this.editor.addLayerFromImageURL(metadata.image, layerMetadata);
   }
@@ -296,11 +297,11 @@ class QuickSearch extends LitElement {
   _createSearchField() {
     const input = document.createElement("input");
     input.type = "text";
-    input.placeholder = "Search for skins";
+    input.placeholder = msg(`Search for skins and parts!`,{id:`search.label.placeholder`});
 
     input.addEventListener("change", () => {
       this._setQuery();
-    })
+    });
 
     return input;
   }
@@ -310,7 +311,7 @@ class QuickSearch extends LitElement {
     select.id = "parts";
 
     const unset = document.createElement("option");
-    unset.textContent = "All";
+    unset.textContent = msg(`All`,{id:`search.label.all`});
     unset.value = "";
 
     select.appendChild(unset);
@@ -324,7 +325,7 @@ class QuickSearch extends LitElement {
       }
 
       select.appendChild(option);
-    })
+    });
 
     select.addEventListener("change", () => {
       this.part = select.value;
@@ -339,7 +340,7 @@ class QuickSearch extends LitElement {
     select.id = "categories";
 
     const unset = document.createElement("option");
-    unset.textContent = "All";
+    unset.textContent = msg(`All`,{id:`search.label.all`});
     unset.value = "";
 
     select.appendChild(unset);
@@ -354,7 +355,7 @@ class QuickSearch extends LitElement {
       }
 
       select.appendChild(option);
-    })
+    });
 
     select.addEventListener("change", () => {
       this.category = select.value;
@@ -369,7 +370,7 @@ class QuickSearch extends LitElement {
     floatArray[0] = Math.random();
 
     const dv = new DataView(floatArray.buffer);
-    
+
     const bytes = [
       dv.getUint8(0), dv.getUint8(1), dv.getUint8(2), dv.getUint8(3),
     ];
@@ -390,10 +391,9 @@ class QuickSearch extends LitElement {
       if (this.ignoreModel) return;
 
       this._syncGalleryData();
-    })
+    });
   }
 }
 
 customElements.define("ncrs-quick-search", QuickSearch);
-
 export default QuickSearch;

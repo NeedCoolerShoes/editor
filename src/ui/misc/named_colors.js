@@ -1,5 +1,5 @@
 const NAMED_COLORS = {
-  // CSS Default colors + spaced out names
+// CSS default colors + spaced out names
   aliceblue: '#f0f8ff',
   alice_blue: '#f0f8ff',
   antiquewhite: '#faebd7',
@@ -264,15 +264,14 @@ const NAMED_COLORS = {
   yellowgreen: '#9acd32',
   yellow_green: '#9acd32',
 
-  // Non-css colors
-  /// Custom colors
+// Custom colors
   tennisball: '#ceff16',
   tennis_ball: '#ceff16',
   meowmeoworange: '#f69901',
   meowmeow_orange: '#f69901',
   meow_meow_orange: '#f69901',
-  
-  /// Easteregg colors
+
+// Easteregg colors
   pancake: '#ffda54',
   mhorkuit: '#4e0047',
   vilpat: '#679267',
@@ -282,7 +281,8 @@ const NAMED_COLORS = {
   rustboro: '#27d8e2',
   wulfian: '#ffbc03',
   dragon: '#5a782a',
-  kittykay: '#f459bf'
-};
+  kittykay: '#f459bf',
+  rephaim: '#a0a0a0'
+}
 
 export default NAMED_COLORS;

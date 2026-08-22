@@ -41,7 +41,6 @@ class Config extends LitElement {
 
     ncrs-tab-group::part(button) {
       all: unset;
-
       flex-grow: 1;
       display: block;
       cursor: pointer;
@@ -77,7 +76,7 @@ class Config extends LitElement {
       background-color: #1a1a1a;
       font-weight: bold;
     }
-  `
+  `;
 
   constructor(ui) {
     super();
@@ -125,5 +124,4 @@ class Config extends LitElement {
 }
 
 customElements.define("ncrs-config", Config);
-
 export default Config;

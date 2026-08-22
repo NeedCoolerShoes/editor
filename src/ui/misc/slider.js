@@ -1,4 +1,4 @@
-import { LitElement, css, html } from "lit";
+import { css, html, LitElement } from "lit";
 import { clamp } from "../../helpers.js";
 
 const SLIDER_SLOWDOWN_START = 15;
@@ -10,7 +10,7 @@ class Slider extends LitElement {
     min: { type: Number },
     max: { type: Number },
     unclamped: { type: Boolean },
-  };
+  }
 
   static styles = css`
     :host {
@@ -21,7 +21,6 @@ class Slider extends LitElement {
       cursor: pointer;
       box-sizing: border-box;
       touch-action: none;
-
       --height: var(--ncrs-slider-height, auto);
     }
 
@@ -89,21 +88,21 @@ class Slider extends LitElement {
     const pointerMove = function (event) {
       event.stopImmediatePropagation();
       scope.onMove(event);
-    };
+    }
 
     const pointerUp = () => {
       document.removeEventListener("pointermove", pointerMove);
       document.removeEventListener("pointerup", pointerUp);
 
       this.dispatchEvent(new CustomEvent("slide-end"));
-    };
+    }
 
     this._onPointerDown = () => {
       document.addEventListener("pointermove", pointerMove);
       document.addEventListener("pointerup", pointerUp);
 
       this.dispatchEvent(new CustomEvent("slide-start"));
-    };
+    }
 
     this._setupResizeObserver();
   }
@@ -148,7 +147,7 @@ class Slider extends LitElement {
 
   onClick(event) {
     if (event.pointerType == "mouse" &&  event.button != 0) { return; }
-    
+
     this.shadowRoot.getElementById("background").focus();
     this.setProgress(event.layerX / this._clientWidth());
     this._onPointerDown();
@@ -283,5 +282,4 @@ class Slider extends LitElement {
 }
 
 customElements.define("ncrs-slider", Slider);
-
 export default Slider;

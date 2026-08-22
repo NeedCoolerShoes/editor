@@ -1,7 +1,6 @@
 import { css, html, LitElement, unsafeCSS } from "lit";
-import { msg } from "@lit/localize";
-
 import imgSteveAlex from "../../../assets/images/steve_alex.png";
+import "@lit/localize/lit-localize.js";
 
 class ModelToggle extends LitElement {
   static styles = css`
@@ -60,7 +59,7 @@ class ModelToggle extends LitElement {
 
     editor.project.addEventListener("variant-change", () => {
       this.requestUpdate();
-    })
+    });
   }
 
   render() {

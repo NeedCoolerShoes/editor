@@ -1,11 +1,10 @@
-import { html, nothing } from "lit";
 import BaseToolConfig from "./base_tool_config.js";
 import BucketTool from "../../../../../editor/tools/toolset/bucket_tool.js";
 
 class BucketToolConfig extends BaseToolConfig {
   static styles = [
     BaseToolConfig.styles
-  ];
+  ]
 
   static properties = {
     camo: {},
@@ -16,50 +15,51 @@ class BucketToolConfig extends BaseToolConfig {
 
   constructor(config, mobile = false) {
     super(config, {
-      camo: {type: "toggle", icon: "camo", title: "Toggle camo\nRandomly lightens and darkens the current color"},
-      blend: {type: "toggle", icon: "blend", title: "Toggle blend\nRandomly selects colors from the blend palette"},
-      bucketErase: {type: "toggle", icon: "eraser", title: "Toggle erase mode"},
+      camo: {type: "toggle", icon: "camo", title: `${msg(`Toggle Camo — Randomizes brightness of selected color.`,{id:`tools.desc.camo`})}`},
+      blend: {type: "toggle", icon: "blend", title: `${msg(`Toggle Blend — Randomly selects colors from the Blend Palette.`,{id:`tools.desc.blend`})}`},
+      bucketErase: {type: "toggle", icon: "eraser", title: `${msg(`Toggle Eraser`,{id:`tools.desc.eraser`})}`},
       fillStyle: {
         type: "select",
         options: [
           {
             icon: "fill-cube-connected",
             value: "fill-cube-connected",
-            title: "Cube connected (default)\nFills all connected pixels of the same color on all sides of the cube"
-          }, 
+            title: `${msg(`Cube Connected (Default) — Fills all connected pixels of the same color on all sides of the cube.`,{id:`buckettool.desc.conCube`})}`
+          },
           {
             icon: "fill-face-connected",
             value: "fill-face-connected",
-            title: "Face connected\nFills all connected pixels of the same color on the face"
-          }, 
+            title: `${msg(`Face Connected — Fills all connected pixels of the same color on one side of the cube.`,{id:`buckettool.desc.conFace`})}`
+          },
           {
             icon: "fill-cube-replace",
             value: "fill-cube-replace",
-            title: "Cube replace\nFills the whole cube with the selected color"
+            title: `${msg(`Flood Fill Cube — One color fills all pixels on all sides of the cube.`,{id:`buckettool.desc.floodCube`})}`
           },
           {
             icon: "fill-face-replace",
             value: "fill-face-replace",
-            title: "Face replace\nFills the whole face with the selected color"
+            title: `${msg(`Flood Fill Face — One color fills all pixels on one side of the cube.`,{id:`buckettool.desc.floodFace`})}`
           },
           {
             icon: "replace-color",
             value: "replace-color",
-            title: "Replace Color\nIf enabled, will replace all pixels of the same color, on the whole canvas ignoring boundaries"
+            title: `${msg(`Replace Color — Replaces all pixels of the same color on all sides of all parts of the active layer, even if the part is hidden.`,{id:`buckettool.desc.replace`})}`
           },
         ],
       },
     }, mobile);
+
     this.tool = new BucketTool(config);
   }
 
   renderDesktop() {
     return html`
       <div id="main">
-        <h2>Bucket Tool</h2>
+        <h2>${msg(`Bucket Tool`,{id:`buckettool.label`})}</h2>
         <div class="group">
           <div>
-            <p class="title">Effects</p>
+            <p class="title">${msg(`Effects`,{id:`tools.label.effects`})}</p>
             <div class="group-sm">
               ${this._camoControl()}
               ${this._blendControl()}
@@ -67,7 +67,7 @@ class BucketToolConfig extends BaseToolConfig {
             </div>
           </div>
         </div>
-        <p class="title">Fill Style</p>
+        <p class="title">${msg(`Style`,{id:`tools.label.style`})}</p>
         <div>
           ${this._fillStyleControl()}
         </div>
@@ -80,7 +80,7 @@ class BucketToolConfig extends BaseToolConfig {
     return html`
       <div id="main-mobile" class="group">
         <div>
-          <p class="title">Effects</p>
+          <p class="title">${msg(`Effects`,{id:`tools.label.effects`})}</p>
           <div class="group-sm">
             ${this._camoControl()}
             ${this._blendControl()}
@@ -88,7 +88,7 @@ class BucketToolConfig extends BaseToolConfig {
           </div>
         </div>
         <div>
-          <p class="title">Fill Style</p>
+          <p class="title">${msg(`Style`,{id:`tools.label.style`})}</p>
           ${this._fillStyleControl()}
         </div>
       </div>
@@ -97,5 +97,4 @@ class BucketToolConfig extends BaseToolConfig {
 }
 
 customElements.define("ncrs-bucket-tool-config", BucketToolConfig);
-
 export default BucketToolConfig;

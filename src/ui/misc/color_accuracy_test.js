@@ -18,7 +18,6 @@ function passesColorAccuracyTest() {
     if (!valid.includes(byte)) {
       return false;
     }
-
   }
 
   return true;

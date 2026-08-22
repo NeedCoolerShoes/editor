@@ -1,6 +1,7 @@
 import { css, html, LitElement } from "lit";
 import ProjectLoader from "../../../../editor/format/project_loader";
 import { download, isIOS } from "../../../../helpers";
+import "@lit/localize/lit-localize.js";
 
 class ExportTabButtons extends LitElement {
   static styles = css`
@@ -22,7 +23,7 @@ class ExportTabButtons extends LitElement {
       padding-top: 0.25rem;
       padding-bottom: 0.25rem;
     }
-    
+
     hr {
       width: 100%;
       border-color: #494C4E;
@@ -41,10 +42,10 @@ class ExportTabButtons extends LitElement {
   render() {
     return html`
       <div id="buttons">
-        <ncrs-button @click=${this.downloadPNG} title="Export current skin as a PNG image file.">Export Image (.png)</ncrs-button>
-        <ncrs-button @click=${this.downloadNCRS} title="Export current skin project, including layers.">Export Project (.ncrs)</ncrs-button>
+        <ncrs-button @click=${this.downloadPNG} title="${msg(`Export skin as a PNG image.`, {id:`save.desc.png`})}">${msg(`Export PNG Image`, {id:`save.label.png`})}</ncrs-button>
+        <ncrs-button @click=${this.downloadNCRS} title="${msg(`Export skin as a Needs Cooler Shoes (.ncrs) project file. This format preserves imported layer data for our editor`, {id:`save.desc.ncrs`})}">${msg(`Export NCRS Project`, {id:`save.label.ncrs`})}</ncrs-button>
         <hr>
-        <ncrs-button @click=${this.showExportForm}>Share to Gallery</ncrs-button>
+        <ncrs-button @click=${this.showExportForm}>${msg(`Share to Gallery`, {id:`save.label.share`})}</ncrs-button>
       </div>
     `;
   }

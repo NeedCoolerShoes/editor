@@ -8,12 +8,10 @@ class Modal extends LitElement {
   static styles = css`
     :host {
       display: none;
-
       position: fixed;
-
       flex-direction: column;
       align-items: center;
-      
+
       background-color: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
@@ -35,7 +33,7 @@ class Modal extends LitElement {
       width: 100%;
       height: 100%;
     }
-  `
+  `;
 
   constructor() {
     super();
@@ -49,9 +47,7 @@ class Modal extends LitElement {
   }
 
   render() {
-    return html`
-      <slot @click=${this._cancelEvent}></slot>
-    `
+    return html`<slot @click=${this._cancelEvent}></slot>`;
   }
 
   show() {
@@ -63,7 +59,7 @@ class Modal extends LitElement {
 
   hide() {
     if (!this.open) { return; }
-    
+
     this._hideEvent();
     this.open = false;
   }
@@ -92,5 +88,4 @@ class Modal extends LitElement {
 }
 
 customElements.define("ncrs-modal", Modal);
-
 export default Modal;

@@ -1,11 +1,9 @@
-import { css, html, unsafeCSS } from "lit";
 import BaseLayout from "./base";
-
+import { css, html, unsafeCSS } from "lit";
 import "../mobile/components/drawer";
 import "../mobile/components/tab";
 import "../mobile/components/tab_group";
 import "../misc/color_picker";
-
 import imgGridDark from "../../../assets/images/grid-editor-dark.png";
 import Toolset from "../tools/toolset";
 import interact from "interactjs";
@@ -21,6 +19,7 @@ import SculptToolConfig from "../config/tabs/tools/configs/sculpt_tool_config";
 import { ColorDrawer, COLOR_DRAWER_STYLES } from "../mobile/color_drawer";
 import { CONFIG_DRAWER_STYLES, ConfigDrawer } from "../mobile/config_drawer";
 import { GALLERY_DRAWER_STYLES, GalleryDrawer } from "../mobile/gallery_drawer";
+import "@lit/localize/lit-localize.js";
 
 const STYLES = css`
   :host {
@@ -105,9 +104,7 @@ const STYLES = css`
   }
 
   @-moz-document url-prefix() {
-    #top {
-      backdrop-filter: none; 
-    }
+    #top { backdrop-filter: none; }
   }
 
   ncrs-warning-manager {
@@ -137,12 +134,11 @@ const STYLES = css`
   }
 
   #bottom::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
 
   ncrs-tools-toolset {
     --ncrs-icon-height: 1.25rem;
-
     display: block;
     box-sizing: border-box;
     width: 100%;
@@ -204,13 +200,12 @@ const STYLES = css`
     display: block;
     cursor: pointer;
   }
-  
+
   #color-button {
     border-radius: 9999px;
     width: 4rem;
     height: 4rem;
-    background: linear-gradient(var(--current-color), var(--current-color)),
-      repeating-conic-gradient(#aaa 0% 25%, #888 0% 50%) 50%/ 8px 8px;
+    background: linear-gradient(var(--current-color), var(--current-color)), repeating-conic-gradient(#aaa 0% 25%, #888 0% 50%) 50%/ 8px 8px;
     border: 4px solid rgb(31, 32, 37);
   }
 
@@ -231,7 +226,7 @@ const STYLES = css`
     --base-blur: 1px;
     --drawer-height: 25rem;
   }
-  
+
   ncrs-tools-part-toggles {
     --scale: 0.9;
     --gap: 0.6rem 0.85rem;
@@ -328,9 +323,7 @@ const STYLES = css`
   }
 
   @-moz-document url-prefix() {
-    #layers .button {
-      backdrop-filter: none;
-    }
+    #layers .button { backdrop-filter: none; }
   }
 
   #layers.open {
@@ -360,9 +353,7 @@ const STYLES = css`
   }
 
   @-moz-document url-prefix() {
-    #layers .toggle {
-      backdrop-filter: none;
-    }
+    #layers .toggle { backdrop-filter: none; }
   }
 
   #layers .toggle ncrs-icon {
@@ -403,15 +394,13 @@ const STYLES = css`
   }
 
   @-moz-document url-prefix() {
-    #tool-config {
-      backdrop-filter: none;
-    }
+    #tool-config { backdrop-filter: none; }
   }
 
   :host(.tool-config-open) #tool-config {
     transform: translateY(0%);
   }
-  
+
   #tool-config > * {
     display: block;
     max-width: 100%;
@@ -445,6 +434,21 @@ const STYLES = css`
   .label-sm {
     margin-top: -0.5rem;
     margin-bottom: 0.25rem;
+  }
+
+  .label-xs {
+    color: rgb(134, 137, 139, 0.8);
+    margin-top: -0.75rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .label-eyedropper {
+    margin-top: -1rem;
+    transform: translateX(-4px);
+  }
+
+  .label-menu {
+    margin-bottom: -0.25rem;
   }
 
   ncrs-button {
@@ -537,7 +541,7 @@ class NCRSUIMobileLayout extends BaseLayout {
       const oldConfig = this.toolConfig;
 
       this._setToolConfig();
-      
+
       if (!this.toolConfig) {
         this.toolConfig = oldConfig;
         this.classList.remove("tool-config-open");
@@ -563,7 +567,7 @@ class NCRSUIMobileLayout extends BaseLayout {
 
   updated() {
     const div = this.renderRoot.getElementById("tool-config");
-    
+
     if (this.toolConfig.scrollWidth > this.toolConfig.clientWidth) {
       div.classList.add("overflow");
     } else {
@@ -594,13 +598,13 @@ class NCRSUIMobileLayout extends BaseLayout {
         <div id="top">
           <div class="left">
             <button id="fullscreenToggle" @click=${this.toggleFullscreen}>
-              <ncrs-icon class="fullscreen" icon="fullscreen" title="Switch to fullscreen." color="var(--icon-color)"></ncrs-icon>
-              <ncrs-icon class="minimize" icon="minimize" title="Switch to minimized." color="var(--icon-color)"></ncrs-icon>
+              <ncrs-icon class="fullscreen" icon="fullscreen" title=${msg(`Fullscreen`,{id:`mobile.label.fullscreen`})} color="var(--icon-color)"></ncrs-icon>
+              <ncrs-icon class="minimize" icon="minimize" title=${msg(`Exit Fullscreen`,{id:`mobile.label.minimize`})} color="var(--icon-color)"></ncrs-icon>
             </button>
             <button id="themeToggle" @click=${this.toggleEditorBackground}>
-              <ncrs-icon title="Switch to dusk mode." icon="dusk-mode" color="var(--icon-color)" class="dark"></ncrs-icon>
-              <ncrs-icon title="Switch to light mode." icon="light-mode" color="var(--icon-color)" class="gray"></ncrs-icon>
-              <ncrs-icon title="Switch to dark mode." icon="dark-mode" color="var(--icon-color)" class="light"></ncrs-icon>
+              <ncrs-icon title=${msg(`Switch Editor Background`,{id:`com.label.switchBG`})} icon="dusk-mode" color="var(--icon-color)" class="dark"></ncrs-icon>
+              <ncrs-icon title=${msg(`Switch Editor Background`,{id:`com.label.switchBG`})} icon="light-mode" color="var(--icon-color)" class="gray"></ncrs-icon>
+              <ncrs-icon title=${msg(`Switch Editor Background`,{id:`com.label.switchBG`})} icon="dark-mode" color="var(--icon-color)" class="light"></ncrs-icon>
             </button>
           </div>
           <div class="right">
@@ -616,7 +620,7 @@ class NCRSUIMobileLayout extends BaseLayout {
               <div class="button">
                 <ncrs-button @click=${this._showGalleryDrawer}>
                   <ncrs-icon icon="search" color="var(--text-color)"></ncrs-icon>
-                  Browse
+                  ${msg(`Browse`,{id:`com.label.browse`})}
                 </ncrs-button>
               </div>
               ${this.layers}
@@ -636,16 +640,23 @@ class NCRSUIMobileLayout extends BaseLayout {
               ${this.toolSet}
             </div>
             <div class="container">
-              <button id="config-button" class="side-button" @touchmove=${preventTouch} @click=${this._showConfigDrawer} title="Open config drawer">
+              <button id="config-button" class="side-button" @touchmove=${preventTouch} @click=${this._showConfigDrawer} title=${msg(`Open Config Drawer`,{id:`com.label.configOpen`})}>
+                <p class="label label-xs label-menu">${msg(`Menu`,{id:`com.label.menu`})}</p>
                 <ncrs-icon icon="menu" color="var(--icon-color)"></ncrs-icon>
               </button>
-              <div id="color-button-rainbow">
-                <button id="color-button" @touchmove=${preventTouch} @click=${this._showColorDrawer} title="Open color drawer"></button>
+              <div>
+                <p class="label label-xs">${msg(`Color`,{id:`com.label.color`})}</p>
+                <div id="color-button-rainbow">
+                  <button id="color-button" @touchmove=${preventTouch} @click=${this._showColorDrawer} title=${msg(`Open Color Drawer`,{id:`com.label.colorOpen`})}></button>
+                </div>
               </div>
-              <ncrs-toggle ?toggled=${eyedropper} @click=${this._toggleEyedropper} class="side-button side-right">
-                <ncrs-icon slot="off" icon="eyedropper" color="var(--icon-color)"></ncrs-icon>
-                <ncrs-icon slot="on" icon="eyedropper" color="var(--icon-color-active)"></ncrs-icon>
-              </ncrs-toggle>
+              <div>
+                <p class="label label-xs label-eyedropper">${msg(`Eyedropper`,{id:`mobile.label.eyedropper`})}</p>
+                <ncrs-toggle ?toggled=${eyedropper} @click=${this._toggleEyedropper} class="side-button side-right">
+                  <ncrs-icon slot="off" icon="eyedropper" color="var(--icon-color)"></ncrs-icon>
+                  <ncrs-icon slot="on" icon="eyedropper" color="var(--icon-color-active)"></ncrs-icon>
+                </ncrs-toggle>
+              </div>
             </div>
             <button class="menu-arrow menu-arrow-right" @click=${this._scrollToToggles}>
               <ncrs-icon icon="arrow-right" color="rgba(255, 255, 255, 0.2)"></ncrs-icon>
@@ -656,11 +667,11 @@ class NCRSUIMobileLayout extends BaseLayout {
               <ncrs-icon icon="arrow-left" color="rgba(255, 255, 255, 0.2)"></ncrs-icon>
             </button>
             <div id="model-toggle">
-              <p class="label">Model</p>
+              <p class="label">${msg(`Model`,{id:`toolbar.label.model`})}</p>
               ${this.modelToggle}
             </div>
             <div id="part-toggles">
-              <p class="label label-sm">Parts</p>
+              <p class="label label-sm">${msg(`Parts`,{id:`toolbar.label.parts`})}</p>
               ${this.partToggles}
             </div>
             <div id="toggles-side">
@@ -736,7 +747,7 @@ class NCRSUIMobileLayout extends BaseLayout {
     const layers = this.renderRoot.getElementById("layers");
     const toggle = layers.querySelector(".toggle");
 
-    
+
     interact(toggle).draggable({
       lockAxis: "x",
       listeners: {
@@ -761,19 +772,19 @@ class NCRSUIMobileLayout extends BaseLayout {
 
     return html`
       <div id="history">
-        <button title="Undo [Ctrl + Z]" ?disabled=${undoDisabled} @click=${this._undo}>
+        <button title=${msg(`Undo`,{id:`mobile.label.undo`})} ?disabled=${undoDisabled} @click=${this._undo}>
           <ncrs-icon icon="undo" color="var(--icon-color)"></ncrs-icon>
         </button>
-        <button title="Redo [Ctrl + Y]" ?disabled=${redoDisabled} @click=${this._redo}>
+        <button title=${msg(`Redo`,{id:`mobile.label.redo`})} ?disabled=${redoDisabled} @click=${this._redo}>
           <ncrs-icon icon="redo" color="var(--icon-color)"></ncrs-icon>
         </button>
       </div>
-    `
+    `;
   }
 
   _setupToolConfigs() {
     const config = this.editor.toolConfig;
-    
+
     this.toolConfigs = {
       pen: new PenToolConfig(config, true),
       eraser: new EraseToolConfig(config, true),

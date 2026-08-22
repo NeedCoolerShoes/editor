@@ -59,7 +59,7 @@ class Skin2d extends LitElement {
 
   constructor() {
     super();
-    
+
     this.canvas = document.createElement("canvas");
     this.canvas.width = (WIDTH * SCALE) + (SCALE / 2);
     this.canvas.height = (HEIGHT * SCALE) + SCALE;
@@ -88,18 +88,18 @@ class Skin2d extends LitElement {
 
     ctx.imageSmoothingEnabled = false;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  
+
     const uvmap = MODEL_MAP[variant];
     const layout = LAYOUT[variant];
 
     ctx.scale(SCALE, SCALE);
     ctx.translate(0.25, 0.5);
-    
+
     layout.forEach(segment => {
       segment.uv.forEach((area, idx) => {
         const from = uvmap[area];
         const to = segment.coordinates;
-        
+
         const destW = from[2];
         const destH = from[3];
 
@@ -115,7 +115,7 @@ class Skin2d extends LitElement {
     });
 
     ctx.resetTransform();
-  
+
     return this.canvas;
   }
 
@@ -131,5 +131,4 @@ class Skin2d extends LitElement {
 }
 
 customElements.define("ncrs-skin-2d", Skin2d);
-
 export default Skin2d;

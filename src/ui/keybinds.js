@@ -1,8 +1,9 @@
 import { del } from "idb-keyval";
 import { getFocusedElement, isKeybindIgnored } from "../helpers";
 import PersistenceManager from "../persistence";
+import "@lit/localize/lit-localize.js";
 
-// All keybind definitions, ^ = ctrl / cmd, + = shift, ! = alt
+//note: ^ = cmd/ctrl, + = shift, ! = alt
 const KEYBINDS = {
   "b": "pen",
   "e": "eraser",
@@ -11,7 +12,7 @@ const KEYBINDS = {
   "i": "eyedropper",
   "+s": "sculpt",
   "^z": "undo",
-  "#z": "undo",
+  "^+y": "undo",
   "^y": "redo",
   "^+z": "redo",
   "^r": "reset",
@@ -30,6 +31,7 @@ const KEYBINDS = {
   "!l": "selectLayer",
   "!i": "selectImport",
   "!e": "selectExport",
+  "!s": "selectExport",
   "+n": "addLayer",
   "delete": "removeLayer",
   "+d": "cloneLayer",
@@ -45,27 +47,17 @@ const KEYBINDS = {
 
 function checkKeybinds(event) {
     let key = '';
-    if (event.ctrlKey || event.metaKey) {
-      key+='^';
-    }
-    if (event.altKey) {
-      key+='!';
-    }
-    if (event.shiftKey) {
-      key+='+';
-    }
+    if (event.ctrlKey || event.metaKey) { key+='^'; }
+    if (event.altKey) { key+='!'; }
+    if (event.shiftKey) { key+='+'; }
     key+=event.key.toLowerCase();
 
-    if (key in KEYBINDS) {
-      return KEYBINDS[key];
-    }
+    if (key in KEYBINDS) { return KEYBINDS[key]; }
   }
 
 function setupKeybinds(ui, editor) {
   document.addEventListener("keydown", event => {
-    if (ui.disableKeybinds) {
-      return;
-    }
+    if (ui.disableKeybinds) { return; }
 
     const element = event.originalTarget || getFocusedElement();
 
@@ -117,14 +109,14 @@ function setupKeybinds(ui, editor) {
         editor.history.redo();
         break;
       case "reset":
-        const check = confirm("Do you want to reset all editor data? You will lose all progress on your current skin.");
+        const check = confirm(msg(`Do you want to reset all editor data? You will lose all progress on your current skin.`,{id:`popup-confirm.keybinds.reset`}));
 
         if (check) {
           PersistenceManager.resetAll();
           del("ncrs:reference-images");
           location.reload();
         }
-        
+
         break;
       case "zoomIn":
         if (editor.camera.position.z > 1) {

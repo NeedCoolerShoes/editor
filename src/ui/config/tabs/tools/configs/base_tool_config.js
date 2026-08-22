@@ -1,6 +1,7 @@
 import { css, html, LitElement } from "lit";
 import { camelize } from "../../../../../helpers.js";
 import { OptionControl, OptionControlButton, ToggleControl } from "../../../controls.js";
+import "@lit/localize/lit-localize.js";
 
 class BaseToolConfig extends LitElement {
   static styles = css`
@@ -60,7 +61,7 @@ class BaseToolConfig extends LitElement {
 
     Object.keys(this.properties).forEach(property => {
       this[property] = this.config.get(property);
-    })
+    });
   }
 
   render() {
@@ -70,7 +71,7 @@ class BaseToolConfig extends LitElement {
   renderDesktop() {
     return html`
       <div id="main">
-        <h2>Base Tool</h2>
+        <h2>${msg(`Base Tool`,{id:`basetool.label`})}</h2>
       </div>
     `;
   }
@@ -78,7 +79,7 @@ class BaseToolConfig extends LitElement {
   renderMobile() {
     return html`
       <div id="main">
-        <h2>Base Tool</h2>
+        <h2>${msg(`Base Tool`,{id:`basetool.label`})}</h2>
       </div>
     `;
   }
@@ -87,7 +88,7 @@ class BaseToolConfig extends LitElement {
     Object.entries(this.properties).map(([property, options]) => {
       this._setupCallbackMethod(property, options);
       this._setupControlMethod(property, options);
-    })
+    });
   }
 
   _setupCallbackMethod(property, options) {
@@ -146,12 +147,12 @@ class BaseToolConfig extends LitElement {
         button.title = entry.title;
         button.touchTooltip = entry.title;
       } else {
-        button.title = `Set ${property} to ${entry.value}`;
+        button.title = `${msg(`Set`,{id:`basetool.label.set`})} ${property} ${msg(`to`,{id:`basetool.label.to`})} ${entry.value}`;
         button.touchTooltip = button.title;
       }
 
       control.appendChild(button);
-    })
+    });
 
     return control;
   }
@@ -160,7 +161,7 @@ class BaseToolConfig extends LitElement {
     Object.keys(this.properties).forEach(property => {
       this.config.addEventListener(`${property}-change`, event => {
         this[property] = event.detail;
-      })
+      });
     });
   }
 }

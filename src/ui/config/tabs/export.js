@@ -1,6 +1,7 @@
 import { css, html } from "lit";
 import Tab from "../../misc/tab.js";
 import ExportTabButtons from "./export/buttons.js";
+import "@lit/localize/lit-localize.js";
 
 class ExportTab extends Tab {
   static styles = [
@@ -19,8 +20,8 @@ class ExportTab extends Tab {
   ]
 
   constructor(ui) {
-    super({name: "Save", title: "Save [4]\nExport skins, project files, and share to gallery."});
-    
+    super({name: msg(`Save`,{id:`save.label`}), title: msg(`Save skins and project files, and share to gallery.`,{id:`save.desc`})});
+
     this.buttons = new ExportTabButtons(ui, ui.editor);
 
     this.ui = ui;
@@ -38,5 +39,4 @@ class ExportTab extends Tab {
 }
 
 customElements.define("ncrs-export-tab", ExportTab);
-
 export default ExportTab;

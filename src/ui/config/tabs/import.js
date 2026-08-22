@@ -2,6 +2,7 @@ import Tab from "../../misc/tab.js";
 import { css, html } from "lit";
 import QuickSearch from "./import/quick_search.js";
 import ImportTabButtons from "./import/buttons.js";
+import "@lit/localize/lit-localize.js";
 
 class ImportTab extends Tab {
   static styles = [
@@ -34,7 +35,7 @@ class ImportTab extends Tab {
   ]
 
   constructor(ui) {
-    super({name: "Import", title: "Import [3]/[Alt+I]\nImport skins and project files."});
+    super({name: `${msg(`Import`,{id:`com.tab.import`})}` title: `${msg(`Load Skin images and NCRS files into current project.`,{id:`com.desc.import`})}`});
     this.ui = ui;
     this.editor = this.ui.editor;
 
@@ -53,7 +54,7 @@ class ImportTab extends Tab {
           </div>
         </div>
       </div>
-    `
+    `;
   }
 
   tabEnter() {
@@ -69,5 +70,4 @@ class ImportTab extends Tab {
 }
 
 customElements.define("ncrs-import-tab", ImportTab);
-
 export default ImportTab;

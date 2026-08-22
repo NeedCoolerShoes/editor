@@ -1,6 +1,6 @@
 import { LitElement } from "lit";
-import { msg } from "@lit/localize";
 import WarningManager from "../misc/warnings";
+import "@lit/localize/lit-localize.js";
 
 class BaseLayout extends LitElement {
   constructor(ui, id) {
@@ -44,7 +44,8 @@ class BaseLayout extends LitElement {
     }
 
     if (layer.hasFilters()) {
-      this.warningManager.add("layer-filters", "tool-config", msg(`Colors drawn on the current layer will appear altered by filters.`, {id:`warning.layer.filters`}));
+      this.warningManager.add("layer-filters", "tool-config",
+      msg(`Colors drawn on the current layer will appear altered by filters.`,{id:`warning.layer.filters`}));
     } else {
       this.warningManager.remove("layer-filters");
     }
@@ -52,8 +53,7 @@ class BaseLayout extends LitElement {
     if (this.editor.toolConfig.get("blend", false)) {
       this.warningManager.add(
         "blend-enabled", "blend",
-        msg(`Blend palette enabled. Colors drawn might not match color picker.`, {id:`warning.blend.blend_enabled`})
-      );
+        msg(`Blend palette enabled. Colors drawn might not match color picker.`,{id:`warning.blend.blend_enabled`}));
     } else {
       this.warningManager.remove("blend-enabled");
     }

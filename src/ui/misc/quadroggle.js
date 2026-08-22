@@ -28,7 +28,7 @@ class Quadroggle extends LitElement {
       cursor: pointer;
       user-select: none;
     }
-  `
+  `;
 
   constructor() {
     super();
@@ -46,7 +46,7 @@ class Quadroggle extends LitElement {
         <slot name="on"></slot>
         <slot name="after"></slot>
       </button>
-    `
+    `;
   }
 
   toggle() {
@@ -66,5 +66,4 @@ class Quadroggle extends LitElement {
 }
 
 customElements.define("ncrs-quadroggle", Quadroggle);
-
 export default Quadroggle;

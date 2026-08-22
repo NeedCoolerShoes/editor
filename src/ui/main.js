@@ -6,24 +6,21 @@ import "./misc/quadroggle";
 import "./misc/modal";
 import "./misc/window";
 import "./misc/skin_2d";
-
-import { css, html, unsafeCSS, LitElement } from "lit";
 import Editor from "../editor/main.js";
 import PersistenceManager from "../persistence.js";
 import Modal from "./misc/modal.js";
-
 import { GALLERY_URL, SKIN_LOOKUP_URL } from "../constants.js";
 import passesColorAccuracyTest from "./misc/color_accuracy_test.js";
 import setupKeybinds from "./keybinds.js";
 import NCRSUIDesktopLayout from "./layouts/desktop.js";
 import NCRSUIMobileLayout from "./layouts/mobile.js";
-
 import imgGridDark from "../../assets/images/grid-editor-dark.png";
 import imgGridGray from "../../assets/images/grid-editor-gray.png";
 import imgGridLight from "../../assets/images/grid-editor-light.png";
 import { isIOS } from "../helpers.js";
-
-import { setLocale } from '../localization.js';
+//UNUSED//import { setLocale } from '../localization.js';
+import { css, html, unsafeCSS, LitElement } from "lit";
+import "@lit/localize/lit-localize.js";
 
 const DESKTOP_MIN_WIDTH = 670;
 
@@ -87,7 +84,7 @@ class UI extends LitElement {
       justify-content: center;
       position: absolute;
     }
-    
+
     #color-check {
       color: white;
       background-color: #1A1A1A;
@@ -200,7 +197,7 @@ class UI extends LitElement {
 
     } else if (this.classList.contains("fullscreen")) {
       if (this._browserFullScreen) {
-        document.exitFullscreen();      
+        document.exitFullscreen();
       } else {
         this.classList.replace("fullscreen", "minimized");
       }
@@ -252,7 +249,7 @@ class UI extends LitElement {
     const modal = new Modal();
     modal.part = name;
     modal.id = name;
-    
+
     const slot = document.createElement("slot");
     slot.name = name;
 
@@ -265,8 +262,8 @@ class UI extends LitElement {
     return html`
       <ncrs-modal id="color-check-modal">
         <div id="color-check">
-          <h2>🚨 Color Inaccuracies Detected 🚨</h2>
-          <p>We have detected that your browser may have issues with color accuracy.</p>
+          <h2>${msg(`🚨 Color Inaccuracies Detected 🚨`,{id:`main.label.farbled`})}</h2>
+          <p${msg(`We have detected that your browser may have issues with color accuracy.</p>
           <p>
             To protect against fingerprinting, browsers can sometimes add visual noise to the canvas.
             This method is known as <a href="https://brave.com/privacy-updates/4-fingerprinting-defenses-2.0/#what-is-farbling">farbling</a>.
@@ -279,10 +276,10 @@ class UI extends LitElement {
           <p>
             Please note that we do not perform any fingerprinting on our site.
           </p>
-          <a href="https://needcoolershoes.com/privacy">Our privacy policy</a>
+          <a href="https://needcoolershoes.com/privacy">Our privacy policy`, {id:`main.desc.farbled`})}</a>
           <div>
-            <ncrs-button @click=${this._closeColorModal}>Close</ncrs-button>
-            <ncrs-button @click=${this._ignoreColorModal}>Do Not Show Again</ncrs-button>
+            <ncrs-button @click=${this._closeColorModal}>${msg(`Close`,{id:`main.label.close`})}</ncrs-button>
+            <ncrs-button @click=${this._ignoreColorModal}>${msg(`Do Not Show Again`,{id:`main.label.ignore`})}</ncrs-button>
           </div>
         </div>
       </ncrs-modal>
@@ -352,12 +349,12 @@ class UI extends LitElement {
       [...event.dataTransfer.items].forEach(item => {
         const file = item.getAsFile();
 
-        if (item.type === "image/png") { 
+        if (item.type === "image/png") {
           this.editor.addLayerFromFile(file);
         } else if (file.name.endsWith(".ncrs")) {
           this.editor.loadProjectFromFile(file);
         }
-      })
+      });
     });
 
     this.addEventListener("fullscreenchange", () => {
@@ -366,7 +363,7 @@ class UI extends LitElement {
       this.classList.remove("fullscreen-browser");
       this.classList.replace("fullscreen", "minimized");
       this._browserFullScreen = false;
-    })
+    });
 
     window.addEventListener("load", () => {
       this._runColorCheck();
@@ -382,10 +379,9 @@ class UI extends LitElement {
 
     this.editor.addEventListener("tool-warning", event => {
       this.displayWarningPopup(event.detail.message);
-    })
+    });
   }
 }
 
 customElements.define("ncrs-ui", UI);
-
 export default UI;

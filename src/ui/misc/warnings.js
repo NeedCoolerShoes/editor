@@ -12,7 +12,6 @@ class WarningManager extends LitElement {
       flex-direction: column;
       gap: 0.25rem;
       pointer-events: none;
-
       --icon-size: 1.25rem;
       --font-size: small;
     }
@@ -30,7 +29,6 @@ class WarningManager extends LitElement {
       gap: 0.5rem;
       width: var(--icon-size);
       height: var(--icon-size);
-
       --icon-color: var(--text-color, #aaaaaa);
     }
   `;

@@ -4,6 +4,7 @@ import Color from "color";
 import { clamp } from "../../helpers.js";
 import NAMED_COLORS from "./named_colors.js";
 import Slider from "./slider.js";
+import "@lit/localize/lit-localize.js";
 
 const EASTEREGG_VALUES = ["#MOXVALLIX", "#DINNERBONE", "#GRUMM", "#AUSTRALIA", "#DEADMAU5", "#EARS", "#JAX"]
 
@@ -14,7 +15,7 @@ class ColorPicker extends LitElement {
     lightness: {},
     alpha: {},
     _eyedropper: {state: true}
-  };
+  }
 
   static styles = css`
     :host {
@@ -64,8 +65,7 @@ class ColorPicker extends LitElement {
         hsl(180, 100%, 50%),
         hsl(240, 100%, 50%),
         hsl(300, 100%, 50%),
-        hsl(0, 100%, 50%)
-      );
+        hsl(0, 100%, 50%));
     }
 
     #hue-slider::part(cursor) {
@@ -198,7 +198,7 @@ class ColorPicker extends LitElement {
     this.alphaSlider = this._createAlphaSlider();
 
     this._setupEvents();
-  }  
+  }
 
   render() {
     const color = this.getColor();
@@ -229,7 +229,7 @@ class ColorPicker extends LitElement {
       "--current-lightness": `${this.lightness / 2}%`,
       "--current-color": color.string(),
       "--current-color-alpha": colorWithAlpha.string(),
-    };
+    }
 
     if (this._isColorDifferent()) {
       this.dispatchEvent(new CustomEvent("color-change", { detail: { color: this.getColorWithAlpha() } }));
@@ -253,7 +253,7 @@ class ColorPicker extends LitElement {
         <div id="input">
           <button @click=${showColorInput} id="color-button" aria-label="Open system color picker"></button>
           ${colorInput} ${textInput}
-          <ncrs-button id="eyedropper" title="Toggle eyedropper [I] or hold [Ctrl]/[Alt]" @click=${this.toggleEyedropper} ?active=${this._eyedropper}>
+          <ncrs-button id="eyedropper" title="${msg(`Eyedropper`,{id:`mobile.toggle.eyedropper`})}" @click=${this.toggleEyedropper} ?active=${this._eyedropper}>
             <ncrs-icon icon="eyedropper" color="var(--text-color)"></ncrs-icon>
           </ncrs-button>
         </div>
@@ -277,7 +277,7 @@ class ColorPicker extends LitElement {
   setColor(color) {
     const currentColor = this.getColor();
     const newColor = Color(color).hsv();
-    
+
     if (newColor.hexa() == currentColor.hexa()) { return false; }
 
     this.hue = newColor.hue();
@@ -409,7 +409,7 @@ class ColorPicker extends LitElement {
       this.dispatchEvent(new CustomEvent("easteregg", { detail: event.target.value }));
     }
 
-    if (event.target.value === "#RANDOM") { 
+    if (event.target.value === "#RANDOM") {
       event.target.value = '#'+Math.floor(Math.random()*16777215).toString(16);
     }
 
@@ -448,7 +448,7 @@ class ColorPickerRegion extends LitElement {
   static properties = {
     progressX: { reflect: true },
     progressY: { reflect: true },
-  };
+  }
 
   static styles = css`
     :host {
@@ -494,12 +494,12 @@ class ColorPickerRegion extends LitElement {
 
     const pointerMove = function (event) {
       scope.onMove(event);
-    };
+    }
 
     const pointerUp = function (_event) {
       document.removeEventListener("pointermove", pointerMove);
       document.removeEventListener("pointerup", pointerUp);
-    };
+    }
 
     this._onPointerDown = event => {
       document.addEventListener("pointermove", pointerMove);
@@ -508,7 +508,7 @@ class ColorPickerRegion extends LitElement {
       this.shadowRoot.getElementById("background").focus();
 
       event.stopPropagation();
-    };
+    }
 
     this._setupResizeObserver();
   }
@@ -597,7 +597,7 @@ class ColorPickerRegion extends LitElement {
     return {
       x: this._clientWidth * this.progressX,
       y: this._clientHeight * this.progressY,
-    };
+    }
   }
 
   _setupResizeObserver() {
@@ -613,5 +613,4 @@ class ColorPickerRegion extends LitElement {
 
 customElements.define("ncrs-color-picker", ColorPicker);
 customElements.define("ncrs-color-picker-region", ColorPickerRegion);
-
 export default ColorPicker;
