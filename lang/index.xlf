@@ -68,79 +68,532 @@ Make sure you have saved the current project.</source>
   <source>Layer</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.base">
-  <source>Toggle base</source>
+  <source>Toggle Base</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.overlay">
-  <source>Toggle overlay</source>
+  <source>Toggle Overlay</source>
 </trans-unit>
 <trans-unit id="toolbar.label.grid">
   <source>Grid</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.base_grid">
-  <source>Toggle base grid</source>
+  <source>Toggle Base Grid</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.overlay_grid">
-  <source>Toggle overlay grid</source>
+  <source>Toggle Overlay Grid</source>
 </trans-unit>
 <trans-unit id="toolbar.label.render">
   <source>Render</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.backface_culling">
-  <source>Toggle backface culling</source>
+  <source>Toggle Backface Culling</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.grid_culling">
-  <source>Toggle grid culling</source>
+  <source>Toggle Grid Culling</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.shading">
-  <source>Toggle shading</source>
+  <source>Toggle Shading</source>
 </trans-unit>
-<trans-unit id="toolbar.toggle.blow_up_model">
-  <source>Blow up model</source>
+<trans-unit id="toolbar.toggle.exploded_view">
+  <source>Toggle Exploded View</source>
 </trans-unit>
 <trans-unit id="toolbar.toggle.model">
-  <source>Toggle skin model</source>
+  <source>Toggle Skin Model</source>
 </trans-unit>
 <trans-unit id="toolbar.part_toggle.head">
-  <source>Toggle head</source>
+  <source>Toggle Head<br>[Shift] + Click to toggle only head</source>
 </trans-unit>
-<trans-unit id="toolbar.part_toggle.head.description">
-  <source><x id="0" equiv-text="${key}"/> + click to toggle only head</source>
-</trans-unit>
+//<trans-unit id="toolbar.part_toggle.head.description">
+//  <source><x id="0" equiv-text="${key}"/> + click to toggle only head</source>
+//</trans-unit>
 <trans-unit id="toolbar.part_toggle.right_arm">
-  <source>Toggle right arm</source>
+  <source>Toggle Right Arm<br>[Shift] + Click to toggle only right arm</source>
 </trans-unit>
-<trans-unit id="toolbar.part_toggle.right_arm.description">
-  <source><x id="0" equiv-text="${key}"/> + click to toggle only right arm</source>
-</trans-unit>
+//<trans-unit id="toolbar.part_toggle.right_arm.description">
+//  <source><x id="0" equiv-text="${key}"/> + click to toggle only right arm</source>
+//</trans-unit>
 <trans-unit id="toolbar.part_toggle.torso">
-  <source>Toggle torso</source>
+  <source>Toggle Torso<br>[Shift] + Click to toggle only torso</source>
 </trans-unit>
-<trans-unit id="toolbar.part_toggle.torso.description">
-  <source><x id="0" equiv-text="${key}"/> + click to toggle only torso</source>
-</trans-unit>
+//<trans-unit id="toolbar.part_toggle.torso.description">
+//  <source><x id="0" equiv-text="${key}"/> + click to toggle only torso</source>
+//</trans-unit>
 <trans-unit id="toolbar.part_toggle.left_arm">
-  <source>Toggle left arm</source>
+  <source>Toggle Left Arm<br>[Shift] + Click to toggle only left arm</source>
 </trans-unit>
-<trans-unit id="toolbar.part_toggle.left_arm.description">
-  <source><x id="0" equiv-text="${key}"/> + click to toggle only left arm</source>
-</trans-unit>
+//<trans-unit id="toolbar.part_toggle.left_arm.description">
+//  <source><x id="0" equiv-text="${key}"/> + click to toggle only left arm</source>
+//</trans-unit>
 <trans-unit id="toolbar.part_toggle.right_leg">
-  <source>Toggle right leg</source>
+  <source>Toggle Right Leg<br>[Shift] + Click to toggle only right leg</source>
 </trans-unit>
-<trans-unit id="toolbar.part_toggle.right_leg.description">
-  <source><x id="0" equiv-text="${key}"/> + click to toggle only right leg</source>
-</trans-unit>
+//<trans-unit id="toolbar.part_toggle.right_leg.description">
+//  <source><x id="0" equiv-text="${key}"/> + click to toggle only right leg</source>
+//</trans-unit>
 <trans-unit id="toolbar.part_toggle.left_leg">
-  <source>Toggle left leg</source>
+  <source>Toggle Left Leg<br>[Shift] + Click to toggle only left leg</source>
 </trans-unit>
-<trans-unit id="toolbar.part_toggle.left_leg.description">
-  <source><x id="0" equiv-text="${key}"/> + click to toggle only left leg</source>
-</trans-unit>
+//<trans-unit id="toolbar.part_toggle.left_leg.description">
+//  <source><x id="0" equiv-text="${key}"/> + click to toggle only left leg</source>
+//</trans-unit>
 <trans-unit id="toolbar.label.parts">
   <source>Parts</source>
 </trans-unit>
 <trans-unit id="toolbar.label.model">
   <source>Model</source>
+</trans-unit>
+//END 📁/Editor, BEGIN 📁/UI
+<trans-unit id="main.label.farbled">
+  <source>🚨 Color Inaccuracies Detected 🚨</source>
+</trans-unit>
+<trans-unit id="main.desc.farbled">
+  <source>
+  We have detected that your browser may have issues with color accuracy.</p>
+  <p>
+  To protect against fingerprinting, browsers can sometimes add visual noise to the canvas.
+  This method is known as <a href="https://brave.com/privacy-updates/4-fingerprinting-defenses-2.0/#what-is-farbling">farbling</a>.
+  This is not ideal for a pixel art editor.
+  </p>
+  <p>
+  If small amounts of noise / randomly coloured pixels in your skin is an issue, follow our guide below to fix the issue.
+  </p>
+  <a href="https://wiki.needcoolershoes.com/troubleshooting/inaccurate_colors/" target="_blank">Learn how to fix</a>
+  <p>
+  Please note that we do not perform any fingerprinting on our site.
+  </p>
+  <a href="https://needcoolershoes.com/privacy">Our privacy policy
+  </source>
+</trans-unit>
+<trans-unit id="main.label.close">
+  <source>Close</source>
+</trans-unit>
+<trans-unit id="main.label.ignore">
+  <source>Do Not Show Again</source>
+</trans-unit>
+<trans-unit id="popup-confirm.keybinds.reset">
+  <source>Do you want to reset all editor data? You will lose all progress on your current skin.</source>
+</trans-unit>
+<trans-unit id="tool.__disabled">
+  <source>\n\n(Disabled)</source>
+</trans-unit>
+<trans-unit id="com.tab.filters">
+  <source>Filters</source>
+</trans-unit>
+<trans-unit id="com.tab.layer">
+  <source>Layer</source>
+</trans-unit>
+<trans-unit id="com.tab.import">
+  <source>Import</source>
+</trans-unit>
+<trans-unit id="com.desc.import">
+  <source>Load Skin images and NCRS files into current project.</source>
+</trans-unit>
+<trans-unit id="com.tab.save">
+  <source>Save</source>
+</trans-unit>
+<trans-unit id="com.label.menu">
+  <source>Menu</source>
+</trans-unit>
+<trans-unit id="com.label.color">
+  <source>Color</source>
+</trans-unit>
+<trans-unit id="com.label.browse">
+  <source>Browse</source>
+</trans-unit>
+//dep?
+<trans-unit id="com.label.picker">
+  <source>Open Color Picker</source>
+</trans-unit>
+//?
+<trans-unit id="com.label.switchBG">
+  <source>Switch Editor Background</source>
+</trans-unit>
+<trans-unit id="com.label.tools">
+  <source>Tools</source>
+</trans-unit>
+<trans-unit id="com.desc.tools">
+  <source>Manage tool colors and options.</source>
+</trans-unit>
+<trans-unit id="com.label.palettes">
+  <source>Palettes</source>
+</trans-unit>
+<trans-unit id="com.label.colors">
+  <source>Color Picker</source>
+</trans-unit>
+<trans-unit id="com.label.configOpen">
+  <source>Open Config Drawer</source>
+</trans-unit>
+<trans-unit id="com.label.colorOpen">
+  <source>Open Color Drawer</source>
+</trans-unit>
+<trans-unit id="import.desc.png">
+  <source>Import skin image (.png) to a new layer.</source>
+</trans-unit>
+<trans-unit id="import.label.png">
+  <source>Import PNG Skin</source>
+</trans-unit>
+<trans-unit id="import.desc.ncrs">
+  <source>Import a Needs Cooler Shoes (.ncrs) project file as a new layer.</source>
+</trans-unit>
+<trans-unit id="import.label.ncrs">
+  <source>Import NCRS Project</source>
+</trans-unit>
+<trans-unit id="import.desc.ref">
+  <source>Add a reference image.</source>
+</trans-unit>
+<trans-unit id="import.label.ref">
+  <source>Add Reference Image</source>
+</trans-unit>
+<trans-unit id="import.label.processing">
+  <source>Processing...</source>
+</trans-unit>
+<trans-unit id="import.label.minecraft">
+  <source>Import Skin from Minecraft: Java</source>
+</trans-unit>
+<trans-unit id="import.label.refimg">
+  <source>Reference Image</source>
+</trans-unit>
+</trans-unit>
+<trans-unit id="save.label">
+  <source>Save</source>
+</trans-unit>
+<trans-unit id="save.desc">
+  <source>Save skins and project files, and share to gallery.</source>
+</trans-unit>
+<trans-unit id="save.desc.png">
+  <source>Export skin as a PNG image.</source>
+</trans-unit>
+<trans-unit id="save.label.png">
+  <source>Export PNG Image</source>
+</trans-unit>
+<trans-unit id="save.desc.ncrs">
+  <source>Export skin as a Needs Cooler Shoes (.ncrs) project file. This format preserves imported layer data for our editor.</source>
+</trans-unit>
+<trans-unit id="save.label.ncrs">
+  <source>Export NCRS Project</source>
+</trans-unit>
+<trans-unit id="save.label.share">
+  <source>Share to Gallery</source>
+</trans-unit>
+<trans-unit id="layer.label">
+  <source>Layer</source>
+</trans-unit>
+<trans-unit id="layer.desc">
+  <source>Apply filters and edit current layer.</source>
+</trans-unit>
+<trans-unit id="layers.label.add">
+  <source>Add Layer</source>
+</trans-unit>
+<trans-unit id="layers.label.remove">
+  <source>Remove Layer</source>
+</trans-unit>
+<trans-unit id="layers.label.clone">
+  <source>Clone Layer</source>
+</trans-unit>
+<trans-unit id="layers.label.merge">
+  <source>Merge Down Layer</source>
+</trans-unit>
+<trans-unit id="layers.desc.flipFB">
+  <source>Flip the front and back faces of the skin.</source>
+</trans-unit>
+<trans-unit id="layers.label.flipFB">
+  <source>Flip Front / Back</source>
+</trans-unit>
+<trans-unit id="layers.desc.flipLR">
+  <source>Flip the current layer horizontally.</source>
+</trans-unit>
+<trans-unit id="layers.label.flipLR">
+  <source>Flip Left / Right</source>
+</trans-unit>
+<trans-unit id="layers.desc.swapBaseOver">
+  <source>Swap the base layer of skin with its overlay.</source>
+</trans-unit>
+<trans-unit id="layers.label.swapBaseOver">
+  <source>Swap Base / Overlay</source>
+</trans-unit>
+<trans-unit id="layers.desc.flatten">
+  <source>Flatten the overlay down to the selected base layer.</source>
+</trans-unit>
+<trans-unit id="layers.label.flatten">
+  <source>Flatten Overlay</source>
+</trans-unit>
+<trans-unit id="layers.desc.eraseBase">
+  <source>Clears the selected base layer.</source>
+</trans-unit>
+<trans-unit id="layers.label.eraseBase">
+  <source>Erase Base</source>
+</trans-unit>
+<trans-unit id="layers.desc.eraseOver">
+  <source>Clears the overlay of the selected layer.</source>
+</trans-unit>
+<trans-unit id="layers.label.eraseOver">
+  <source>Erase Overlay</source>
+</trans-unit>
+<trans-unit id="filters.label.copy">
+  <source>Copy Filters</source>
+</trans-unit>
+<trans-unit id="filters.label.paste">
+  <source>Paste Filters</source>
+</trans-unit>
+<trans-unit id="filters.label.adjustHue">
+  <source>Adjust Layer Hue</source>
+</trans-unit>
+<trans-unit id="filters.label.resetHue">
+  <source>Reset Hue</source>
+</trans-unit>
+<trans-unit id="filters.label.adjustSat">
+  <source>Adjust Layer Saturation</source>
+</trans-unit>
+<trans-unit id="filters.label.resetSat">
+  <source>Reset Saturation</source>
+</trans-unit>
+<trans-unit id="filters.label.adjustBri">
+  <source>Adjust Layer Brightness</source>
+</trans-unit>
+<trans-unit id="filters.label.resetBri">
+  <source>Reset Brightness</source>
+</trans-unit>
+<trans-unit id="filters.label.adjustOpa">
+  <source>Adjust Layer Opacity</source>
+</trans-unit>
+<trans-unit id="filters.label.resetOpa">
+  <source>Reset Opacity</source>
+</trans-unit>
+<trans-unit id="filters.desc.clear">
+  <source>Clear active filters on the current layer.</source>
+</trans-unit>
+<trans-unit id="filters.label.clear">
+  <source>Clear Filters</source>
+</trans-unit>
+<trans-unit id="filters.desc.merge">
+  <source>Applies the current filter to the selected layer.</source>
+</trans-unit>
+<trans-unit id="filters.label.merge">
+  <source>Merge Filter</source>
+</trans-unit>
+<trans-unit id="gallery.desc.meta">
+  <source>Click to add skin to project.</source>
+</trans-unit>
+<trans-unit id="gallery.label.by">
+  <source>by </source>
+</trans-unit>
+<trans-unit id="search.label">
+  <source>Search</source>
+</trans-unit>
+<trans-unit id="search.desc.ignoreModel">
+  <source>Enabled: Model Specific — Only known compatible parts shown.<p>
+  Disabled: Shows All — Visual issues may appear on the arms.</source>
+</trans-unit>
+<trans-unit id="search.label.ignoreModel">
+  <source>Smart Sort</source>
+</trans-unit>
+<trans-unit id="search.label.part">
+  <source>Part</source>
+</trans-unit>
+<trans-unit id="search.label.category">
+  <source>Category</source>
+</trans-unit>
+<trans-unit id="search.label.back">
+  <source>Back</source>
+</trans-unit>
+<trans-unit id="search.label.next">
+  <source>Next</source>
+</trans-unit>
+<trans-unit id="search.label.placeholder">
+  <source>Search for skins and parts!</source>
+</trans-unit>
+<trans-unit id="search.label.all">
+  <source>All</source>
+</trans-unit>
+<trans-unit id="settings.label">
+  <source>⚙ Settings</source>
+</trans-unit>
+<trans-unit id="settings.desc">
+  <source>NCRS Editor Project Settings</source>
+</trans-unit>
+<trans-unit id="settings.label.vizPrefs">
+  <source>Visual Preferences</source>
+</trans-unit>
+<trans-unit id="settings.label.fov">
+  <source>FOV</source>
+</trans-unit>
+<trans-unit id="settings.desc.fov">
+  <source>Field of View Angle: Minecraft default is 70</source>
+</trans-unit>
+<trans-unit id="basetool.label">
+  <source>Base Tool</source>
+</trans-unit>
+<trans-unit id="basetool.label.set">
+  <source>Set</source>
+</trans-unit>
+<trans-unit id="basetool.label.to">
+  <source>to</source>
+</trans-unit>
+<trans-unit id="brushtool.label">
+  <source>Pen Tool</source>
+</trans-unit>
+<trans-unit id="buckettool.label">
+  <source>Bucket Tool</source>
+</trans-unit>
+<trans-unit id="buckettool.desc.conCube">
+  <source>Cube Connected (Default) — Fills all connected pixels of the same color on all sides of the cube.</source>
+</trans-unit>
+<trans-unit id="buckettool.desc.conFace">
+  <source>Face Connected — Fills all connected pixels of the same color on one side of the cube.</source>
+</trans-unit>
+<trans-unit id="buckettool.desc.floodCube">
+  <source>Flood Fill Cube — One color fills all pixels on all sides of the cube.</source>
+</trans-unit>
+<trans-unit id="buckettool.desc.floodFace">
+  <source>Flood Fill Face — One color fills all pixels on one side of the cube.</source>
+</trans-unit>
+<trans-unit id="buckettool.desc.replace">
+  <source>Replace Color — Replaces all pixels of the same color on all sides of all parts of the active layer, even if the part is hidden.</source>
+</trans-unit>
+<trans-unit id="erasetool.label">
+  <source>Erase Tool</source>
+</trans-unit>
+<trans-unit id="palette.label">
+  <source>Palette</source>
+</trans-unit>
+<trans-unit id="palette.desc.setColor">
+  <source>Set color to ${color}</source>
+</trans-unit>
+<trans-unit id="palette.label.scaleInc">
+  <source>Increase Scale</source>
+</trans-unit>
+<trans-unit id="palette.label.scaleDec">
+  <source>Decrease Scale +</source>
+</trans-unit>
+<trans-unit id="palette.label.scale">
+  <source>Scale</source>
+</trans-unit>
+<trans-unit id="palette.label.width">
+  <source>Palette Width</source>
+</trans-unit>
+<trans-unit id="palette.label.select">
+  <source>Select Palette</source>
+</trans-unit>
+<trans-unit id="palette.label.recent">
+  <source>Recent Colors — Colors used in skin.</source>
+</trans-unit>
+<trans-unit id="palette.desc.noRecent">
+  <source>Colors used in skin will show up here.</source>
+</trans-unit>
+<trans-unit id="palette.desc.plus">
+  <source>Click the plus [+] button to add a color to the Blend Palette.</p>
+  <p>Tools with the Blend Effect enabled will randomly sample colors.</source>
+</trans-unit>
+<trans-unit id="palette.label.plus">
+  <source>+</source>
+</trans-unit>
+<trans-unit id="palette.label.blend">
+  <source>Blend Palette</source>
+</trans-unit>
+<trans-unit id="palette.label.preset1">
+  <source>Allure</source>
+</trans-unit>
+<trans-unit id="palette.label.preset2">
+  <source>Skin Tones</source>
+</trans-unit>
+<trans-unit id="palette.label.preset3">
+  <source>Pastels</source>
+</trans-unit>
+<trans-unit id="palette.label.preset4">
+  <source>Nature</source>
+</trans-unit>
+<trans-unit id="palette.label.preset5">
+  <source>Gameboy</source>
+</trans-unit>
+<trans-unit id="palette.label.preset6">
+  <source>Ruby</source>
+</trans-unit>
+<trans-unit id="palette.label.preset7">
+  <source>Place</source>
+</trans-unit>
+<trans-unit id="palette.label.preset8">
+  <source>Paint</source>
+</trans-unit>
+<trans-unit id="sculpttool.label">
+  <source>Sculpt Tool</source>
+</trans-unit>
+<trans-unit id="sculpttool.desc.flatten">
+  <source>Toggle Flatten Mode — Moves pixels from Overlay to Base layer.</source>
+</trans-unit>
+<trans-unit id="sculpttool.desc.global">
+  <source>Toggle Global Sculpt — Disabled: Sculpt only draws from active layer.</source>
+</trans-unit>
+<trans-unit id="shadetool.label">
+  <source>Shade Tool</source>
+</trans-unit>
+<trans-unit id="shadetool.desc.lighten">
+  <source>Set Shade Style to Lighten.</source>
+</trans-unit>
+<trans-unit id="shadetool.label.lighten">
+  <source>Lighten Shaded Pixels</source>
+</trans-unit>
+<trans-unit id="shadetool.desc.saturate">
+  <source>Set Shade Style to Saturate.</source>
+</trans-unit>
+<trans-unit id="shadetool.label.once">
+  <source>Only shade each pixel once in a stroke.</source>
+</trans-unit>
+<trans-unit id="tools.label.size">
+  <source>Size</source>
+</trans-unit>
+<trans-unit id="tools.label.shape">
+  <source>Shape</source>
+</trans-unit>
+<trans-unit id="tools.label.effects">
+  <source>Effects</source>
+</trans-unit>
+<trans-unit id="tools.label.force">
+  <source>Force</source>
+</trans-unit>
+<trans-unit id="tools.label.style">
+  <source>Style</source>
+</trans-unit>
+<trans-unit id="tools.desc.blend">
+  <source>Toggle Blend — Randomly selects colors from the Blend Palette.</source>
+</trans-unit>
+<trans-unit id="tools.label.eraser">
+  <source>Toggle Eraser</source>
+</trans-unit>
+<trans-unit id="tools.desc.mirror">
+  <source>Toggle Mirror — Mirrors stroke across the face of the skin.</source>
+</trans-unit>
+<trans-unit id="tools.desc.camo">
+  <source>Toggle Camo — Randomizes brightness of selected color.</source>
+</trans-unit>
+<trans-unit id="desktop.label.fullscreen">
+  <source>Fullscreen [F]</source>
+</trans-unit>
+<trans-unit id="desktop.label.minimize">
+  <source>Exit Fullscreen [F]</source>
+</trans-unit>
+<trans-unit id="desktop.label.undo">
+  <source>Undo [Ctrl+Z] / [Ctrl+Shift+Y]</source>
+</trans-unit>
+<trans-unit id="desktop.label.redo">
+  <source>Redo [Ctrl+Y] / [Ctrl+Shift+Z]</source>
+</trans-unit>
+<trans-unit id="desktop.toggle.eyedropper">
+  <source>Eyedropper [I] / Hold [Ctrl] or [Alt]</source>
+</trans-unit>
+<trans-unit id="mobile.toggle.fullscreen">
+  <source>Fullscreen</source>
+</trans-unit>
+<trans-unit id="mobile.toggle.minimize">
+  <source>Exit Fullscreen</source>
+</trans-unit>
+<trans-unit id="mobile.label.undo">
+  <source>Undo</source>
+</trans-unit>
+<trans-unit id="mobile.label.redo">
+  <source>Redo</source>
+</trans-unit>
+<trans-unit id="mobile.toggle.eyedropper">
+  <source>Eyedropper</source>
 </trans-unit>
 </body>
 </file>

@@ -1,5 +1,6 @@
 import Tab from "../../misc/tab.js";
 import { css, html } from "lit";
+import "@lit/localize/lit-localize.js";
 
 class SettingsTab extends Tab {
   static styles = [
@@ -67,7 +68,7 @@ class SettingsTab extends Tab {
         border-radius:5px;
         cursor: pointer;
       }
-      
+
       .slider::-moz-range-thumb {
         transform: translate(0,-2px);
         width: 21px;
@@ -82,7 +83,7 @@ class SettingsTab extends Tab {
   ]
 
   constructor(ui) {
-    super({name: "⚙", title: "Settings [5]\nProject settings."});
+    super({name: msg(`⚙ Settings`{id:`settings.label`})}, title: msg(`NCRS Editor Project Settings`,{id:`settings.desc`}));
     this.ui = ui;
     this.editor = this.ui.editor;
 
@@ -93,15 +94,15 @@ class SettingsTab extends Tab {
     return html`
       <div id="main">
         <div id="container">
-          <h2>Visual Preferences</h2>
-          <label for="fov-slider">FOV</label>
+          <h2>${msg(`Visual Preferences`{id:`settings.label.vizPrefs`})}</h2>
+          <label for="fov-slider">${msg(`Field of View Angle: Minecraft default is 70`{id:`settings.desc.fov`})}</label>
           <div class="slider-container">
             <input type="range" min="30" max="180" value="90" step="1" id="fov-slider" class="slider">
           </div>
         </div>
         </div>
       </div>
-    `
+    `;
   }
 
   _setupEvents() {
@@ -112,11 +113,9 @@ class SettingsTab extends Tab {
           this.editor.camera.updateProjectionMatrix();
           break;
       }
-    })
+    });
   }
-
 }
 
 customElements.define("ncrs-settings-tab", SettingsTab);
-
 export default SettingsTab;

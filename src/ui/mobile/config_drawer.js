@@ -6,6 +6,7 @@ import LayersTabFilters from "../config/tabs/layers/filters";
 import LayersTabButtons from "../config/tabs/layers/buttons";
 import ImportTabButtons from "../config/tabs/import/buttons";
 import ExportTabButtons from "../config/tabs/export/buttons";
+import "@lit/localize/lit-localize.js";
 
 const CONFIG_DRAWER_STYLES = css`
   ncrs-layers-tab-filters {
@@ -60,7 +61,7 @@ class ConfigDrawer {
 
   _createFiltersTab() {
     const tab = new MobileTab();
-    tab.name = "Filters";
+    tab.name = msg(`Filters`,{id:`mobile.tab.filters`});
 
     const filters = new LayersTabFilters(this.editor);
     tab.appendChild(filters);
@@ -70,7 +71,7 @@ class ConfigDrawer {
 
   _createLayerTab() {
     const tab = new MobileTab();
-    tab.name = "Layer";
+    tab.name = msg(`Layer`,{id:`mobile.tab.layer`});
 
     const buttons = new LayersTabButtons(this.editor);
     tab.appendChild(buttons);
@@ -80,17 +81,17 @@ class ConfigDrawer {
 
   _createImportTab() {
     const tab = new MobileTab();
-    tab.name = "Import";
+    tab.name = msg(`Import`,{id:`mobile.tab.import`});
 
     const buttons = new ImportTabButtons(this.ui, this.editor);
     tab.appendChild(buttons);
 
     return tab;
   }
-  
+
   _createExportTab() {
     const tab = new MobileTab();
-    tab.name = "Save";
+    tab.name = msg(`Save`,{id:`mobile.tab.save`});
 
     const buttons = new ExportTabButtons(this.ui, this.editor);
     tab.appendChild(buttons);

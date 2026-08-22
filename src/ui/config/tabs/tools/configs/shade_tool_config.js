@@ -1,11 +1,10 @@
-import { html, nothing } from "lit";
 import BaseToolConfig from "./base_tool_config.js";
 import ShadeTool from "../../../../../editor/tools/toolset/shade_tool.js";
 
 class ShadeToolConfig extends BaseToolConfig {
   static styles = [
     BaseToolConfig.styles
-  ];
+  ]
 
   static properties = {
     size: {},
@@ -32,10 +31,10 @@ class ShadeToolConfig extends BaseToolConfig {
       },
       shadeStyle: {
         type: "select",
-        options: [{icon: "lighten", value: "lighten", title: "Set shade style to lighten"}, {icon: "saturate", value: "saturate", title: "Set shade style to saturate"}]
+        options: [{icon: "lighten", value: "lighten", title: `${msg(`Set shade style to Lighten`,{id:`shadetool.desc.lighten`})}`}, {icon: "saturate", value: "saturate", title: `${msg(`Set shade style to Saturate.`,{id:`shadetool.label.saturate`})}`}]
       },
-      shadeOnce: {type: "toggle", icon: "shade-once", title: "Shade only once\nShade any pixel only once in a stroke."},
-      shadeLighten: {type: "toggle", icon: "shade-lighten", title: "Lighten shaded pixels"},
+      shadeOnce: {type: "toggle", icon: "shade-once", title: `${msg(`Only shade each pixel once in a stroke.`,{id:`shadetool.label.once`})}`},
+      shadeLighten: {type: "toggle", icon: "shade-lighten", title: `${msg(`Lighten Shaded Pixels`,{id:`shadetool.label.lighten`})}`},
     }, mobile);
     this.tool = new ShadeTool(config);
   }
@@ -43,28 +42,28 @@ class ShadeToolConfig extends BaseToolConfig {
   renderDesktop() {
     return html`
       <div id="main">
-        <h2>Shade Tool</h2>
+        <h2>${msg(`Shade Tool`,{id:`shadetool.label`})}</h2>
         <div class="group">
           <div>
-            <p class="title">Size</p>
+            <p class="title">${msg(`Size`,{id:`tools.label.size`})}</p>
             ${this._sizeControl()}
           </div>
           <div>
-            <p class="title">Shape</p>
+            <p class="title">${msg(`Shape`,{id:`tools.label.shape`})}</p>
             ${this._shapeControl()}
           </div>
           <div>
-            <p class="title">Style</p>
+            <p class="title">${msg(`Style`,{id:`tools.label.style`})}</p>
             ${this._shadeStyleControl()}
           </div>
         </div>
         <div class="group">
           <div>
-            <p class="title">Force</p>
+            <p class="title">${msg(`Force`,{id:`tools.label.force`})}</p>
             ${this._forceControl()}
           </div>
           <div>
-            <p class="title">Effects</p>
+            <p class="title">${msg(`Effects`,{id:`tools.label.effects`})}</p>
             <div class="group-sm">
               ${this._shadeOnceControl()}
               ${this._shadeLightenControl()}
@@ -80,33 +79,32 @@ class ShadeToolConfig extends BaseToolConfig {
     return html`
       <div id="main-mobile" class="group">
         <div>
-          <p class="title">Effects</p>
+          <p class="title">${msg(`Effects`,{id:`tools.label.effects`})}</p>
           <div class="group-sm">
             ${this._shadeOnceControl()}
             ${this._shadeLightenControl()}
           </div>
         </div>
         <div>
-          <p class="title">Size</p>
+          <p class="title">${msg(`Size`,{id:`tools.label.size`})}</p>
           ${this._sizeControl()}
         </div>
         <div>
-          <p class="title">Shape</p>
+          <p class="title">${msg(`Shape`,{id:`tools.label.shape`})}</p>
           ${this._shapeControl()}
         </div>
         <div>
-          <p class="title">Style</p>
+          <p class="title">${msg(`Style`,{id:`tools.label.style`})}</p>
           ${this._shadeStyleControl()}
         </div>
         <div>
-          <p class="title">Force</p>
+          <p class="title">${msg(`Force`,{id:`tools.label.force`})}</p>
           ${this._forceControl()}
         </div>
       </div>
     `;
-  };
+  }
 }
 
 customElements.define("ncrs-shade-tool-config", ShadeToolConfig);
-
 export default ShadeToolConfig;

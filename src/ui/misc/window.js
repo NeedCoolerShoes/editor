@@ -1,5 +1,7 @@
 import { css, html, LitElement } from "lit";
 import { clamp } from "three/src/math/MathUtils.js";
+import "@lit/localize/lit-localize.js";
+
 
 class Window extends LitElement {
   static properties = {
@@ -9,7 +11,6 @@ class Window extends LitElement {
   static styles = css`
     :host {
       --background-color: white;
-
       position: fixed;
       display: flex;
       flex-direction: column;
@@ -20,7 +21,6 @@ class Window extends LitElement {
       resize: both;
       background-color: var(--background-color);
       box-sizing: border-box;
-
       top: 0px;
       left: 0px;
       z-index: 100;
@@ -66,7 +66,7 @@ class Window extends LitElement {
       width: 100%;
       height: 100%;
     }
-  `
+  `;
 
   constructor() {
     super();
@@ -93,7 +93,7 @@ class Window extends LitElement {
     return html`
       <div id="header">
         <h2>${this.name}</h2>
-        <button @click=${this.close} title="Close window.">
+        <button @click=${this.close} title="${msg(`Close`,{id:`main.label.close`})}">
           <svg data-slot="icon" aria-hidden="true" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
@@ -102,7 +102,7 @@ class Window extends LitElement {
       <div id="body">
         <slot></slot>
       </div>
-    `
+    `;
   }
 
   close() {
@@ -139,7 +139,7 @@ class Window extends LitElement {
 
     this._offsetX = event.offsetX;
     this._offsetY = event.offsetY;
-    
+
     this.header.style.cursor = "grabbing";
 
     event.preventDefault();
@@ -153,7 +153,7 @@ class Window extends LitElement {
   _dragMove(event) {
     const posX = event.clientX - this._offsetX;
     const posY = event.clientY - this._offsetY;
-    
+
     this.setPosition(posX, posY);
 
     event.preventDefault();
@@ -196,5 +196,4 @@ class Window extends LitElement {
 }
 
 customElements.define("ncrs-window", Window);
-
 export default Window;

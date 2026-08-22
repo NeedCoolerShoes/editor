@@ -1,47 +1,48 @@
 import { clamp } from "three/src/math/MathUtils.js";
 import Tab from "../../../../misc/tab.js";
-import { css, html } from "lit";
+import { html } from "lit";
 import Color from "color";
 import "./scale_selector.js";
+import "@lit/localize/lit-localize.js";
 
 const defaultPalettes = [
   {
-    name: "Allure",
+    name: `${msg(`Allure`,{id:`palette.label.preset1`})}`,
     palette: ["#2c152c","#472246","#772655","#b42552","#e8453c","#f68f5d","#ffdeb6","#931651","#c54324","#da6d11","#efa326","#f6c532","#ffe27a","#fffadf","#01323e","#0a5151","#157362","#34a868","#66e16f","#aafb93","#edffe5","#042b47","#0a455d","#0d6577","#11818d","#17a8ad","#44cfc0","#92f5df","#393080","#5047ce","#5b77f9","#3dabec","#45daf8","#97eeff","#defbff","#431b69","#6c22ac","#9832ca","#c63ed2","#f84ada","#ff99de","#ffdaf4","#980699","#c61a97","#e843a3","#f471af","#fa9bc8","#ffcfde","#fff4f8","#481c1a","#6b2d27","#913f34","#ba6143","#d58665","#e8af99","#f5dad0","#221213","#351d20","#4c2b2b","#593931","#63463b","#705344","#846857","#2f3048","#494a65","#61657e","#80859d","#a5abc2","#c7cbd9","#e8eaef","#3c264c","#473464","#5a4d85","#6c69a3","#8189bb","#a9b7d6","#cee6f1","#19121d","#241c27","#2e2733","#3c3441","#4a4250","#655c67","#817880"],
     scale: 14
   },
   {
-    name: "Skin Tones",
-    palette: ["#c27f7c","#d79d93","#e6b1a4","#efc8b8","#f7dece","#c27764","#cf9475","#e0b08a","#f0c697","#f3d2a2","#7e4855","#9a5b5d","#a97266","#bd8e76","#d5ab88","#5d3740","#754540","#8b5949","#a06e53","#af7e57","#2e1e30","#412431","#582f34","#6f403a","#7a4d3e"],      
+    name: `${msg(`Skin Tones`,{id:`palette.label.preset2`})}`,
+    palette: ["#c27f7c","#d79d93","#e6b1a4","#efc8b8","#f7dece","#c27764","#cf9475","#e0b08a","#f0c697","#f3d2a2","#7e4855","#9a5b5d","#a97266","#bd8e76","#d5ab88","#5d3740","#754540","#8b5949","#a06e53","#af7e57","#2e1e30","#412431","#582f34","#6f403a","#7a4d3e"],
     "scale": 10
   },
   {
-    name: "Pastels",
+    name: `${msg(`Pastels`,{id:`palette.label.preset3`})}`,
     palette: ["#d26a3d","#df8433","#ea9d31","#f2b23a","#f8cb43","#ffe27a","#fff5c7","#c1567b","#dc6272","#f17b7b","#f89f96","#fcb7af","#ffd6cc","#ffebe6","#c156b4","#dc62b3","#f17bba","#f896c1","#fcafd0","#ffccdd","#ffe6ee","#5c56c1","#8362dc","#aa7bf1","#c696f8","#d6affc","#ebccff","#f5e6ff","#5d8ed4","#669ede","#6cade5","#74c0ee","#91d3f2","#adeafa","#ddf8fe","#226468","#267776","#298d86","#31a591","#3ec4a2","#62dcb3","#95efd2"],
     scale: 14
   },
   {
-    name: "Nature",
+    name: `${msg(`Nature`,{id:`palette.label.preset4`})}`,
     palette: ["#242e23","#313f2e","#445539","#546a3e","#6b8347","#88a150","#aac156","#1b261d","#293a29","#375033","#486940","#5d874f","#70a059","#83b861","#271213","#3d1d1e","#5a2b2a","#723b32","#8a523e","#9d6a53","#b18875","#45201a","#5b2720","#77352b","#934335","#b45e41","#ca7b5c","#d99a84","#ad7048","#b3804d","#c6a064","#d8bc79","#e0ca8a","#ecdfa5","#f5edcd"],
     scale: 14
   },
   {
-    name: "Gameboy",
+    name: `${msg(`Gameboy`,{id:`palette.label.preset5`})}`,
     palette: ["#bdc156","#90a651","#738747","#56683e","#3e4b37","#2d352e","#222327","#19191d"],
     scale: 8
   },
   {
-    name: "Ruby",
+    name: `${msg(`Ruby`,{id:`palette.label.preset6`})}`,
     palette:["#160a1c","#2c152c","#472246","#772655","#b42552","#e8453c","#f27343","#fba948","#ffcb6d","#ffee94","#fdffcf"],
     scale: 11
   },
   {
-    name: "Place",
+    name: `${msg(`Place`,{id:`palette.label.preset7`})}`,
     palette: ["#E8453C","#DA6D11","#F6C532","#66E16F","#3DABEC","#5047CE","#9832CA","#C61A97","#F84ADA","#E6B1A4","#E0B08A","#BD8E76","#9A5B5D","#754540","#412431","#000000","#494A65","#A5ABC2","#FFFFFF"],
     scale: 10
   },
   {
-    name: "Paint",
+    name: `${msg(`Paint`,{id:`palette.label.preset8`})}`,
     palette: ["#000000", "#7F7F7F", "#880015", "#ED1C24", "#FF7F27", "#FFF200", "#21B14C", "#00A2E8", "#3E48CC", "#A349A4",
       "#FFFFFF", "#C3C3C3", "#B97A57", "#FFAEC9", "#FFC90E", "#EFE4B0", "#B5E61D", "#99D9EA", "#7092BE", "#C8BFE7"
     ],
@@ -136,11 +137,11 @@ class PresetPaletteTab extends Tab {
       .color.light:focus-visible {
         border: black solid 1px;
       }
-    `
+    `;
   ]
 
   constructor(colorPicker) {
-    super({name: "Palette"});
+    super({name: `${msg(`Palette`,{id:`palette.label`})}`});
 
     this.colorPicker = colorPicker;
     this.palettes = this._loadPalettes();
@@ -174,12 +175,30 @@ class PresetPaletteTab extends Tab {
         <div id="options">
           <ncrs-palette-scale-selector id="scale" scale=${this.scale} @update=${this._onScaleUpdate}></ncrs-palette-scale-selector>
           <div>
-            <label id="palette-label" for="palette-select">Select palette</label>
+            <label id="palette-label" for="palette-select">${msg(`Select Palette`,{id:`palette.label.select`})}</label>
             ${this.select}
           </div>
         </div>
       </div>
     `;
+  }
+
+  getIndexOfColor(color) {
+    const colors = this.renderRoot.getElementById("colors");
+    const el = colors.querySelector(`[color="${color}"]`);
+
+    if (!el) return -1;
+
+    return [...colors.children].indexOf(el);
+  }
+
+  getColorAtIndex(idx) {
+    const colors = this.renderRoot.getElementById("colors");
+    const color = colors.children.item(idx);
+
+    if (!color) return;
+
+    return color.getAttribute("color");
   }
 
   _loadPalettes() {
@@ -215,7 +234,7 @@ class PresetPaletteTab extends Tab {
   _createColor(color) {
     const button = document.createElement("button");
     button.classList = ["color"];
-    button.title = `Set color to ${color}`
+    button.title = `${msg(`Set color to ${color}`,{id:`palette.desc.setColor`})}`
 
     button.style.backgroundColor = color;
     button.setAttribute("color", color);
@@ -233,7 +252,7 @@ class PresetPaletteTab extends Tab {
 
     button.addEventListener("click", () => {
       this.colorPicker.setColor(color);
-    })
+    });
 
     return button;
   }
@@ -253,7 +272,7 @@ class PresetPaletteTab extends Tab {
         if (!selected) return;
 
         selected.classList.remove("selected");
-      };
+      }
     });
   }
 
@@ -272,5 +291,4 @@ class PresetPaletteTab extends Tab {
 }
 
 customElements.define("ncrs-preset-palette-tab", PresetPaletteTab);
-
 export default PresetPaletteTab;

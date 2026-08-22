@@ -1,6 +1,7 @@
 import { Sortable } from "sortablejs";
 import { css, html, LitElement } from "lit";
 import Layer from "./layer.js";
+import "@lit/localize/lit-localize.js";
 
 class LayerList extends LitElement {
   static properties = {
@@ -20,9 +21,7 @@ class LayerList extends LitElement {
     }
 
     @-moz-document url-prefix() {
-      :host {
-        backdrop-filter: none;
-      }
+      :host { backdrop-filter: none; }
     }
 
     #list {
@@ -178,16 +177,16 @@ class LayerList extends LitElement {
       <div id="list">
         ${layersDiv}
         <div id="buttons">
-          <ncrs-button id="add-button" @click=${this._addLayer} title="Add layer [Shift+N]">
+          <ncrs-button id="add-button" @click=${this._addLayer} title="${msg(`Add Layer`,{id:`layers.label.add`})}">
             <ncrs-icon part="icon" icon="add" color="var(--text-color)"></ncrs-icon>
           </ncrs-button>
-          <ncrs-button id="remove-button" @click=${this._removeLayer} title="Remove current layer [Del]">
+          <ncrs-button id="remove-button" @click=${this._removeLayer} title="${msg(`Remove Layer`,{id:`layers.label.remove`})}">
             <ncrs-icon part="icon" icon="remove" color="var(--text-color)"></ncrs-icon>
           </ncrs-button>
-          <ncrs-button id="clone-button" @click=${this._cloneLayer} title="Clone current layer [Shift+D]">
+          <ncrs-button id="clone-button" @click=${this._cloneLayer} title="${msg(`Clone Layer`,{id:`layers.label.clone`})}">
             <ncrs-icon part="icon" icon="clone" color="var(--text-color)"></ncrs-icon>
           </ncrs-button>
-          <ncrs-button id="merge-button" @click=${this._mergeLayer} title="Merge current layer with below [Shift+M]" ?disabled=${mergeDisabled}>
+          <ncrs-button id="merge-button" @click=${this._mergeLayer} title="${msg(`Merge Down Layer`,{id:`layers.label.merge`})}" ?disabled=${mergeDisabled}>
             <ncrs-icon part="icon" icon="merge" color="var(--text-color)"></ncrs-icon>
           </ncrs-button>
         </div>
@@ -267,5 +266,4 @@ class LayerList extends LitElement {
 }
 
 customElements.define("ncrs-layer-list", LayerList);
-
 export default LayerList;

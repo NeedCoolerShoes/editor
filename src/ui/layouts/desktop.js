@@ -1,12 +1,11 @@
 import BaseLayout from "./base";
-
 import { css, html, unsafeCSS } from "lit";
 import Toolbar from "../tools/toolbar.js";
 import LayerList from "../layers/layer_list.js";
 import Config from "../config/main.js";
 import WarningManager from "../misc/warnings.js";
-
 import imgGridDark from "../../../assets/images/grid-editor-dark.png";
+import "@lit/localize/lit-localize.js";
 
 class NCRSUIDesktopLayout extends BaseLayout {
   static styles = css`
@@ -224,9 +223,9 @@ class NCRSUIDesktopLayout extends BaseLayout {
   _bgToggle() {
     return html`
       <button id="themeToggle" @click=${this.toggleEditorBackground}>
-        <ncrs-icon title="Switch to dusk mode." icon="dusk-mode" color="var(--editor-icon-color)" class="dark"></ncrs-icon>
-        <ncrs-icon title="Switch to light mode." icon="light-mode" color="var(--editor-icon-color)" class="gray"></ncrs-icon>
-        <ncrs-icon title="Switch to dark mode." icon="dark-mode" color="var(--editor-icon-color)" class="light"></ncrs-icon>
+        <ncrs-icon title=${msg(`Switch Editor Background`,{id:`com.label.switchBG`})} icon="dusk-mode" color="var(--editor-icon-color)" class="dark"></ncrs-icon>
+        <ncrs-icon title=${msg(`Switch Editor Background`,{id:`com.label.switchBG`})} icon="light-mode" color="var(--editor-icon-color)" class="gray"></ncrs-icon>
+        <ncrs-icon title=${msg(`Switch Editor Background`,{id:`com.label.switchBG`})} icon="dark-mode" color="var(--editor-icon-color)" class="light"></ncrs-icon>
       </button>
     `;
   }
@@ -234,8 +233,8 @@ class NCRSUIDesktopLayout extends BaseLayout {
   _fullscreenToggle() {
     return html`
       <button id="fullscreenToggle" @click=${this.toggleFullscreen}>
-        <ncrs-icon class="fullscreen" title="Switch to Fullscreen." icon="fullscreen" color="var(--editor-icon-color)" class="minimized"></ncrs-icon>
-        <ncrs-icon class="minimize" title="Minimize." icon="minimize" color="var(--editor-icon-color)" class="fullscreen"></ncrs-icon>
+        <ncrs-icon class="fullscreen" title=${msg(`Fullscreen [F]`,{id:`desktop.label.fullscreen`})} icon="fullscreen" color="var(--editor-icon-color)" class="minimized"></ncrs-icon>
+        <ncrs-icon class="minimize" title=${msg(`Exit Fullscreen [F]`,{id:`desktop.label.minimize`})} icon="minimize" color="var(--editor-icon-color)" class="fullscreen"></ncrs-icon>
       </button>
     `;
   }
@@ -246,14 +245,14 @@ class NCRSUIDesktopLayout extends BaseLayout {
 
     return html`
       <div id="history">
-        <button title="Undo [Ctrl + Z]" ?disabled=${undoDisabled} @click=${this._undo}>
+        <button title=${msg(`Undo [Ctrl+Z] / [Ctrl+Shift+Y]`,{id:`desktop.label.undo`})} ?disabled=${undoDisabled} @click=${this._undo}>
           <ncrs-icon icon="undo" color="var(--icon-color)"></ncrs-icon>
         </button>
-        <button title="Redo [Ctrl + Y]" ?disabled=${redoDisabled} @click=${this._redo}>
+        <button title=${msg(`Redo [Ctrl+Y] / [Ctrl+Shift+Z]`,{id:`desktop.label.redo`})} ?disabled=${redoDisabled} @click=${this._redo}>
           <ncrs-icon icon="redo" color="var(--icon-color)"></ncrs-icon>
         </button>
       </div>
-    `
+    `;
   }
 
   _undo() {
@@ -278,5 +277,4 @@ class NCRSUIDesktopLayout extends BaseLayout {
 }
 
 customElements.define("ncrs-ui-desktop-layout", NCRSUIDesktopLayout);
-
 export default NCRSUIDesktopLayout;

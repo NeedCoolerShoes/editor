@@ -1,6 +1,7 @@
 import { clamp } from "three/src/math/MathUtils.js";
 import "../../../../misc/button.js";
 import { css, html, LitElement } from "lit";
+import "@lit/localize/lit-localize.js";
 
 class NCRSPaletteScaleSelector extends LitElement {
   static properties = {
@@ -44,18 +45,18 @@ class NCRSPaletteScaleSelector extends LitElement {
   render() {
     if (Number(this._input.value) !== this.scale) {
       this.scale = this._clampValue(this.scale);
-      
+
       this._input.value = this.scale;
       this.dispatchEvent(new CustomEvent("update", {detail: this.scale}));
     }
-    
+
     const decrementDisabled = this.scale <= this.min;
     const incrementDisabled = this.scale >= this.max;
 
     return html`
-      <ncrs-button ?disabled=${decrementDisabled} @click=${this._onDecrement} title="Decrement scale.">-</ncrs-button>
+      <ncrs-button ?disabled=${decrementDisabled} @click=${this._onDecrement} title="${msg(`Decrease Scale`,{id:`palette.label.scaleDec`})}">-</ncrs-button>
       ${this._input}
-      <ncrs-button ?disabled=${incrementDisabled} @click=${this._onIncrement} title="Increment scale.">+</ncrs-button>
+      <ncrs-button ?disabled=${incrementDisabled} @click=${this._onIncrement} title="${msg(`Increase Scale`,{id:`palette.label.scaleInc`})}">+</ncrs-button>
     `;
   }
 
@@ -70,7 +71,7 @@ class NCRSPaletteScaleSelector extends LitElement {
   _createInput() {
     const input = document.createElement("input");
     input.id = "input";
-    input.title = "Palette width";
+    input.title = msg(`Palette Width`,{id:`palette.label.width`});
     input.type = "number";
     input.inputmode = "numeric";
     input.addEventListener("input", event => this._onInput(event));

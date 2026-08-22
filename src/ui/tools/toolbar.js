@@ -1,10 +1,9 @@
 import { css, html, LitElement } from "lit";
-import { msg } from "@lit/localize";
-import PartToggles from "./part_toggles.js";
-
-import EditorToggles from "./editor_toggles.js";
-import ModelToggle from "./model_toggle.js";
 import Toolset from "./toolset.js";
+import EditorToggles from "./editor_toggles.js";
+import PartToggles from "./part_toggles.js";
+import ModelToggle from "./model_toggle.js";
+import "@lit/localize/lit-localize.js";
 
 class Toolbar extends LitElement {
   static styles = css`
@@ -64,9 +63,9 @@ class Toolbar extends LitElement {
     this.editor = this.ui.editor;
 
     this.toolSet = new Toolset(this.editor);
+    this.editorToggles = new EditorToggles(this.editor);
     this.partToggles = new PartToggles(this.editor);
     this.modelToggle = new ModelToggle(this.editor);
-    this.editorToggles = new EditorToggles(this.editor);
   }
 
   render() {
@@ -74,9 +73,9 @@ class Toolbar extends LitElement {
       <div id="toolbar">
         ${this.toolSet}
         <div>
-          <p class="label">${msg(`Parts`, {id: `toolbar.label.parts`})}</p>
+          <p class="label">${msg(`Parts`,{id:`toolbar.label.parts`})}</p>
           ${this.partToggles}
-          <p class="label">${msg(`Model`, {id: `toolbar.label.model`})}</p>
+          <p class="label">${msg(`Model`,{id:`toolbar.label.model`})}</p>
           ${this.modelToggle}
           ${this.editorToggles}
         </div>
@@ -86,5 +85,4 @@ class Toolbar extends LitElement {
 }
 
 customElements.define("ncrs-toolbar", Toolbar);
-
 export default Toolbar;

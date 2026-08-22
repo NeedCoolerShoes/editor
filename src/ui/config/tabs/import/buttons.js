@@ -1,6 +1,7 @@
 import { css, html, LitElement } from "lit";
 import ReferenceImageManager from "./reference_image";
 import MinecraftImport from "./minecraft";
+import "@lit/localize/lit-localize.js";
 
 class ImportTabButtons extends LitElement {
   static styles = css`
@@ -90,12 +91,11 @@ class ImportTabButtons extends LitElement {
 
     this.ncrsFileInput.accept = ".ncrs"
     this.ncrsFileInput.addEventListener("change", this._ncrsFileRead.bind(this));
-    
+
     this.referenceFileInput.accept = "image/*";
     this.referenceFileInput.addEventListener("change", this._referenceFileRead.bind(this));
 
     this.minecraftImport = new MinecraftImport(this.ui);
-
   }
 
   render() {
@@ -108,13 +108,14 @@ class ImportTabButtons extends LitElement {
           ${this.minecraftImport}
           <hr>
         </div>
-        <ncrs-button part="png-import" @click=${this.pngOpen} title="Import a skin .png file as a new layer.">Import Skin from File (.png)</ncrs-button>
-        <ncrs-button part="ncrs-import" @click=${this.ncrsOpen} title="Import a .ncrs project file.">Import Project from File (.ncrs)</ncrs-button>
+        <ncrs-button part="png-import" @click=${this.pngOpen} title="${msg(`Import a PNG image skin to a new layer.`,{id:`import.desc.png`})}">${msg(`Import Skin (.png)`,{id:`import.label.png`})}</ncrs-button>
+        <ncrs-button part="ncrs-import" @click=${this.ncrsOpen} title="${msg(`Import Needs Cooler Shoes (.ncrs) project file as a new layer.`,{id:`import.desc.ncrs`})}">${msg(`Import NCRS Project`,{id:`import.label.ncrs`})}</ncrs-button>
         <div part="reference-image">
           <hr>
-          <ncrs-button @click=${this.referenceImageOpen} title="Add a reference image.">Add Reference Image</ncrs-button>
+          <ncrs-button @click=${this.referenceImageOpen} title="${msg(`Add a reference image.`,{id:`import.desc.ref`})}">${msg(`Add Reference Image`,{id:`import.label.ref`})}</ncrs-button>
         </div>
-      </div>`;
+      </div>
+    `;
   }
 
   pngOpen() {

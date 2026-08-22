@@ -1,5 +1,5 @@
 import { css, html, LitElement } from "lit";
-import { msg } from "@lit/localize";
+import "@lit/localize/lit-localize.js";
 
 class EditorToggles extends LitElement {
   static styles = css`
@@ -71,45 +71,62 @@ class EditorToggles extends LitElement {
     const cullGrid = cfg.get("cullGrid", true);
 
     return html`
-      <p class="label">${msg(`Layer`, {id: `toolbar.label.layer`})}</p>
+      <p class="label">${msg(`Layer`,{id:`toolbar.label.layer`})}</p>
       <div class="ncrs-toggle-row">
-        <ncrs-toggle title="${msg(`Toggle base`, {id: `toolbar.toggle.base`})} [Ctrl+Shift+L]" ?toggled=${baseVisible} @toggle=${this._toggleBase}>
+        <ncrs-toggle
+         title="${msg(`Toggle Base`,{id:`toolbar.toggle.base`})}"
+         ?toggled=${baseVisible} @toggle=${this._toggleBase}>
           <ncrs-icon slot="off" icon="base" color="white"></ncrs-icon>
           <ncrs-icon slot="on" icon="base" color="#55b2ff"></ncrs-icon>
         </ncrs-toggle>
-        <ncrs-toggle title="${msg(`Toggle overlay`, {id: `toolbar.toggle.overlay`})} [Shift+L]" ?toggled=${overlayVisible} @toggle=${this._toggleOverlay}>
+        <ncrs-toggle
+         title="${msg(`Toggle Overlay`,{id:`toolbar.toggle.overlay`})}"
+         ?toggled=${overlayVisible} @toggle=${this._toggleOverlay}>
           <ncrs-icon slot="off" icon="overlay" color="white"></ncrs-icon>
           <ncrs-icon slot="on" icon="overlay" color="#55b2ff"></ncrs-icon>
         </ncrs-toggle>
       </div>
-      <p class="label  label-grid">${msg(`Grid`, {id: `toolbar.label.grid`})}</p>
+      <p class="label label-grid">${msg(`Grid`,{id:`toolbar.label.grid`})}"
+       ?toggled=${overlayVisible} @toggle=${this._toggleOverlay}></p>
       <div class="ncrs-toggle-row row-grid">
-        <ncrs-toggle title="${msg(`Toggle base grid`, {id: `toolbar.toggle.base_grid`})} [Ctrl+Shift+O]" ?toggled=${baseGridVisible} @toggle=${this._toggleBaseGrid}>
+        <ncrs-toggle
+         title="${msg(`Toggle Base Grid`,{id:`toolbar.toggle.base_grid`})}"
+         ?toggled=${baseGridVisible} @toggle=${this._toggleBaseGrid}>
           <ncrs-icon slot="off" icon="base-grid" color="white"></ncrs-icon>
           <ncrs-icon slot="on" icon="base-grid" color="#55b2ff"></ncrs-icon>
         </ncrs-toggle>
-        <ncrs-toggle title="${msg(`Toggle overlay grid`, {id: `toolbar.toggle.overlay_grid`})} [Shift+O]" ?toggled=${overlayGridVisible} @toggle=${this._toggleOverlayGrid}>
+        <ncrs-toggle
+         title="${msg(`Toggle Overlay Grid`,{id:`toolbar.toggle.overlay_grid`})}"
+         ?toggled=${overlayGridVisible} @toggle=${this._toggleOverlayGrid}>
           <ncrs-icon slot="off" icon="overlay-grid" color="white"></ncrs-icon>
           <ncrs-icon slot="on" icon="overlay-grid" color="#55b2ff"></ncrs-icon>
         </ncrs-toggle>
       </div>
-      <p class="label">${msg(`Render`, {id: `toolbar.label.render`})}</p>
+      <p class="label">${msg(`Render`,{id:`toolbar.label.render`})}</p>
       <div class="ncrs-toggle-row">
-        <ncrs-toggle title="${msg(`Toggle backface culling`, {id: `toolbar.toggle.backface_culling`})} [Shift+F]" ?toggled=${cullBackFace} @toggle=${this._toggleBackfaceCulling}>
+        <ncrs-toggle
+         title="${msg(`Toggle Backface Culling`,{id:`toolbar.toggle.backface_culling`})}"
+         ?toggled=${cullBackFace} @toggle=${this._toggleBackfaceCulling}>
           <ncrs-icon slot="off" icon="backface-culling" color="white"></ncrs-icon>
           <ncrs-icon slot="on" icon="backface-culling" color="#55b2ff"></ncrs-icon>
         </ncrs-toggle>
-        <ncrs-toggle title="${msg(`Toggle grid culling`, {id: `toolbar.toggle.grid_culling`})} [Ctrl+Shift+F]" ?toggled=${cullGrid} @toggle=${this._toggleGridCulling}>
+        <ncrs-toggle
+         title="${msg(`Toggle Grid Culling`,{id:`toolbar.toggle.grid_culling`})}"
+         ?toggled=${cullGrid} @toggle=${this._toggleGridCulling}>
           <ncrs-icon slot="off" icon="grid-culling" color="white"></ncrs-icon>
           <ncrs-icon slot="on" icon="grid-culling" color="#55b2ff"></ncrs-icon>
         </ncrs-toggle>
       </div>
       <div class="hidden ncrs-toggle-row">
-        <ncrs-toggle title="${msg(`Toggle shading`, {id: `toolbar.toggle.shading`})}" ?toggled=${cullBackFace} @toggle=${this._toggleShading}>
+        <ncrs-toggle
+         title="${msg(`Toggle Shading`,{id:`toolbar.toggle.shading`})}"
+         ?toggled=${cullBackFace} @toggle=${this._toggleShading}>
           <ncrs-icon slot="off" icon="shade" color="white"></ncrs-icon>
           <ncrs-icon slot="on" icon="shade" color="#55b2ff"></ncrs-icon>
         </ncrs-toggle>
-        <ncrs-toggle title="${msg(`Blow up model`, {id: `toolbar.toggle.blow_up_model`})}" @toggle=${this._toggleBlowUp}>
+        <ncrs-toggle
+         title="${msg(`Toggle Exploded View`,{id:`toolbar.toggle.exploded_view`})}"
+         @toggle=${this._toggleBlowUp}>
           <ncrs-icon slot="off" icon="blow-up-model" color="white"></ncrs-icon>
           <ncrs-icon slot="on" icon="blow-up-model" color="#55b2ff"></ncrs-icon>
         </ncrs-toggle>
@@ -144,24 +161,23 @@ class EditorToggles extends LitElement {
   _setupEvents() {
     this.editor.config.addEventListener("baseVisible-change", event => {
       this.requestUpdate();
-    })
+    });
     this.editor.config.addEventListener("overlayVisible-change", event => {
       this.requestUpdate();
-    })
+    });
     this.editor.config.addEventListener("baseGridVisible-change", event => {
       this.requestUpdate();
-    })
+    });
     this.editor.config.addEventListener("overlayGridVisible-change", event => {
       this.requestUpdate();
-    })
+    });
     this.editor.config.addEventListener("cullBackFace-change", event => {
       this.requestUpdate();
-    })
+    });
     this.editor.config.addEventListener("cullGrid-change", event => {
       this.requestUpdate();
-    })
+    });
   }
-
 }
 
 customElements.define("ncrs-tools-editor-toggles", EditorToggles);

@@ -11,6 +11,7 @@ import SculptToolConfig from "./tools/configs/sculpt_tool_config.js";
 import ShadeToolConfig from "./tools/configs/shade_tool_config.js";
 import BucketToolConfig from "./tools/configs/bucket_tool_config.js";
 import Color from "color";
+import "@lit/localize/lit-localize.js";
 
 class ToolTab extends Tab {
   static styles = [
@@ -107,14 +108,14 @@ class ToolTab extends Tab {
         flex-basis: 0;
       }
     `
-  ]
+  ];
 
   static properties = {
     tool: {}
   }
 
   constructor(ui) {
-    super({name: "Tools", title: "Tools [1]/[Alt+T]\nManage tool config and colors."});
+    super({name: msg(`Tools`,{id:`com.label.tools`}), title: msg(`Manage tool config and colors.`,{id:`com.desc.tools`})});
 
     this.ui = ui;
     this.editor = this.ui.editor;
@@ -122,7 +123,7 @@ class ToolTab extends Tab {
     this.editor.addEventListener("select-tool", event => {
       const tool = event.detail.tool;
       this.tool = tool.properties.id;
-    })
+    });
 
     this.tool = this.editor.currentTool.properties.id;
     this.colorPicker = this._setupColorPicker();
@@ -146,7 +147,7 @@ class ToolTab extends Tab {
         </div>
         ${config}
       </div>
-    `
+    `;
   }
 
   firstUpdated() {
@@ -207,5 +208,4 @@ class ToolTab extends Tab {
 }
 
 customElements.define("ncrs-tool-tab", ToolTab);
-
 export default ToolTab;

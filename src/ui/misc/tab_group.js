@@ -25,18 +25,18 @@ class TabGroup extends LitElement {
     this.tabs.forEach(tab => {
       tabsDiv.appendChild(tab);
       buttonsDiv.appendChild(this._createTabButton(tab));
-    })
+    });
 
     if (this.side === "top") {
       return html`
         ${buttonsDiv}
         ${tabsDiv}
-      `
+      `;
     } else {
       return html`
         ${tabsDiv}
         ${buttonsDiv}
-      `
+      `;
     }
   }
 
@@ -47,7 +47,7 @@ class TabGroup extends LitElement {
       }
 
       tab.visible = (tab == selectedTab);
-    })
+    });
 
     selectedTab.tabEnter();
 
@@ -62,7 +62,7 @@ class TabGroup extends LitElement {
     }
 
     tab.part = "tab";
-    
+
     this.tabs.push(tab);
     this.requestUpdate();
   }
@@ -108,12 +108,11 @@ class TabGroup extends LitElement {
       } else {
         button.part.remove("darkened");
       }
-    })
+    });
 
     return button;
   }
 }
 
 customElements.define("ncrs-tab-group", TabGroup);
-
 export default TabGroup;

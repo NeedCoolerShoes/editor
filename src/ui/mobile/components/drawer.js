@@ -15,7 +15,6 @@ class MobileDrawer extends LitElement {
       --base-opacity: 0.75;
       --base-blur: 4px;
       --drawer-height: 100%;
-
       display: none;
       align-items: flex-end;
       position: absolute;
@@ -37,7 +36,7 @@ class MobileDrawer extends LitElement {
     #drawer {
       background-color: rgb(26, 26, 26);
       height: var(--drawer-height);
-      max-height: 100vh;
+      max-height: 100%;
       width: 100%;
       border-top-left-radius: 0.5rem;
       border-top-right-radius: 0.5rem;
@@ -72,6 +71,7 @@ class MobileDrawer extends LitElement {
     #body {
       height: 100%;
       max-height: calc(100% - 2rem);
+      overflow-y: auto;
       box-sizing: border-box;
     }
 
@@ -101,31 +101,20 @@ class MobileDrawer extends LitElement {
     }
 
     @keyframes open {
-      from {
-        transform: translateY(100%);
-      }
-
-      to {
-        transform: translateY(0%);
-      }
+      from { transform: translateY(100%); }
+      to { transform: translateY(0%); }
     }
 
     @keyframes snap {
-      to {
-        transform: translateY(0%);
-      }
+      to { transform: translateY(0%); }
     }
 
     @keyframes close {
-      to {
-        transform: translateY(100%);
-      }
+      to { transform: translateY(100%); }
     }
 
     @keyframes fade {
-      to {
-        opacity: 0;
-      }
+      to { opacity: 0; }
     }
   `;
 
@@ -175,7 +164,7 @@ class MobileDrawer extends LitElement {
     handle.addEventListener("click", () => {
       if (this._translate > 0) return;
       if (this.classList.contains("snap")) return;
-      
+
       this.hide();
     });
 
@@ -259,7 +248,7 @@ class MobileDrawer extends LitElement {
       if (this.classList.contains("snap")) return;
 
       this.hide();
-    })
+    });
   }
 }
 

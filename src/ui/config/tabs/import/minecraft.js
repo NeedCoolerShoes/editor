@@ -1,5 +1,6 @@
 import { css, html, LitElement } from "lit";
 import { SKIN_LOOKUP_URL } from "../../../../constants.js";
+import "@lit/localize/lit-localize.js";
 
 class MinecraftImport extends LitElement {
   static properties = {
@@ -51,7 +52,7 @@ class MinecraftImport extends LitElement {
       top: -5px;
       margin-left: calc(var(--height) * -1);
     }
-  `
+  `;
 
   constructor(ui) {
     super();
@@ -66,7 +67,7 @@ class MinecraftImport extends LitElement {
       <form @submit=${this._formSubmit}>
         ${this.input}
         <ncrs-button ?disabled=${this._processing} @click=${this._buttonSubmit}>
-          ${this._processing ? "Processing..." : "Import Skin from Minecraft" }
+          ${this._processing ? msg(`Processing...`,{id:`import.label.processing`}) : msg(`Import Skin from Minecraft: Java`,{id:`import.label.minecraft`})}
         </ncrs-button>
       </form>
     `;
@@ -109,13 +110,12 @@ class MinecraftImport extends LitElement {
         this._processing = false;
       }, () => {
         this._processing = false;
-      })
+      });
     }, () => {
       this._processing = false;
-    })
+    });
   }
 }
 
 customElements.define("ncrs-import-minecraft", MinecraftImport);
-
 export default MinecraftImport;

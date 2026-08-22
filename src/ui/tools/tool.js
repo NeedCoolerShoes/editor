@@ -1,4 +1,5 @@
 import { css, html, LitElement } from "lit";
+import "@lit/localize/lit-localize.js";
 
 class Tool extends LitElement {
   static styles = css`
@@ -72,7 +73,7 @@ class Tool extends LitElement {
     const properties = this.tool.properties;
 
     const icon = properties.icon;
-    const title = properties.name + "\n" + properties.description + (this.disabled ? "\n\n(Disabled)" : "");
+    const title = properties.name + "\n" + properties.description + (this.disabled ? msg(`\n\n(Disabled)`,{id:`tool.__disabled`}) : "");
 
     return html`
       <ncrs-button ?active=${this.active} ?disabled=${this.disabled} title="${title}" @click=${this.select}>
@@ -82,7 +83,7 @@ class Tool extends LitElement {
           <ncrs-icon class="open" icon="arrow-down" color="var(--expand-icon-color)" style="filter: drop-shadow(0px -1px 1px #25282b);"></ncrs-icon>
         </div>
       </ncrs-button>
-    `
+    `;
   }
 
   select() {
@@ -91,5 +92,4 @@ class Tool extends LitElement {
 }
 
 customElements.define("ncrs-tool", Tool);
-
 export default Tool;
