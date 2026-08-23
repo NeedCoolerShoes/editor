@@ -263,7 +263,7 @@ class QuickSearch extends LitElement {
       data.json().then(json => {
         this._galleryData = json;
       });
-    })
+    });
   }
 
   _renderSkins() {
@@ -277,7 +277,7 @@ class QuickSearch extends LitElement {
       const gallerySkin = new GallerySkin(skin);
       gallerySkin.addEventListener("add-skin", event => {
         this._addSkin(event.detail);
-      })
+      });
 
       div.appendChild(gallerySkin);
     });
@@ -300,7 +300,7 @@ class QuickSearch extends LitElement {
 
     input.addEventListener("change", () => {
       this._setQuery();
-    })
+    });
 
     return input;
   }
@@ -324,7 +324,7 @@ class QuickSearch extends LitElement {
       }
 
       select.appendChild(option);
-    })
+    });
 
     select.addEventListener("change", () => {
       this.part = select.value;
@@ -354,7 +354,7 @@ class QuickSearch extends LitElement {
       }
 
       select.appendChild(option);
-    })
+    });
 
     select.addEventListener("change", () => {
       this.category = select.value;
@@ -369,7 +369,7 @@ class QuickSearch extends LitElement {
     floatArray[0] = Math.random();
 
     const dv = new DataView(floatArray.buffer);
-    
+
     const bytes = [
       dv.getUint8(0), dv.getUint8(1), dv.getUint8(2), dv.getUint8(3),
     ];
@@ -390,10 +390,9 @@ class QuickSearch extends LitElement {
       if (this.ignoreModel) return;
 
       this._syncGalleryData();
-    })
+    });
   }
 }
 
 customElements.define("ncrs-quick-search", QuickSearch);
-
 export default QuickSearch;

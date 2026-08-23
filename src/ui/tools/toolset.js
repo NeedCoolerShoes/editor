@@ -25,7 +25,7 @@ class Toolset extends LitElement {
     this.editor = editor;
     this.expanded = false;
   }
-  
+
   firstUpdated() {
     this._setupEvents();
   }
@@ -45,7 +45,7 @@ class Toolset extends LitElement {
         newTool.disabled = !editor.config.get("overlayVisible", false);
         editor.config.addEventListener("overlayVisible-change", event => {
           newTool.disabled = !event.detail;
-        })
+        });
       }
 
       tools.push(newTool);

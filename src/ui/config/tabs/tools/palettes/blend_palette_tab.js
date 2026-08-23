@@ -126,7 +126,7 @@ class BlendPaletteTab extends Tab {
         width: 0.75rem;
         height: 0.75rem;
       }
-    `
+    `;
   ]
 
   constructor(ui, colorPicker) {
@@ -160,12 +160,12 @@ class BlendPaletteTab extends Tab {
           <p>Click the plus to add a color to the blend palette.</p>
           <p>Colors in this palette will be randomly sampled by tools with the blend effect on.</p>
         </div>
-      `
+      `;
     }
 
     const colorsDiv = document.createElement("div");
     colorsDiv.id = "colors";
-    
+
     colorsDiv.appendChild(plusButton);
     colors.forEach(color => {
       colorsDiv.appendChild(this._createColor(color))
@@ -272,11 +272,11 @@ class BlendPaletteTab extends Tab {
 
     cfg.addEventListener("blend-palette-change", () => {
       this.requestUpdate();
-    })
+    });
 
     cfg.addEventListener("blend-change", event => {
       this.setDarkened(!event.detail);
-    })
+    });
 
     this.addEventListener("wheel", this._onPaletteWheel.bind(this));
 
@@ -292,7 +292,7 @@ class BlendPaletteTab extends Tab {
         if (!selected) return;
 
         this.requestUpdate();
-      };
+      }
     });
   }
 
@@ -311,5 +311,4 @@ class BlendPaletteTab extends Tab {
 }
 
 customElements.define("ncrs-blend-palette-tab", BlendPaletteTab);
-
 export default BlendPaletteTab;

@@ -151,7 +151,7 @@ class BaseToolConfig extends LitElement {
       }
 
       control.appendChild(button);
-    })
+    });
 
     return control;
   }
@@ -160,9 +160,9 @@ class BaseToolConfig extends LitElement {
     Object.keys(this.properties).forEach(property => {
       this.config.addEventListener(`${property}-change`, event => {
         this[property] = event.detail;
-      })
+      });
     });
   }
 }
 
-export default BaseToolConfig;
+export default BaseToolConfig

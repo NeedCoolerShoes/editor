@@ -99,7 +99,7 @@ class RecentColorPaletteTab extends Tab {
       .color.light:focus-visible {
         border: black solid 1px;
       }
-    `
+    `;
   ]
 
   constructor(ui, colorPicker) {
@@ -187,7 +187,7 @@ class RecentColorPaletteTab extends Tab {
 
     button.addEventListener("click", () => {
       this.colorPicker.setColor(color);
-    })
+    });
 
     return button;
   }
@@ -199,7 +199,7 @@ class RecentColorPaletteTab extends Tab {
       const color = this.editor.toolConfig.get("color");
 
       this.addColor(color.hex().toLowerCase())
-    })
+    });
 
     this.addEventListener("wheel", this._onPaletteWheel.bind(this));
 
@@ -215,7 +215,7 @@ class RecentColorPaletteTab extends Tab {
         if (!selected) return;
 
         selected.classList.remove("selected");
-      };
+      }
     });
   }
 
@@ -234,5 +234,4 @@ class RecentColorPaletteTab extends Tab {
 }
 
 customElements.define("ncrs-recent-color-palette-tab", RecentColorPaletteTab);
-
 export default RecentColorPaletteTab;

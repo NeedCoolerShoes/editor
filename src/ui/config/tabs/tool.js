@@ -106,7 +106,7 @@ class ToolTab extends Tab {
         flex-grow: 1;
         flex-basis: 0;
       }
-    `
+    `;
   ]
 
   static properties = {
@@ -122,7 +122,7 @@ class ToolTab extends Tab {
     this.editor.addEventListener("select-tool", event => {
       const tool = event.detail.tool;
       this.tool = tool.properties.id;
-    })
+    });
 
     this.tool = this.editor.currentTool.properties.id;
     this.colorPicker = this._setupColorPicker();
@@ -146,7 +146,7 @@ class ToolTab extends Tab {
         </div>
         ${config}
       </div>
-    `
+    `;
   }
 
   firstUpdated() {
@@ -207,5 +207,4 @@ class ToolTab extends Tab {
 }
 
 customElements.define("ncrs-tool-tab", ToolTab);
-
 export default ToolTab;

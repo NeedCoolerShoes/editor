@@ -1,5 +1,4 @@
 import { css, html, LitElement, unsafeCSS } from "lit";
-
 import imgHeadEnabled from "../../../assets/images/skin_parts/head_enabled.png";
 import imgHeadDisabled from "../../../assets/images/skin_parts/head_disabled.png";
 import imgTorsoEnabled from "../../../assets/images/skin_parts/torso_enabled.png";
@@ -97,11 +96,11 @@ class PartToggles extends LitElement {
       --background-image-enabled: url(${unsafeCSS(imgLeftLegEnabled)});
       --background-image-disabled: url(${unsafeCSS(imgLeftLegDisabled)});
     }
-  `
+  `;
 
   constructor(editor) {
     super();
-    
+
     this.editor = editor;
     this.isShift = false;
 
@@ -124,7 +123,7 @@ class PartToggles extends LitElement {
           <ncrs-toggle id="toggle-lleg" title="Toggle left leg.\nShift + click to toggle only left leg" ?toggled=${toggled.leg_left} @toggle=${this._toggleLLegPart}></ncrs-toggle>
         </div>
       </div>
-    `
+    `;
   }
 
   _toggleHeadPart(event) {
@@ -247,5 +246,4 @@ class PartToggles extends LitElement {
 }
 
 customElements.define("ncrs-tools-part-toggles", PartToggles)
-
 export default PartToggles;

@@ -12,7 +12,7 @@ class LayersTab extends Tab {
     super({name: "Layer", title: "Layer [2]/[Alt+L]\nApply filters and edit current layer."});
 
     this.editor = editor;
-    
+
     this.filters = new LayersTabFilters(this.editor);
     this.buttons = new LayersTabButtons(this.editor);
   }
@@ -26,5 +26,4 @@ class LayersTab extends Tab {
 }
 
 customElements.define("ncrs-layers-tab", LayersTab);
-
 export default LayersTab;

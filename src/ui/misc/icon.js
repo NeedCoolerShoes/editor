@@ -174,7 +174,7 @@ class Icon extends LitElement {
     div {
       width: 100%;
       height: 100%;
-      
+
       mask-size: contain;
       mask-repeat: no-repeat;
       mask-position: center;
@@ -201,5 +201,4 @@ class Icon extends LitElement {
 }
 
 customElements.define("ncrs-icon", Icon);
-
 export {Icon, ICON_MAP};

@@ -84,5 +84,4 @@ class PenToolConfig extends BaseToolConfig {
 }
 
 customElements.define("ncrs-pen-tool-config", PenToolConfig);
-
 export default PenToolConfig;
