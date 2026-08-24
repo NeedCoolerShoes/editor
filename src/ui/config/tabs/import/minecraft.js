@@ -76,7 +76,7 @@ class MinecraftImport extends LitElement {
     const input = document.createElement("input");
     input.type = "text";
     input.placeholder = "Steve";
-x`
+
     return input;
   }
 
