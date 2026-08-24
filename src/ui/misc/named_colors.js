@@ -282,7 +282,7 @@ const NAMED_COLORS = {
   rustboro: '#27d8e2',
   wulfian: '#ffbc03',
   dragon: '#5a782a',
-  kittykay: '#f459bf'
+  kittykay: '#f459bf',
   rephaim: '#6a6a6a'
 }
 
