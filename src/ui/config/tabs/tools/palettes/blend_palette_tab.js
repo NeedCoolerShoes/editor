@@ -126,7 +126,7 @@ class BlendPaletteTab extends Tab {
         width: 0.75rem;
         height: 0.75rem;
       }
-    `;
+    `
   ]
 
   constructor(ui, colorPicker) {
