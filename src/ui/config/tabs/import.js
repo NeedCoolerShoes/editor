@@ -30,7 +30,7 @@ class ImportTab extends Tab {
         font-size: medium;
         color: white;
       }
-    `;
+    `
   ]
 
   constructor(ui) {
