@@ -15,7 +15,7 @@ class ExportTab extends Tab {
       #form {
         flex-grow: 1;
       }
-    `;
+    `
   ]
 
   constructor(ui) {
