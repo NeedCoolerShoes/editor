@@ -78,7 +78,7 @@ class SettingsTab extends Tab {
         border-radius:5px;
         cursor: pointer;
       }
-    `;
+    `
   ]
 
   constructor(ui) {
