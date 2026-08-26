@@ -36,7 +36,7 @@ class TabGroup extends LitElement {
       return html`
         ${tabsDiv}
         ${buttonsDiv}
-      `
+      `;
     }
   }
 
@@ -62,7 +62,7 @@ class TabGroup extends LitElement {
     }
 
     tab.part = "tab";
-    
+
     this.tabs.push(tab);
     this.requestUpdate();
   }
@@ -115,5 +115,4 @@ class TabGroup extends LitElement {
 }
 
 customElements.define("ncrs-tab-group", TabGroup);
-
 export default TabGroup;

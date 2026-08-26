@@ -42,7 +42,7 @@ class GallerySkin extends LitElement {
 
   constructor(metadata = {}) {
     super();
-    
+
     this.metadata = metadata;
   }
 
@@ -59,7 +59,7 @@ class GallerySkin extends LitElement {
           <p>${meta.name}</p>
         </div>
       </button>
-    `
+    `;
   }
 
   _addSkin() {
@@ -68,5 +68,4 @@ class GallerySkin extends LitElement {
 }
 
 customElements.define("ncrs-gallery-skin", GallerySkin);
-
 export default GallerySkin;

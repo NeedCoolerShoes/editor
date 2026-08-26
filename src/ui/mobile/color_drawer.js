@@ -146,13 +146,13 @@ class ColorDrawer {
     drawer.id = "color-picker-drawer";
 
     const tabGroup = new MobileTabGroup();
-    
+
     const colorPickerTab = new MobileTab();
     colorPickerTab.id = "color-picker-tab";
     colorPickerTab.name = "Color Picker";
     colorPickerTab.appendChild(this.colorPicker);
     tabGroup.appendChild(colorPickerTab);
-    
+
     const paletteTab = new MobileTab();
     paletteTab.name = "Palettes";
     paletteTab.appendChild(this._createPaletteTabs());

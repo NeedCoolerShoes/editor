@@ -12,7 +12,6 @@ class Layer extends LitElement {
       border-width: 2px;
       border-radius: 4px;
       border-color: #232428bc;
-
       --icon-size: 1rem;
     }
 
@@ -43,7 +42,6 @@ class Layer extends LitElement {
       cursor: grab;
       padding: 0.375rem;
       padding-left: 0.125rem;
-
       top: 0px;
       bottom: 0px;
       left: 0px;
@@ -78,7 +76,7 @@ class Layer extends LitElement {
       width: var(--icon-size);
       height: auto;
     }
-  `
+  `;
 
   static properties = {
     active: {reflect: true},
@@ -97,7 +95,7 @@ class Layer extends LitElement {
 
     this.ui = ui;
     this.editor = ui.editor;
-    
+
     this.visible = layer.visible;
     this.active = layer.selected;
 
@@ -153,10 +151,9 @@ class Layer extends LitElement {
   _setupEvents() {
     this.editor.project.addEventListener("variant-change", () => {
       this.requestUpdate();
-    })
+    });
   }
 }
 
 customElements.define("ncrs-layer", Layer);
-
 export default Layer;

@@ -26,12 +26,12 @@ class BucketToolConfig extends BaseToolConfig {
             icon: "fill-cube-connected",
             value: "fill-cube-connected",
             title: "Cube connected (default)\nFills all connected pixels of the same color on all sides of the cube"
-          }, 
+          },
           {
             icon: "fill-face-connected",
             value: "fill-face-connected",
             title: "Face connected\nFills all connected pixels of the same color on the face"
-          }, 
+          },
           {
             icon: "fill-cube-replace",
             value: "fill-cube-replace",
@@ -97,5 +97,4 @@ class BucketToolConfig extends BaseToolConfig {
 }
 
 customElements.define("ncrs-bucket-tool-config", BucketToolConfig);
-
 export default BucketToolConfig;

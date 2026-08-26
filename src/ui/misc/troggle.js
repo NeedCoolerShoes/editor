@@ -24,7 +24,7 @@ class Troggle extends LitElement {
       cursor: pointer;
       user-select: none;
     }
-  `
+  `;
 
   constructor() {
     super();
@@ -41,7 +41,7 @@ class Troggle extends LitElement {
         <slot name="on"></slot>
         <slot name="after"></slot>
       </button>
-    `
+    `;
   }
 
   toggle() {
@@ -59,5 +59,4 @@ class Troggle extends LitElement {
 }
 
 customElements.define("ncrs-troggle", Troggle);
-
 export default Troggle;
