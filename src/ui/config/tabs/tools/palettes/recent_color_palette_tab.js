@@ -99,7 +99,7 @@ class RecentColorPaletteTab extends Tab {
       .color.light:focus-visible {
         border: black solid 1px;
       }
-    `;
+    `
   ]
 
   constructor(ui, colorPicker) {
