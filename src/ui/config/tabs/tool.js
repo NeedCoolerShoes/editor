@@ -106,7 +106,7 @@ class ToolTab extends Tab {
         flex-grow: 1;
         flex-basis: 0;
       }
-    `;
+    `
   ]
 
   static properties = {
