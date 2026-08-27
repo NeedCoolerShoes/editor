@@ -100,7 +100,7 @@ class ReferenceImage extends EventTarget {
     const panZoom = this.panZoom;
 
     canvas.addEventListener("click", event => {
-      if (!editor.config.get("pick-color")) { return; }
+      if (!editor.config.get("pickColor")) { return; }
   
       const ctx = nonPolyfilledCtx(canvas.getContext('2d'));
       const imgData = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data
@@ -108,7 +108,7 @@ class ReferenceImage extends EventTarget {
   
       if (editor.config.get("pick-color-toggle")) {
         editor.config.set("pick-color-toggle", false);
-        editor.config.set("pick-color", false);
+        editor.config.set("pickColor", false);
       }
   
       editor.toolConfig.set("color", color);

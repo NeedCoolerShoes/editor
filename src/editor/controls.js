@@ -223,7 +223,7 @@ class Controls {
     this.shiftKey = event.shiftKey;
 
     if ((event.key === "Control" || event.key === "Alt") && !event.repeat) {
-      this.editor.config.set("pick-color", true);
+      this.editor.config.set("pickColor", true);
       this.keybindEyedropper = true;
     }
   }
@@ -231,7 +231,7 @@ class Controls {
   onKeyUp(event) {
     if (event.key === "Control" || event.key === "Alt") {
       event.preventDefault();
-      this.editor.config.set("pick-color", false);
+      this.editor.config.set("pickColor", false);
       this.keybindEyedropper = false;
     }
 
@@ -263,7 +263,7 @@ class Controls {
     }
 
     if ((this.targetingModel || this.pointerDown) && !this.firstClickOutside) {
-      if (this.editor.config.get("pick-color", false)) {
+      if (this.editor.config.get("pickColor", false)) {
         return CURSOR_EYEDROPPER;
       }
 
@@ -282,7 +282,7 @@ class Controls {
   }
 
   shouldRaycast() {
-    if (this.editor.config.get("pick-color", false)) return true;
+    if (this.editor.config.get("pickColor", false)) return true;
 
     return this.editor.currentTool.properties.id !== "move";
   }
@@ -291,7 +291,7 @@ class Controls {
     if (!this.keybindEyedropper) { return; };
     if (event.ctrlKey || event.altKey) { return; }
 
-    this.editor.config.set("pick-color", false);
+    this.editor.config.set("pickColor", false);
     this.keybindEyedropper = false;
   }
 

@@ -56,6 +56,7 @@ const CONFIG_VALUES = {
   overlayGridVisible: {default: true, persistence: true},
   cullBackFace: {default: true, persistence: true},
   cullGrid: {default: true, persistence: true},
+  pickColor: {default: true, persistence: false},
 }
 
 class Editor extends LitElement {
@@ -142,7 +143,7 @@ class Editor extends LitElement {
   }
 
   toolCheck(parts, pointerEvent) {
-    if (this.config.get("pick-color", false)) {
+    if (this.config.get("pickColor", false)) {
       const toolData = this._createToolData(parts, pointerEvent.buttons);
       this._pickColor(toolData);
       if (this.currentTool == this.getToolById("eraser")) {
@@ -570,7 +571,7 @@ class Editor extends LitElement {
     if (this.config.get("pick-color-toggle")) {
       setTimeout(() => {
         this.config.set("pick-color-toggle", false);
-        this.config.set("pick-color", false);
+        this.config.set("pickColor", false);
       }, 100)
     }
 
