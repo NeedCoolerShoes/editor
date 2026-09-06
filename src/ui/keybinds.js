@@ -98,8 +98,8 @@ function setupKeybinds(ui, editor) {
         editor.selectToolById("sculpt");
         break;
       case "eyedropper":
-        editor.config.set("pick-color-toggle", true);
-        editor.config.set("pick-color", !editor.config.get("pick-color", false));
+        editor.config.set("pickColor-toggle", true);
+        editor.config.set("pickColor", !editor.config.get("pickColor", false));
         break;
       case "undo":
         editor.history.undo();
