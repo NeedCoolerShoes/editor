@@ -91,7 +91,7 @@ class MinecraftImport extends LitElement {
 
   _loadSkin() {
     this._processing = true;
-    const username = encodeURI(this.input.value);
+    const username = encodeURI(this.input.value.trim());
     const url = this.ui.skinLookupURL() + "/" + username;
 
     fetch(url).then(res => {
