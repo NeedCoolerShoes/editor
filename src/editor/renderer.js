@@ -28,7 +28,7 @@ class Renderer {
   }
 
   _setupRenderer() {
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
     renderer.domElement.style.position = "absolute";
 
     this.renderer = renderer;
