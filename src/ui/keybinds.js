@@ -108,7 +108,7 @@ function setupKeybinds(ui, editor) {
         break;
       case "eyedropper":
         editor.config.set("pick-color-toggle", true);
-        editor.config.set("pickColor", !editor.config.get("pickColor", false));
+        editor.config.set("pick-color", !editor.config.get("pick-color", false));
         break;
       case "undo":
         editor.history.undo();

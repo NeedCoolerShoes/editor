@@ -297,13 +297,13 @@ class ColorPicker extends LitElement {
   }
 
   toggleEyedropper() {
-    const eyedropperEnabled = this.config.get("pickColor", false);
+    const eyedropperEnabled = this.config.get("pick-color", false);
 
     if (!eyedropperEnabled) {
       this.config.set("pick-color-toggle", true);
     }
 
-    this.config.set("pickColor", !eyedropperEnabled);
+    this.config.set("pick-color", !eyedropperEnabled);
   }
 
   _isColorDifferent() {

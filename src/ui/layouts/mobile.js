@@ -598,7 +598,7 @@ class NCRSUIMobileLayout extends BaseLayout {
   }
 
   render() {
-    const eyedropper = this.editor.config.get("pickColor", false);
+    const eyedropper = this.editor.config.get("pick-color", false);
 
     function preventTouch(event) {
       event.preventDefault();
