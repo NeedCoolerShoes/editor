@@ -56,6 +56,15 @@ class BaseLayout extends LitElement {
     } else {
       this.warningManager.remove("blend-enabled");
     }
+
+    const baseVisible = this.editor.config.get("baseVisible", false);
+    const overlayVisible = this.editor.config.get("overlayVisible", false);
+
+    if (!baseVisible && !overlayVisible) {
+      this.warningManager.add("model-visible", "overlay", "Both the base and overlay layers of the model are currently toggled off.");
+    } else {
+      this.warningManager.remove("model-visible");
+    }
   }
 
   #setupEvents() {
@@ -73,6 +82,14 @@ class BaseLayout extends LitElement {
     });
 
     this.editor.toolConfig.addEventListener("blend-change", () => {
+      this.#updateWarning();
+    });
+
+    this.editor.config.addEventListener("baseVisible-change", () => {
+      this.#updateWarning();
+    });
+
+    this.editor.config.addEventListener("overlayVisible-change", () => {
       this.#updateWarning();
     });
   }
