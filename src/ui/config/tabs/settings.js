@@ -67,7 +67,7 @@ class SettingsTab extends Tab {
         border-radius:5px;
         cursor: pointer;
       }
-      
+
       .slider::-moz-range-thumb {
         transform: translate(0,-2px);
         width: 21px;
@@ -101,7 +101,7 @@ class SettingsTab extends Tab {
         </div>
         </div>
       </div>
-    `
+    `;
   }
 
   _setupEvents() {
@@ -112,11 +112,9 @@ class SettingsTab extends Tab {
           this.editor.camera.updateProjectionMatrix();
           break;
       }
-    })
+    });
   }
-
 }
 
 customElements.define("ncrs-settings-tab", SettingsTab);
-
 export default SettingsTab;

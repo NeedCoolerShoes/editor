@@ -1,6 +1,5 @@
 import { css, html, LitElement } from "lit";
 import PartToggles from "./part_toggles.js";
-
 import EditorToggles from "./editor_toggles.js";
 import ModelToggle from "./model_toggle.js";
 import Toolset from "./toolset.js";
@@ -85,5 +84,4 @@ class Toolbar extends LitElement {
 }
 
 customElements.define("ncrs-toolbar", Toolbar);
-
 export default Toolbar;

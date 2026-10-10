@@ -1,11 +1,9 @@
 import { css, html, unsafeCSS } from "lit";
 import BaseLayout from "./base";
-
 import "../mobile/components/drawer";
 import "../mobile/components/tab";
 import "../mobile/components/tab_group";
 import "../misc/color_picker";
-
 import imgGridDark from "../../../assets/images/grid-editor-dark.png";
 import Toolset from "../tools/toolset";
 import interact from "interactjs";
@@ -105,9 +103,7 @@ const STYLES = css`
   }
 
   @-moz-document url-prefix() {
-    #top {
-      backdrop-filter: none; 
-    }
+    #top { backdrop-filter: none;  v}
   }
 
   ncrs-warning-manager {
@@ -137,12 +133,11 @@ const STYLES = css`
   }
 
   #bottom::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
 
   ncrs-tools-toolset {
     --ncrs-icon-height: 1.25rem;
-
     display: block;
     box-sizing: border-box;
     width: 100%;
@@ -204,7 +199,7 @@ const STYLES = css`
     display: block;
     cursor: pointer;
   }
-  
+
   #color-button {
     border-radius: 9999px;
     width: 4rem;
@@ -231,7 +226,7 @@ const STYLES = css`
     --base-blur: 1px;
     --drawer-height: 25rem;
   }
-  
+
   ncrs-tools-part-toggles {
     --scale: 0.9;
     --gap: 0.6rem 0.85rem;
@@ -328,9 +323,7 @@ const STYLES = css`
   }
 
   @-moz-document url-prefix() {
-    #layers .button {
-      backdrop-filter: none;
-    }
+    #layers .button { backdrop-filter: none; }
   }
 
   #layers.open {
@@ -360,9 +353,7 @@ const STYLES = css`
   }
 
   @-moz-document url-prefix() {
-    #layers .toggle {
-      backdrop-filter: none;
-    }
+    #layers .toggle { backdrop-filter: none; }
   }
 
   #layers .toggle ncrs-icon {
@@ -403,15 +394,13 @@ const STYLES = css`
   }
 
   @-moz-document url-prefix() {
-    #tool-config {
-      backdrop-filter: none;
-    }
+    #tool-config { backdrop-filter: none; }
   }
 
   :host(.tool-config-open) #tool-config {
     transform: translateY(0%);
   }
-  
+
   #tool-config > * {
     display: block;
     max-width: 100%;
@@ -552,7 +541,7 @@ class NCRSUIMobileLayout extends BaseLayout {
       const oldConfig = this.toolConfig;
 
       this._setToolConfig();
-      
+
       if (!this.toolConfig) {
         this.toolConfig = oldConfig;
         this.classList.remove("tool-config-open");
@@ -578,7 +567,7 @@ class NCRSUIMobileLayout extends BaseLayout {
 
   updated() {
     const div = this.renderRoot.getElementById("tool-config");
-    
+
     if (this.toolConfig.scrollWidth > this.toolConfig.clientWidth) {
       div.classList.add("overflow");
     } else {
@@ -592,9 +581,7 @@ class NCRSUIMobileLayout extends BaseLayout {
 
     this.renderRoot.getElementById("warningPopup").prepend(warning);
 
-    setTimeout(() => {
-      warning.remove();
-    }, 2000);
+    setTimeout(() => { warning.remove(); }, 2000);
   }
 
   render() {
@@ -758,7 +745,7 @@ class NCRSUIMobileLayout extends BaseLayout {
     const layers = this.renderRoot.getElementById("layers");
     const toggle = layers.querySelector(".toggle");
 
-    
+
     interact(toggle).draggable({
       lockAxis: "x",
       listeners: {
@@ -790,12 +777,12 @@ class NCRSUIMobileLayout extends BaseLayout {
           <ncrs-icon icon="redo" color="var(--icon-color)"></ncrs-icon>
         </button>
       </div>
-    `
+    `;
   }
 
   _setupToolConfigs() {
     const config = this.editor.toolConfig;
-    
+
     this.toolConfigs = {
       pen: new PenToolConfig(config, true),
       eraser: new EraseToolConfig(config, true),

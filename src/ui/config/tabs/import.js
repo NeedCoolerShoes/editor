@@ -53,7 +53,7 @@ class ImportTab extends Tab {
           </div>
         </div>
       </div>
-    `
+    `;
   }
 
   tabEnter() {
@@ -69,5 +69,4 @@ class ImportTab extends Tab {
 }
 
 customElements.define("ncrs-import-tab", ImportTab);
-
 export default ImportTab;

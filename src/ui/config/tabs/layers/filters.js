@@ -344,5 +344,4 @@ class LayersTabFilters extends LitElement {
 }
 
 customElements.define("ncrs-layers-tab-filters", LayersTabFilters);
-
 export default LayersTabFilters;

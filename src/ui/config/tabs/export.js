@@ -20,7 +20,7 @@ class ExportTab extends Tab {
 
   constructor(ui) {
     super({name: "Save", title: "Save [4]\nExport skins, project files, and share to gallery."});
-    
+
     this.buttons = new ExportTabButtons(ui, ui.editor);
 
     this.ui = ui;
@@ -38,5 +38,4 @@ class ExportTab extends Tab {
 }
 
 customElements.define("ncrs-export-tab", ExportTab);
-
 export default ExportTab;

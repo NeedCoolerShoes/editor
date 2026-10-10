@@ -90,12 +90,11 @@ class ImportTabButtons extends LitElement {
 
     this.ncrsFileInput.accept = ".ncrs"
     this.ncrsFileInput.addEventListener("change", this._ncrsFileRead.bind(this));
-    
+
     this.referenceFileInput.accept = "image/*";
     this.referenceFileInput.addEventListener("change", this._referenceFileRead.bind(this));
 
     this.minecraftImport = new MinecraftImport(this.ui);
-
   }
 
   render() {
@@ -114,7 +113,8 @@ class ImportTabButtons extends LitElement {
           <hr>
           <ncrs-button @click=${this.referenceImageOpen} title="Add a reference image.">Add Reference Image</ncrs-button>
         </div>
-      </div>`;
+      </div>
+    `;
   }
 
   pngOpen() {

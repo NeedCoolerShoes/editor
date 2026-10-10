@@ -51,7 +51,7 @@ class MinecraftImport extends LitElement {
       top: -5px;
       margin-left: calc(var(--height) * -1);
     }
-  `
+  `;
 
   constructor(ui) {
     super();
@@ -112,10 +112,9 @@ class MinecraftImport extends LitElement {
       })
     }, () => {
       this._processing = false;
-    })
+    });
   }
 }
 
 customElements.define("ncrs-import-minecraft", MinecraftImport);
-
 export default MinecraftImport;

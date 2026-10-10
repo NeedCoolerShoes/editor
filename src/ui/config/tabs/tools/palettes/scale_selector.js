@@ -44,11 +44,11 @@ class NCRSPaletteScaleSelector extends LitElement {
   render() {
     if (Number(this._input.value) !== this.scale) {
       this.scale = this._clampValue(this.scale);
-      
+
       this._input.value = this.scale;
       this.dispatchEvent(new CustomEvent("update", {detail: this.scale}));
     }
-    
+
     const decrementDisabled = this.scale <= this.min;
     const incrementDisabled = this.scale >= this.max;
 
