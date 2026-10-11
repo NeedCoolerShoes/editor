@@ -65,6 +65,13 @@ class BaseLayout extends LitElement {
     } else {
       this.warningManager.remove("model-visible");
     }
+
+    const pv = this.editor.config.get("partVisibility", {});
+    if (!pv.head && !pv.arm_left && !pv.torso && !pv.arm_right && !pv.leg_left && !pv.leg_right) {
+      this.warningManager.add("part-visible", "base", "All parts of the model are currently toggled off.");
+    } else {
+      this.warningManager.remove("part-visible");
+    }
   }
 
   #setupEvents() {
@@ -90,6 +97,10 @@ class BaseLayout extends LitElement {
     });
 
     this.editor.config.addEventListener("overlayVisible-change", () => {
+      this.#updateWarning();
+    });
+
+    this.editor.config.addEventListener("partVisibility-change", () => {
       this.#updateWarning();
     });
   }
