@@ -229,6 +229,10 @@ class Controls {
   }
 
   onKeyUp(event) {
+    const element = event.originalTarget || getFocusedElement();
+
+    if (isKeybindIgnored(element)) { return; }
+
     if (event.key === "Control" || event.key === "Alt") {
       event.preventDefault();
       this.editor.config.set("pick-color", false);
