@@ -20,9 +20,7 @@ class LayerList extends LitElement {
     }
 
     @-moz-document url-prefix() {
-      :host {
-        backdrop-filter: none;
-      }
+      :host { backdrop-filter: none; }
     }
 
     #list {
@@ -44,7 +42,6 @@ class LayerList extends LitElement {
       position: absolute;
       display: flex;
       flex-direction: column;
-
       top: 0px;
       bottom: 0px;
       left: 0px;
@@ -267,5 +264,4 @@ class LayerList extends LitElement {
 }
 
 customElements.define("ncrs-layer-list", LayerList);
-
 export default LayerList;

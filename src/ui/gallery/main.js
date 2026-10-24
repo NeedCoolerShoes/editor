@@ -11,7 +11,6 @@ class Gallery extends LitElement {
       display: block;
       width: 100%;
       height: 100%;
-
       padding: 2rem;
       box-sizing: border-box;
       pointer-events: none;
@@ -19,14 +18,11 @@ class Gallery extends LitElement {
 
     #main {
       box-sizing: border-box;
-
       width: 100%;
       height: 100%;
-
       display: grid;
       grid-template-columns: 2fr 8fr;
       background-color: rgba(35, 36, 40, 0.75);
-
       pointer-events: all;
     }
 
@@ -51,7 +47,7 @@ class Gallery extends LitElement {
       width: 10rem;
       height: 10rem;
     }
-  `
+  `;
 
   constructor(ui) {
     super();
@@ -72,7 +68,7 @@ class Gallery extends LitElement {
           <div id="pagination"></div>
         </div>
       </div>
-    `
+    `;
   }
 
   getURL() {
@@ -94,7 +90,7 @@ class Gallery extends LitElement {
       data.json().then(json => {
         json.skins.forEach(skin => {
           const gallerySkin = new GallerySkin(skin);
-  
+
           div.appendChild(gallerySkin);
         });
       });
@@ -105,5 +101,4 @@ class Gallery extends LitElement {
 }
 
 customElements.define("ncrs-gallery", Gallery);
-
 export {Gallery};

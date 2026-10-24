@@ -72,9 +72,8 @@ class EraseToolConfig extends BaseToolConfig {
         </div>
       </div>
     `;
-  };
+  }
 }
 
 customElements.define("ncrs-erase-tool-config", EraseToolConfig);
-
 export default EraseToolConfig;

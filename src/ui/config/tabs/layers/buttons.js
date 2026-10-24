@@ -166,5 +166,4 @@ class LayersTabButtons extends LitElement {
 }
 
 customElements.define("ncrs-layers-tab-buttons", LayersTabButtons);
-
 export default LayersTabButtons;

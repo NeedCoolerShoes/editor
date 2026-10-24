@@ -1,5 +1,4 @@
 import { css, html, LitElement, unsafeCSS } from "lit";
-
 import imgSteveAlex from "../../../assets/images/steve_alex.png";
 
 class ModelToggle extends LitElement {
@@ -59,7 +58,7 @@ class ModelToggle extends LitElement {
 
     editor.project.addEventListener("variant-change", () => {
       this.requestUpdate();
-    })
+    });
   }
 
   render() {

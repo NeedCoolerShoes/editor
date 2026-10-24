@@ -82,5 +82,4 @@ class SculptToolConfig extends BaseToolConfig {
 }
 
 customElements.define("ncrs-sculpt-tool-config", SculptToolConfig);
-
 export default SculptToolConfig;

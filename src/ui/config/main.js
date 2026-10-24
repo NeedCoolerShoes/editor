@@ -41,7 +41,6 @@ class Config extends LitElement {
 
     ncrs-tab-group::part(button) {
       all: unset;
-
       flex-grow: 1;
       display: block;
       cursor: pointer;
@@ -77,7 +76,7 @@ class Config extends LitElement {
       background-color: #1a1a1a;
       font-weight: bold;
     }
-  `
+  `;
 
   constructor(ui) {
     super();
@@ -115,7 +114,7 @@ class Config extends LitElement {
       const tabName = Object.keys(t).find(key => t[key] === event.detail);
       if (!tabName) { return; }
       this.ui.persistence.set("selectedTab", tabName);
-    })
+    });
 
     const selectedTab = this.ui.persistence.get("selectedTab", "tool");
     tabs.select(t[selectedTab]);
@@ -125,5 +124,4 @@ class Config extends LitElement {
 }
 
 customElements.define("ncrs-config", Config);
-
 export default Config;

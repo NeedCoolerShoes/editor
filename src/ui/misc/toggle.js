@@ -24,7 +24,7 @@ class BasicToggle extends LitElement {
       cursor: pointer;
       user-select: none;
     }
-  `
+  `;
 
   render() {
     return html`
@@ -34,7 +34,7 @@ class BasicToggle extends LitElement {
         <slot name="on"></slot>
         <slot name="after"></slot>
       </button>
-    `
+    `;
   }
 
   toggle() {
@@ -45,5 +45,4 @@ class BasicToggle extends LitElement {
 }
 
 customElements.define("ncrs-toggle", BasicToggle);
-
 export default BasicToggle;

@@ -56,7 +56,7 @@ class MobileTabGroup extends LitElement {
     }
 
     #body::-webkit-scrollbar {
-        display: none;
+      display: none;
     }
 
     ::slotted(ncrs-mobile-tab) {
@@ -75,7 +75,7 @@ class MobileTabGroup extends LitElement {
     this._setupMutationObserver();
   }
   selectedTab;
-  
+
   render() {
     return html`
       <div id="nav">
@@ -91,7 +91,7 @@ class MobileTabGroup extends LitElement {
     return this._getChildTabs().map(tab => {
       const button = document.createElement("button");
       button.textContent = tab.name;
-      
+
       button.addEventListener("click", () => {
         const body = this.shadowRoot.getElementById("body");
         body.scrollTo({left: tab.offsetLeft, behavior: "smooth"});
@@ -102,7 +102,7 @@ class MobileTabGroup extends LitElement {
       });
 
       return button;
-    })
+    });
   }
 
   _getChildTabs() {
@@ -120,7 +120,7 @@ class MobileTabGroup extends LitElement {
   _setupIntersectionObserver(tab, callback) {
     const intersectionObserver = new IntersectionObserver((entries, _observer) => {
       callback(entries);
-    }, {threshold: 0.5})
+    }, {threshold: 0.5});
 
     intersectionObserver.observe(tab);
   }

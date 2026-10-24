@@ -11,7 +11,6 @@ class BaseLayout extends LitElement {
     this.editor = this.ui.editor;
     this.warningManager = new WarningManager();
 
-
     this.classList.add("minimized");
 
     this.#setupEvents();

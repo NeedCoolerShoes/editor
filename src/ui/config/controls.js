@@ -36,7 +36,7 @@ class ToggleControl extends LitElement {
       width: 100%;
       height: 100%;
     }
-  `
+  `;
 
   constructor() {
     super();
@@ -49,20 +49,19 @@ class ToggleControl extends LitElement {
       <ncrs-button @click=${this._onClick} ?active=${this.selected} touch-tooltip=${this.touchTooltip}>
         <ncrs-icon icon=${this.icon} color="var(--text-color)"></ncrs-icon>
       </ncrs-button>
-    `
+    `;
   }
 
   _onClick() {
     this.selected = !this.selected;
     this.dispatchEvent(new CustomEvent("toggle", {detail: {toggle: this.selected}}));
   }
-
 }
 
 class OptionControl extends LitElement {
   static properties = {
     selected: { reflect: true },
-  };
+  }
 
   static styles = css`
     :host {
@@ -122,7 +121,7 @@ class OptionControlButton extends LitElement {
     name: { reflect: true },
     selected: { reflect: true },
     touchTooltip: {type: String, attribute: "touch-tooltip"},
-  };
+  }
 
   static styles = css`
     :host {
@@ -179,6 +178,5 @@ class OptionControlButton extends LitElement {
 customElements.define("ncrs-option-control", OptionControl);
 customElements.define("ncrs-option-control-button", OptionControlButton);
 customElements.define("ncrs-toggle-control", ToggleControl);
-
 
 export { OptionControl, OptionControlButton, ToggleControl };

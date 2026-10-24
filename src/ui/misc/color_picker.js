@@ -14,7 +14,7 @@ class ColorPicker extends LitElement {
     lightness: {},
     alpha: {},
     _eyedropper: {state: true}
-  };
+  }
 
   static styles = css`
     :host {
@@ -39,8 +39,7 @@ class ColorPicker extends LitElement {
     #gradient {
       flex-grow: 1;
       border-radius: 0.25rem;
-      background-image: linear-gradient(rgba(0, 0, 0, 0), #000),
-        linear-gradient(90deg, #fff, hsl(var(--current-hue), 100%, 50%));
+      background-image: linear-gradient(rgba(0, 0, 0, 0), #000), linear-gradient(90deg, #fff, hsl(var(--current-hue), 100%, 50%));
     }
 
     #gradient::part(cursor) {
@@ -85,13 +84,11 @@ class ColorPicker extends LitElement {
     }
 
     #alpha-slider::part(slider) {
-      background: linear-gradient(to right, transparent, var(--current-color)),
-        repeating-conic-gradient(#aaa 0% 25%, #888 0% 50%) 50%/ 8px 8px;
+      background: linear-gradient(to right, transparent, var(--current-color)), repeating-conic-gradient(#aaa 0% 25%, #888 0% 50%) 50%/ 8px 8px;
     }
 
     #alpha-slider::part(cursor) {
-      background: linear-gradient(var(--current-color-alpha), var(--current-color-alpha)),
-        repeating-conic-gradient(#aaa 0% 25%, #888 0% 50%) 50%/ 8px 8px;
+      background: linear-gradient(var(--current-color-alpha), var(--current-color-alpha)), repeating-conic-gradient(#aaa 0% 25%, #888 0% 50%) 50%/ 8px 8px;
     }
 
     ncrs-slider {
@@ -129,8 +126,7 @@ class ColorPicker extends LitElement {
       height: 2rem;
       min-width: 2rem;
       border-radius: 100%;
-      background: linear-gradient(var(--current-color-alpha), var(--current-color-alpha)),
-        repeating-conic-gradient(#aaa 0% 25%, #888 0% 50%) 50%/ 8px 8px;
+      background: linear-gradient(var(--current-color-alpha), var(--current-color-alpha)), repeating-conic-gradient(#aaa 0% 25%, #888 0% 50%) 50%/ 8px 8px;
       cursor: pointer;
     }
 
@@ -144,7 +140,6 @@ class ColorPicker extends LitElement {
 
     #text-input {
       font-size: var(--ncrs-color-picker-font-size, small);
-
       color: white;
       text-align: center;
       background-color: #131315;
@@ -198,7 +193,7 @@ class ColorPicker extends LitElement {
     this.alphaSlider = this._createAlphaSlider();
 
     this._setupEvents();
-  }  
+  }
 
   render() {
     const color = this.getColor();
@@ -229,7 +224,7 @@ class ColorPicker extends LitElement {
       "--current-lightness": `${this.lightness / 2}%`,
       "--current-color": color.string(),
       "--current-color-alpha": colorWithAlpha.string(),
-    };
+    }
 
     if (this._isColorDifferent()) {
       this.dispatchEvent(new CustomEvent("color-change", { detail: { color: this.getColorWithAlpha() } }));
@@ -277,7 +272,7 @@ class ColorPicker extends LitElement {
   setColor(color) {
     const currentColor = this.getColor();
     const newColor = Color(color).hsv();
-    
+
     if (newColor.hexa() == currentColor.hexa()) { return false; }
 
     this.hue = newColor.hue();
@@ -409,7 +404,7 @@ class ColorPicker extends LitElement {
       this.dispatchEvent(new CustomEvent("easteregg", { detail: event.target.value }));
     }
 
-    if (event.target.value === "#RANDOM") { 
+    if (event.target.value === "#RANDOM") {
       event.target.value = '#'+Math.floor(Math.random()*16777215).toString(16);
     }
 
@@ -448,7 +443,7 @@ class ColorPickerRegion extends LitElement {
   static properties = {
     progressX: { reflect: true },
     progressY: { reflect: true },
-  };
+  }
 
   static styles = css`
     :host {
@@ -494,12 +489,12 @@ class ColorPickerRegion extends LitElement {
 
     const pointerMove = function (event) {
       scope.onMove(event);
-    };
+    }
 
     const pointerUp = function (_event) {
       document.removeEventListener("pointermove", pointerMove);
       document.removeEventListener("pointerup", pointerUp);
-    };
+    }
 
     this._onPointerDown = event => {
       document.addEventListener("pointermove", pointerMove);
@@ -508,7 +503,7 @@ class ColorPickerRegion extends LitElement {
       this.shadowRoot.getElementById("background").focus();
 
       event.stopPropagation();
-    };
+    }
 
     this._setupResizeObserver();
   }
@@ -597,7 +592,7 @@ class ColorPickerRegion extends LitElement {
     return {
       x: this._clientWidth * this.progressX,
       y: this._clientHeight * this.progressY,
-    };
+    }
   }
 
   _setupResizeObserver() {
@@ -605,7 +600,7 @@ class ColorPickerRegion extends LitElement {
       this._clientWidth = this.clientWidth;
       this._clientHeight = this.clientHeight;
       this.requestUpdate();
-    })
+    });
 
     resizeObserver.observe(this);
   }

@@ -143,24 +143,23 @@ class EditorToggles extends LitElement {
   _setupEvents() {
     this.editor.config.addEventListener("baseVisible-change", event => {
       this.requestUpdate();
-    })
+    });
     this.editor.config.addEventListener("overlayVisible-change", event => {
       this.requestUpdate();
-    })
+    });
     this.editor.config.addEventListener("baseGridVisible-change", event => {
       this.requestUpdate();
-    })
+    });
     this.editor.config.addEventListener("overlayGridVisible-change", event => {
       this.requestUpdate();
-    })
+    });
     this.editor.config.addEventListener("cullBackFace-change", event => {
       this.requestUpdate();
-    })
+    });
     this.editor.config.addEventListener("cullGrid-change", event => {
       this.requestUpdate();
-    })
+    });
   }
-
 }
 
 customElements.define("ncrs-tools-editor-toggles", EditorToggles);

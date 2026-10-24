@@ -271,7 +271,7 @@ const NAMED_COLORS = {
   meowmeoworange: '#f69901',
   meowmeow_orange: '#f69901',
   meow_meow_orange: '#f69901',
-  
+
   /// Easteregg colors
   pancake: '#ffda54',
   mhorkuit: '#4e0047',
@@ -282,7 +282,8 @@ const NAMED_COLORS = {
   rustboro: '#27d8e2',
   wulfian: '#ffbc03',
   dragon: '#5a782a',
-  kittykay: '#f459bf'
-};
+  kittykay: '#f459bf',
+  rephaim: '#6a6a6a'
+}
 
 export default NAMED_COLORS;

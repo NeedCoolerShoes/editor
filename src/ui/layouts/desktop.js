@@ -1,11 +1,9 @@
 import BaseLayout from "./base";
-
 import { css, html, unsafeCSS } from "lit";
 import Toolbar from "../tools/toolbar.js";
 import LayerList from "../layers/layer_list.js";
 import Config from "../config/main.js";
 import WarningManager from "../misc/warnings.js";
-
 import imgGridDark from "../../../assets/images/grid-editor-dark.png";
 
 class NCRSUIDesktopLayout extends BaseLayout {
@@ -196,9 +194,7 @@ class NCRSUIDesktopLayout extends BaseLayout {
 
     this.renderRoot.getElementById("warningPopup").prepend(warning);
 
-    setTimeout(() => {
-      warning.remove();
-    }, 2000);
+    setTimeout(() => { warning.remove(); }, 2000);
   }
 
   render() {
@@ -253,7 +249,7 @@ class NCRSUIDesktopLayout extends BaseLayout {
           <ncrs-icon icon="redo" color="var(--icon-color)"></ncrs-icon>
         </button>
       </div>
-    `
+    `;
   }
 
   _undo() {
@@ -278,5 +274,4 @@ class NCRSUIDesktopLayout extends BaseLayout {
 }
 
 customElements.define("ncrs-ui-desktop-layout", NCRSUIDesktopLayout);
-
 export default NCRSUIDesktopLayout;

@@ -12,11 +12,7 @@ class MobileTab extends LitElement {
     }
   `;
 
-  render() {
-    return html`
-      <slot></slot>
-    `;
-  }
+  render() { return html`<slot></slot>`; }
 }
 
 customElements.define("ncrs-mobile-tab", MobileTab);

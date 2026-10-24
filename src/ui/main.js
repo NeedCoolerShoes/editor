@@ -6,18 +6,15 @@ import "./misc/quadroggle";
 import "./misc/modal";
 import "./misc/window";
 import "./misc/skin_2d";
-
 import { css, html, unsafeCSS, LitElement } from "lit";
 import Editor from "../editor/main.js";
 import PersistenceManager from "../persistence.js";
 import Modal from "./misc/modal.js";
-
 import { GALLERY_URL, SKIN_LOOKUP_URL } from "../constants.js";
 import passesColorAccuracyTest from "./misc/color_accuracy_test.js";
 import setupKeybinds from "./keybinds.js";
 import NCRSUIDesktopLayout from "./layouts/desktop.js";
 import NCRSUIMobileLayout from "./layouts/mobile.js";
-
 import imgGridDark from "../../assets/images/grid-editor-dark.png";
 import imgGridGray from "../../assets/images/grid-editor-gray.png";
 import imgGridLight from "../../assets/images/grid-editor-light.png";
@@ -85,7 +82,7 @@ class UI extends LitElement {
       justify-content: center;
       position: absolute;
     }
-    
+
     #color-check {
       color: white;
       background-color: #1A1A1A;
@@ -198,7 +195,7 @@ class UI extends LitElement {
 
     } else if (this.classList.contains("fullscreen")) {
       if (this._browserFullScreen) {
-        document.exitFullscreen();      
+        document.exitFullscreen();
       } else {
         this.classList.replace("fullscreen", "minimized");
       }
@@ -250,7 +247,7 @@ class UI extends LitElement {
     const modal = new Modal();
     modal.part = name;
     modal.id = name;
-    
+
     const slot = document.createElement("slot");
     slot.name = name;
 
@@ -350,12 +347,12 @@ class UI extends LitElement {
       [...event.dataTransfer.items].forEach(item => {
         const file = item.getAsFile();
 
-        if (item.type === "image/png") { 
+        if (item.type === "image/png") {
           this.editor.addLayerFromFile(file);
         } else if (file.name.endsWith(".ncrs")) {
           this.editor.loadProjectFromFile(file);
         }
-      })
+      });
     });
 
     this.addEventListener("fullscreenchange", () => {
@@ -364,7 +361,7 @@ class UI extends LitElement {
       this.classList.remove("fullscreen-browser");
       this.classList.replace("fullscreen", "minimized");
       this._browserFullScreen = false;
-    })
+    });
 
     window.addEventListener("load", () => {
       this._runColorCheck();
@@ -380,10 +377,9 @@ class UI extends LitElement {
 
     this.editor.addEventListener("tool-warning", event => {
       this.displayWarningPopup(event.detail.message);
-    })
+    });
   }
 }
 
 customElements.define("ncrs-ui", UI);
-
 export default UI;

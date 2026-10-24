@@ -82,7 +82,7 @@ class Tool extends LitElement {
           <ncrs-icon class="open" icon="arrow-down" color="var(--expand-icon-color)" style="filter: drop-shadow(0px -1px 1px #25282b);"></ncrs-icon>
         </div>
       </ncrs-button>
-    `
+    `;
   }
 
   select() {
@@ -91,5 +91,4 @@ class Tool extends LitElement {
 }
 
 customElements.define("ncrs-tool", Tool);
-
 export default Tool;

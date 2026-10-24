@@ -9,7 +9,6 @@ class Window extends LitElement {
   static styles = css`
     :host {
       --background-color: white;
-
       position: fixed;
       display: flex;
       flex-direction: column;
@@ -20,7 +19,6 @@ class Window extends LitElement {
       resize: both;
       background-color: var(--background-color);
       box-sizing: border-box;
-
       top: 0px;
       left: 0px;
       z-index: 100;
@@ -66,7 +64,7 @@ class Window extends LitElement {
       width: 100%;
       height: 100%;
     }
-  `
+  `;
 
   constructor() {
     super();
@@ -102,7 +100,7 @@ class Window extends LitElement {
       <div id="body">
         <slot></slot>
       </div>
-    `
+    `;
   }
 
   close() {
@@ -139,7 +137,7 @@ class Window extends LitElement {
 
     this._offsetX = event.offsetX;
     this._offsetY = event.offsetY;
-    
+
     this.header.style.cursor = "grabbing";
 
     event.preventDefault();
@@ -153,7 +151,7 @@ class Window extends LitElement {
   _dragMove(event) {
     const posX = event.clientX - this._offsetX;
     const posY = event.clientY - this._offsetY;
-    
+
     this.setPosition(posX, posY);
 
     event.preventDefault();
@@ -196,5 +194,4 @@ class Window extends LitElement {
 }
 
 customElements.define("ncrs-window", Window);
-
 export default Window;

@@ -29,9 +29,7 @@ class MobileDrawer extends LitElement {
     }
 
     @-moz-document url-prefix() {
-      :host {
-        backdrop-filter: none;
-      }
+      :host { backdrop-filter: none; }
     }
 
     #drawer {
@@ -102,31 +100,21 @@ class MobileDrawer extends LitElement {
     }
 
     @keyframes open {
-      from {
-        transform: translateY(100%);
-      }
+      from { transform: translateY(100%); }
 
-      to {
-        transform: translateY(0%);
-      }
+      to { transform: translateY(0%); }
     }
 
     @keyframes snap {
-      to {
-        transform: translateY(0%);
-      }
+      to { transform: translateY(0%); }
     }
 
     @keyframes close {
-      to {
-        transform: translateY(100%);
-      }
+      to { transform: translateY(100%); }
     }
 
     @keyframes fade {
-      to {
-        opacity: 0;
-      }
+      to { opacity: 0; }
     }
   `;
 
@@ -176,7 +164,7 @@ class MobileDrawer extends LitElement {
     handle.addEventListener("click", () => {
       if (this._translate > 0) return;
       if (this.classList.contains("snap")) return;
-      
+
       this.hide();
     });
 
@@ -260,7 +248,7 @@ class MobileDrawer extends LitElement {
       if (this.classList.contains("snap")) return;
 
       this.hide();
-    })
+    });
   }
 }
 

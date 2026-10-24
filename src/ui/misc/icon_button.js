@@ -7,7 +7,6 @@ class IconButton extends LitElement {
       --icon-color-hover: #ccc;
       --icon-color-pressed: #aaa;
       --icon-height: 1.75rem;
-
       display: block;
       cursor: pointer;
       user-select: none;
@@ -56,7 +55,7 @@ class IconButton extends LitElement {
       width: auto;
       display: block;
     }
-  `
+  `;
 
   static properties = {
     icon: {reflect: true},
@@ -75,10 +74,10 @@ class IconButton extends LitElement {
     return html`
       <button part="button" @click="${this.callback}">
         <ncrs-icon part="icon" icon=${this.icon} color="var(--icon-color)"></ncrs-icon>
-      </button>`
+      </button>
+    `;
   }
 }
 
 customElements.define("ncrs-icon-button", IconButton);
-
 export default IconButton;

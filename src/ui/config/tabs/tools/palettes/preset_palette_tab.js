@@ -12,7 +12,7 @@ const defaultPalettes = [
   },
   {
     name: "Skin Tones",
-    palette: ["#c27f7c","#d79d93","#e6b1a4","#efc8b8","#f7dece","#c27764","#cf9475","#e0b08a","#f0c697","#f3d2a2","#7e4855","#9a5b5d","#a97266","#bd8e76","#d5ab88","#5d3740","#754540","#8b5949","#a06e53","#af7e57","#2e1e30","#412431","#582f34","#6f403a","#7a4d3e"],      
+    palette: ["#c27f7c","#d79d93","#e6b1a4","#efc8b8","#f7dece","#c27764","#cf9475","#e0b08a","#f0c697","#f3d2a2","#7e4855","#9a5b5d","#a97266","#bd8e76","#d5ab88","#5d3740","#754540","#8b5949","#a06e53","#af7e57","#2e1e30","#412431","#582f34","#6f403a","#7a4d3e"],
     "scale": 10
   },
   {
@@ -251,7 +251,7 @@ class PresetPaletteTab extends Tab {
 
     button.addEventListener("click", () => {
       this.colorPicker.setColor(color);
-    })
+    });
 
     return button;
   }
@@ -271,7 +271,7 @@ class PresetPaletteTab extends Tab {
         if (!selected) return;
 
         selected.classList.remove("selected");
-      };
+      }
     });
   }
 
@@ -290,5 +290,4 @@ class PresetPaletteTab extends Tab {
 }
 
 customElements.define("ncrs-preset-palette-tab", PresetPaletteTab);
-
 export default PresetPaletteTab;

@@ -108,5 +108,4 @@ class ShadeToolConfig extends BaseToolConfig {
 }
 
 customElements.define("ncrs-shade-tool-config", ShadeToolConfig);
-
 export default ShadeToolConfig;
