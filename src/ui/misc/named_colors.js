@@ -276,7 +276,7 @@ const NAMED_COLORS = {
   pancake: '#ffda54',
   mhorkuit: '#4e0047',
   vilpat: '#679267',
-  nucc: '#03fc6b',
+  maya: '#03fc6b',
   kyrius: '#000000',
   szczur: '#734f96',
   rustboro: '#27d8e2',
